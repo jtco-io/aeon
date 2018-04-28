@@ -1,0 +1,15 @@
+[ignore]
+<PROJECT_ROOT>/server/node_modules/config-chain/.*
+<PROJECT_ROOT>/server/node_modules/bcryptjs/.*
+
+[include]
+server
+src
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]
