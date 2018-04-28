@@ -15,7 +15,7 @@ type Props = {
 
 type State = {
   email: string,
-  password: string
+  //password: string
 }
 
 class LoginPage extends React.Component<Props, State> {
