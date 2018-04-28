@@ -18,4 +18,5 @@ cache:
 pre_test_lint_and_flow:
   script:
    - yarn install
-   - yarn run lint && yarn run flow
+   - yarn run lint
+   - yarn run flow check
