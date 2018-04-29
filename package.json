@@ -47,9 +47,11 @@
     "eject": "react-scripts eject",
     "prettier": "prettier-eslint --write \"src/**/*.+(js|jsx)\"",
     "prettier-dry-run": "prettier-eslint \"src/**/*.+(js|jsx)\" -l debug",
-    "d:dev": "docker-compose -f docker-compose.yml -f ./server/docker-compose.yml up -d",
     "d:build": "docker-compose -f docker-compose.yml -f ./server/docker-compose.yml -f ./testing/docker-compose.yml build",
-    "d:test": "yarn run d:dev && docker-compose -f ./testing/docker-compose.yml up"
+    "d:client": "docker-compose -f docker-compose.yml",
+    "d:server": "yarn run d:client  -f ./server/docker-compose.yml",
+    "d:dev": "yarn run d:server up",
+    "d:test": "yarn run d:server -f ./testing/docker-compose.yml up"
   },
   "prettier": {
     "semi": false,
