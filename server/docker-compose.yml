@@ -1,5 +1,18 @@
-version: '3'
+version: '3.4'
 services:
+  server:
+    image: ${IMAGE}/server
+    restart: always
+    ports:
+    - "4000:4000"
+    build:
+      context: ./server
+    environment:
+      PRISMA_ENDPOINT: "http://prisma:4466/database/dev"
+    depends_on:
+    - prisma
+
+
   prisma:
     image: prismagraphql/prisma:1.7.3
     restart: always
@@ -17,6 +30,10 @@ services:
             port: 5432
             user: root
             password: prisma
+    depends_on:
+    - db
+
+
   db:
     image: postgres:alpine
     restart: always

@@ -8,12 +8,7 @@ services:
     build:
       context: .
       target: build
+      args:
+          REACT_APP_GRAPHQL_URL: 192.168.99.100:4000
 
-  db:
-    image: postgres:alpine
-    restart: always
-    ports:
-    - "5432:5432"
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: prisma
+
