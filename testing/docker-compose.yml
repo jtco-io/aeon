@@ -4,13 +4,15 @@ services:
   selenium:
     image: ${IMAGE}/testing
     build:
-      context: .
+      context: ./testing
     depends_on:
       - selenium_hub
       - server
       - client-serve
     volumes:
        - ./screenshots:/root/screenshots
+    environment:
+      SELENIUM_GRID_URL: http://selenium_hub:4444/wd/hub
 
   firefox:
     image: selenium/node-firefox-debug:3.9.1

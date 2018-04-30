@@ -12,3 +12,4 @@ Dockerfile
 graphql.config.json
 readme.md
 *.log
+.env

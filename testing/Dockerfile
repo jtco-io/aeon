@@ -2,13 +2,13 @@ ARG BASE_IMAGE=node:9.6.1-alpine
 ARG REACT_APP_GRAPHQL_URL=server:4000
 
 FROM $BASE_IMAGE
-COPY ./package.json ./package.json
-COPY ./yarn.lock ./yarn.lock
-RUN yarn
+
+ENV INSTALL_PATH=/app
+WORKDIR $INSTALL_PATH
+
 COPY . .
-RUN yarn run build
+RUN yarn
 
 
-EXPOSE 5000
-ENTRYPOINT ["serve"]
-CMD ["-s", "build"]
+ENTRYPOINT ["yarn"]
+CMD ["run", "start"]
