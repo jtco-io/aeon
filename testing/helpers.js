@@ -1,17 +1,17 @@
-import { Builder } from 'selenium-webdriver';
+import { Builder } from 'selenium-webdriver'
 
 export const driver = new Builder()
   .forBrowser('chrome')
   .usingServer('http://localhost:4444/wd/hub')
-  .build();
+  .build()
 
 afterAll(async () => {
   // Cleanup `process.on('exit')` event handlers to prevent a memory leak caused by the combination of `jest` & `tmp`.
   for (const listener of process.listeners('exit')) {
-    listener();
-    process.removeListener('exit', listener);
+    listener()
+    process.removeListener('exit', listener)
   }
-  await driver.quit();
-});
+  await driver.quit()
+})
 
-export const defaultTimeout = 10e3;
+export const defaultTimeout = 10e3

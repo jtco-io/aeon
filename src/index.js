@@ -11,7 +11,7 @@ import { ApolloProvider } from 'react-apollo'
 import 'tachyons'
 import './index.css'
 
-const graphqlUrl = process.env.GRAPHQL_URL|| 'localhost:4000';
+const graphqlUrl = process.env.GRAPHQL_URL|| 'localhost:4000'
 const httpLink = new HttpLink({ uri: `http://${graphqlUrl}` })
 
 const middlewareLink = new ApolloLink((operation, forward) => {
