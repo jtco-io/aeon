@@ -36,7 +36,7 @@ build_test_deploy:
     - apk update
     - apk add py-pip yarn
     - pip install --cache-dir cache/pip docker-compose
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - yarn run d:build
   script:
      - ls  cache/pip
