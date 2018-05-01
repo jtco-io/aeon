@@ -25,6 +25,7 @@ build_test_deploy:
     - docker:dind
   variables:
     IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    PIP_DOWNLOAD_CACHE: cache/pip
   cache:
     paths:
     - cache/apk
