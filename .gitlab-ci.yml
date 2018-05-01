@@ -13,7 +13,6 @@ stages:
 #  cache:
 #    paths:
 #    - node_modules/
-#
 #  script:
 #   - yarn install
 #   - yarn run lint
@@ -27,6 +26,7 @@ build_test_deploy:
   variables:
     IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   before_script:
+    - apk update
     - apk add py-pip yarn
 #    - pip install docker-compose
 #    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
