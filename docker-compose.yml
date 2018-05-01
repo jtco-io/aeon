@@ -7,8 +7,6 @@ services:
         - "5000:5000"
     build:
       context: .
-      target: build
+      target: client
       args:
           REACT_APP_GRAPHQL_URL: 192.168.99.100:4000
-
-

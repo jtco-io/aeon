@@ -1,11 +1,11 @@
 ARG BASE_IMAGE=node:9.6.1-alpine
 ARG REACT_APP_GRAPHQL_URL=server:4000
 
-FROM $BASE_IMAGE as server
+FROM $BASE_IMAGE as client-server
 RUN yarn global add serve
 
 # Build the client files and allows us to only copy the build folder
-FROM $BASE_IMAGE as client
+FROM $BASE_IMAGE as client-builder
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
 RUN yarn
@@ -14,8 +14,8 @@ RUN yarn run build
 
 # Use our server image as a build argument --build-arg BASE_IMAGE=...
 # The copy only the build folder leave node_moduels behind
-FROM server as build
-COPY --from=client build build
+FROM client-server as client
+COPY --from=client-builder build build
 
 # Expose entrypoint and CMD configed to allow as gitlab runner service
 EXPOSE 5000
