@@ -25,14 +25,15 @@ build_test_deploy:
     - docker:dind
   variables:
     IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    APK_CACHE_DIR: "$CI_PROJECT_DIR/cache-apk"
     PIP_CACHE_DIR: "$CI_PROJECT_DIR/cache-pip"
   cache:
     paths:
-    - "$CI_PROJECT_DIR/cache-apk"
-    - "$CI_PROJECT_DIR/cache-pip"
+    - $APK_CACHE_DIR
+    - $PIP_CACHE_DIR
   before_script:
-    - mkdir cache cache/apk cache/pip
-    - ls $CI_PROJECT_DIR/cache-apk
+    - mkdir cache $APK_CACHE_DIR $PIP_CACHE_DIR
+    - ls $APK_CACHE_DIR
     - ls $PIP_CACHE_DIR
     - ln -s /var/cache/apk cache/apk/
     - apk update
@@ -41,7 +42,7 @@ build_test_deploy:
     #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - yarn run d:build
   script:
-     - ls $CI_PROJECT_DIR/cache-apk
+     - ls $APK_CACHE_DIR
      - ls $PIP_CACHE_DIR
      - yarn run d:test
 #  after_script:
