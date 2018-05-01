@@ -35,11 +35,11 @@ build_test_deploy:
     - apk update
     - apk add py-pip yarn
     - pip install --cache-dir cache/pip docker-compose
-#    - pip install docker-compose
+     - pip install docker-compose
 #    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
 #    - docker build --build-arg BASE_IMAGE=$SERVER_IMAGE --target build -t $IMAGE_NAME .
   script:
-     - ls  /var/cache/pip
-#    - yarn run d:test
+     - ls  cache/pip
+#     - yarn run d:test
 #  after_script:
 #    - docker push $IMAGE_NAME
