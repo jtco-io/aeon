@@ -30,6 +30,7 @@ build_test_deploy:
     - /var/cache/apk
     - /var/cache/pip
   before_script:
+    - apk update
     - apk add py-pip yarn
     - pip install --cache-dir /var/cache/pip docker-compose
 #    - pip install docker-compose
