@@ -31,9 +31,9 @@ build_test_deploy:
     - "$CI_PROJECT_DIR/cache-apk"
     - "$CI_PROJECT_DIR/cache-pip"
   before_script:
+    - mkdir cache cache/apk cache/pip
     - ls $CI_PROJECT_DIR/cache-apk
     - ls $PIP_CACHE_DIR
-    - mkdir cache cache/apk cache/pip
     - ln -s /var/cache/apk cache/apk/
     - apk update
     - apk add py-pip yarn
