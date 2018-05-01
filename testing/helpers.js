@@ -1,8 +1,10 @@
 import { Builder } from 'selenium-webdriver'
 
+const seleniumUrl = process.env.SELENIUM_URL || 'localhost:4000'
+
 export const driver = new Builder()
   .forBrowser('chrome')
-  .usingServer('http://localhost:4444/wd/hub')
+  .usingServer(`http://${seleniumUrl}/wd/hub`)
   .build()
 
 afterAll(async () => {

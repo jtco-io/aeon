@@ -14,7 +14,7 @@ RUN yarn run build
 
 # Use our server image as a build argument --build-arg BASE_IMAGE=...
 # The copy only the build folder leave node_moduels behind
-FROM registry.gitlab.com/ncrmro/cra-selenium-ci/base/server as build
+FROM server as build
 COPY --from=client build build
 
 # Expose entrypoint and CMD configed to allow as gitlab runner service
