@@ -33,9 +33,9 @@ build_test_deploy:
     - $PIP_CACHE_DIR
   before_script:
     - mkdir cache $APK_CACHE_DIR $PIP_CACHE_DIR
+    - ln -s /var/cache/apk $APK_CACHE_DIR
     - ls $APK_CACHE_DIR
     - ls $PIP_CACHE_DIR
-    - ln -s /var/cache/apk $APK_CACHE_DIR
     - apk update
     - apk add py-pip yarn
     - pip install docker-compose
