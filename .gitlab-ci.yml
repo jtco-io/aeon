@@ -32,6 +32,9 @@ build_test_deploy:
 #    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
 #    - docker build --build-arg BASE_IMAGE=$SERVER_IMAGE --target build -t $IMAGE_NAME .
   script:
+     - mkdir -p /var/cache/apk
+     - mkdir -p /etc/apk/cache
+     - ls /var/cache/apk
      - ls /etc/apk/cache
 #    - yarn run d:test
 #  after_script:
