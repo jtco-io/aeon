@@ -27,12 +27,13 @@ build_test_deploy:
     IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   cache:
     paths:
-    - /var/cache/apk
-    - /var/cache/pip
+    - cache/apk
+    - cache/pip
   before_script:
+    - ln -s /var/cache/apk cache/apk/
     - apk update
     - apk add py-pip yarn
-    - pip install --cache-dir /var/cache/pip docker-compose
+    - pip install --cache-dir cache/pip docker-compose
 #    - pip install docker-compose
 #    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
 #    - docker build --build-arg BASE_IMAGE=$SERVER_IMAGE --target build -t $IMAGE_NAME .
