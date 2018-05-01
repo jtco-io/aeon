@@ -30,7 +30,7 @@ build_test_deploy:
     - cache/apk
     - cache/pip
   before_script:
-    - mkdir cache/apk cache/pip
+    - mkdir cache cache/apk cache/pip
     - ln -s /var/cache/apk cache/apk/
     - apk update
     - apk add py-pip yarn
