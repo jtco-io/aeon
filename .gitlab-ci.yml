@@ -41,7 +41,8 @@ build_test_deploy:
     #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - yarn run d:build
   script:
-     - ls  cache/pip
+     - ls $CI_PROJECT_DIR/cache-apk
+     - ls $PIP_CACHE_DIR
      - yarn run d:test
 #  after_script:
 #    - docker push $IMAGE_NAME
