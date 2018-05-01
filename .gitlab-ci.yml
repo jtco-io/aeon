@@ -33,5 +33,7 @@ build:
     - pip install docker-compose
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker build --build-arg BASE_IMAGE=$SERVER_IMAGE --target build -t $IMAGE_NAME .
+  script:
+    - yarn run d:test
   after_script:
     - docker push $IMAGE_NAME
