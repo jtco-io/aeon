@@ -25,7 +25,7 @@ build_test_deploy:
     - docker:dind
   variables:
     IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-    PIP_DOWNLOAD_CACHE: cache/pip
+    PIP_CACHE_DIR: cache/pip
   cache:
     paths:
     - cache/apk
@@ -35,7 +35,7 @@ build_test_deploy:
     - ln -s /var/cache/apk cache/apk/
     - apk update
     - apk add py-pip yarn
-    - pip install --cache-dir cache/pip docker-compose
+    - pip install docker-compose
     #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - yarn run d:build
   script:
