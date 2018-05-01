@@ -2,22 +2,22 @@ variables:
   DOCKER_DRIVER: overlay2
 
 stages:
-  - fasttest
+#  - fasttest
   - build_test_deploy
-
-fasttest:
-  stage: fasttest
-  image: node:latest
-  # This folder is cached between builds
-  # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
-  cache:
-    paths:
-    - node_modules/
-
-  script:
-   - yarn install
-   - yarn run lint
-   - yarn run flow check
+#
+#fasttest:
+#  stage: fasttest
+#  image: node:latest
+#  # This folder is cached between builds
+#  # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+#  cache:
+#    paths:
+#    - node_modules/
+#
+#  script:
+#   - yarn install
+#   - yarn run lint
+#   - yarn run flow check
 
 build_test_deploy:
   stage: build_test_deploy
@@ -30,10 +30,10 @@ build_test_deploy:
     - setup-apkcache
     - apk add --no-cache py-pip yarn
     - ls /etc/apk/cache
-    - pip install docker-compose
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker build --build-arg BASE_IMAGE=$SERVER_IMAGE --target build -t $IMAGE_NAME .
-  script:
-    - yarn run d:test
-  after_script:
-    - docker push $IMAGE_NAME
+#    - pip install docker-compose
+#    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+#    - docker build --build-arg BASE_IMAGE=$SERVER_IMAGE --target build -t $IMAGE_NAME .
+#  script:
+#    - yarn run d:test
+#  after_script:
+#    - docker push $IMAGE_NAME
