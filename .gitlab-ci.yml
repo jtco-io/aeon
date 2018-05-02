@@ -32,7 +32,7 @@ build_test_deploy:
     - $APK_CACHE_DIR
     - $PIP_CACHE_DIR
   before_script:
-    - docker login -u gitlab-ci-token $CI_BUILD_TOKEN --password-stdin $CI_REGISTRY
+    - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
     - mkdir cache $APK_CACHE_DIR $PIP_CACHE_DIR
     - ln -s /var/cache/apk $APK_CACHE_DIR
     - ls $APK_CACHE_DIR
