@@ -2,7 +2,7 @@
 version: '3.4'
 services:
   selenium:
-    image: ${REPO}/selenium_testing
+    image: registry.gitlab.com/ncrmro/prion/selenium_testing
     build:
       context: ./testing
     depends_on:

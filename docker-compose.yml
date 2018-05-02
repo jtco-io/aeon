@@ -1,12 +1,13 @@
 version: '3.4'
 services:
   client-serve:
-    image: ${REPO}
+    image: registry.gitlab.com/ncrmro/prion/client
     restart: always
     ports:
         - "5000:5000"
     build:
       context: .
-      target: client
       args:
+          CLIENT_BUILDER_IMAGE: $CLIENT_BUILDER_IMAGE
+          CLIENT_SERVER_IMAGE: $CLIENT_SERVER_IMAGE
           REACT_APP_GRAPHQL_URL: 192.168.99.100:4000

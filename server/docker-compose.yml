@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   server:
-    image: ${REPO}/server
+    image: registry.gitlab.com/ncrmro/prion/server
     restart: always
     ports:
     - "4000:4000"

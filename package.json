@@ -53,7 +53,8 @@
     "d:dev": "yarn run dc up",
     "d:selenium": "yarn run dc -f ./testing/docker-compose.yml up -d firefox chrome selenium_hub",
     "d:test": "yarn run d:selenium && yarn run dc -f ./testing/docker-compose.yml up --exit-code-from selenium selenium",
-    "d:down": "yarn run dc -f ./testing/docker-compose.yml down"
+    "d:down": "yarn run dc -f ./testing/docker-compose.yml down",
+    "d:push": "yarn run dc -f ./testing/docker-compose.yml push"
   },
   "prettier": {
     "semi": false,

@@ -1,11 +1,13 @@
 ARG BASE_IMAGE=node:9.6.1-alpine
+ARG CLIENT_BUILDER_IMAGE=$BASE_IMAGE
+ARG CLIENT_SERVER_IMAGE=$BASE_IMAGE
 ARG REACT_APP_GRAPHQL_URL=server:4000
 
-FROM $BASE_IMAGE as client-server
+FROM $CLIENT_SERVER_IMAGE as client-server
 RUN yarn global add serve
 
 # Build the client files and allows us to only copy the build folder
-FROM $BASE_IMAGE as client-builder
+FROM $CLIENT_BUILDER_IMAGE as client-builder
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
 RUN yarn
