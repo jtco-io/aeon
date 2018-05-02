@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   client-serve:
-    image: registry.gitlab.com/ncrmro/prion/client
+    image: $CLIENT_IMAGE
     restart: always
     ports:
         - "5000:5000"
