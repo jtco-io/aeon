@@ -32,6 +32,7 @@ build_test_deploy:
     - $APK_CACHE_DIR
     - $PIP_CACHE_DIR
   before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - mkdir cache $APK_CACHE_DIR $PIP_CACHE_DIR
     - ln -s /var/cache/apk $APK_CACHE_DIR
     - ls $APK_CACHE_DIR
@@ -39,7 +40,6 @@ build_test_deploy:
     - apk update
     - apk add py-pip yarn
     - pip install docker-compose
-    #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - yarn run d:build
   script:
      - ls $APK_CACHE_DIR
