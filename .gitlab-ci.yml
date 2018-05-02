@@ -20,7 +20,7 @@ stages:
 
 build_test_deploy:
   stage: build_test_deploy
-  image: docker:latest
+  image: ncrmro/ci-compose:latest
   services:
     - docker:dind
   variables:
