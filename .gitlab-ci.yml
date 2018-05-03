@@ -13,6 +13,8 @@ fasttest:
   cache:
     paths:
     - node_modules/
+  before_script:
+   - ls ./
   script:
    - yarn install
    - yarn run lint
