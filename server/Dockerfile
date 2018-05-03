@@ -1,4 +1,6 @@
-FROM node:9.6.1-alpine
+ARG BASE_IMAGE=node:9.6.1-alpine
+
+FROM $BASE_IMAGE as base-server
 
 ENV INSTALL_PATH=/app
 WORKDIR $INSTALL_PATH
@@ -6,6 +8,8 @@ WORKDIR $INSTALL_PATH
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
 RUN yarn
+
+FROM base-server
 COPY . .
 
 EXPOSE 5000
