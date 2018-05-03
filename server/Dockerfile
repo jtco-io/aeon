@@ -11,6 +11,7 @@ RUN yarn
 
 FROM base-server
 COPY . .
+RUN yarn
 
 EXPOSE 5000
 ENTRYPOINT ["yarn"]

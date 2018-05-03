@@ -1,14 +1,14 @@
 version: '3.4'
 services:
   server:
-    image: $SERVER_IMAGE
+    image: $IMAGE_SERVER
     restart: always
     ports:
     - "4000:4000"
     build:
       context: ./server
       args:
-        BASE_SERVER_IMAGE: $BASE_SERVER_IMAGE
+        IMAGE: $IMAGE_BASE_SERVER
     environment:
       PRISMA_ENDPOINT: "http://prisma:4466/database/dev"
     depends_on:

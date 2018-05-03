@@ -1,13 +1,13 @@
 version: '3.4'
 services:
   client-serve:
-    image: $CLIENT_IMAGE
+    image: $IMAGE_CLIENT
     restart: always
     ports:
         - "5000:5000"
     build:
       context: .
       args:
-        CLIENT_BUILDER_IMAGE: $CLIENT_BUILDER_IMAGE
-        CLIENT_SERVER_IMAGE: $CLIENT_SERVER_IMAGE
+        IMAGE_BASE_CLIENT_SERVER: $IMAGE_BASE_CLIENT_SERVER
+        IMAGE_BASE_CLIENT_BUILDER: $IMAGE_BASE_CLIENT_BUILDER
         REACT_APP_GRAPHQL_URL: 192.168.99.100:4000
