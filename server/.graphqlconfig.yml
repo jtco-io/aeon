@@ -8,9 +8,6 @@ projects:
     schemaPath: src/generated/prisma.graphql
     extensions:
       prisma: database/prisma.yml
-      binding:
-        output: src/generated/prisma.js
-        generator: prisma-js
 
 # graphql prepare
 # graphql get-schema --project database
