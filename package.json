@@ -4,6 +4,9 @@
   "private": true,
   "devDependencies": {
     "babel-eslint": "8.2.3",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.3",
     "eslint": "^4.19.1",
     "eslint-config-react-app": "2.1.0",
     "eslint-plugin-flowtype": "2.46.3",
@@ -38,12 +41,12 @@
     "tachyons": "4.9.1"
   },
   "scripts": {
-    "precommit": "yarn run lint --fix && yarn run flow",
+    "precommit": "yarn run lint && yarn run flow && yarn run test",
     "flow": "flow",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "start": "PORT=5000 react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "jest",
     "eject": "react-scripts eject",
     "prettier": "prettier-eslint --write \"src/**/*.+(js|jsx)\"",
     "prettier-dry-run": "prettier-eslint \"src/**/*.+(js|jsx)\" -l debug",
@@ -60,5 +63,29 @@
     "semi": false,
     "singleQuote": true,
     "trailingComma": "all"
+  },
+  "jest": {
+    "setupFiles": [
+      "./jestsetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  },
+  "babel": {
+    "plugins": [],
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "last 2 Chrome versions"
+            ]
+          }
+        }
+      ],
+      "react"
+    ]
   }
 }
