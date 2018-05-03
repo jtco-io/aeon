@@ -2,21 +2,21 @@ variables:
   DOCKER_DRIVER: overlay2
 
 stages:
-#  - fasttest
+  - fast_test
   - build_test_deploy
-#
-#fasttest:
-#  stage: fasttest
-#  image: node:latest
-#  # This folder is cached between builds
-#  # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
-#  cache:
-#    paths:
-#    - node_modules/
-#  script:
-#   - yarn install
-#   - yarn run lint
-#   - yarn run flow check
+
+fasttest:
+  stage: fast_test
+  image: node:latest
+  # This folder is cached between builds
+  # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+  cache:
+    paths:
+    - node_modules/
+  script:
+   - yarn install
+   - yarn run lint
+   - yarn run flow check
 
 build_test_deploy:
   stage: build_test_deploy
@@ -29,5 +29,3 @@ build_test_deploy:
     - yarn run d:build
   script:
      - yarn run d:test
-#  after_script:
-#    - docker push $IMAGE_NAME
