@@ -72,7 +72,7 @@
   },
   "jest": {
     "setupFiles": [
-      "./jestsetup.js"
+      "./jestSetup.js"
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
