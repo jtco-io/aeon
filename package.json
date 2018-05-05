@@ -52,7 +52,7 @@
     "prettier-dry-run": "prettier-eslint \"src/**/*.+(js|jsx)\" -l debug",
     "dc": "docker-compose -f docker-compose.yml -f ./server/docker-compose.yml",
     "d:build": "yarn run dc -f ./testing/docker-compose.yml build",
-    "d:ddb": "yarn run dc -f ./testing/docker-compose.yml exec server yarn prisma deploy",
+    "d:prisma-deploy": "yarn run dc -f ./testing/docker-compose.yml exec server yarn prisma deploy",
     "d:dev": "yarn run dc up",
     "d:selenium": "yarn run dc -f ./testing/docker-compose.yml up -d firefox chrome selenium_hub",
     "d:test": "yarn run d:selenium && yarn run dc -f ./testing/docker-compose.yml up --exit-code-from selenium selenium",
