@@ -18,6 +18,10 @@ Its a good idea to have docker and node installed.
 A first time spin up might look something like this.
 
 ```
+cp .env.sample .env
+```
+
+```
 yarn d:dev
 ```
 

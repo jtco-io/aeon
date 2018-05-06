@@ -1,14 +1,14 @@
 version: '3.4'
 services:
   server:
-    image: $IMAGE_SERVER
+    image: $CI_REGISTRY_IMAGE/server
     restart: always
     ports:
     - "4000:4000"
     build:
       context: ./server
       args:
-        IMAGE: $IMAGE_BASE_SERVER
+        IMAGE: $CI_REGISTRY_IMAGE/base/server
     environment:
       PRISMA_ENDPOINT: "http://prisma:4466/database/dev"
     depends_on:
