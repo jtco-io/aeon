@@ -33,6 +33,11 @@ This will spin up the following
 
 Next up we need to tell prisma to turn our graphql schema into a database and run any migration needed.
 
+## Docker
+We use docker and docker-compose throughout the project.
+
+docker images are tagged in the docker compose files using .env file and GITLAB_CI env variables this keeps everything configured through env variables
+
 ```
 yarn d:prisma-deploy
 ```
