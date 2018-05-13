@@ -8,8 +8,8 @@ import { AUTH_TOKEN } from './constant'
 import RootContainer from './components/RootContainer'
 import { ApolloProvider } from 'react-apollo'
 
-import 'tachyons'
-import './index.css'
+//import 'tachyons'
+//import './index.css'
 
 const graphqlUrl = process.env.GRAPHQL_URL || 'localhost:4000'
 const httpLink = new HttpLink({ uri: `http://${graphqlUrl}` })
