@@ -4,7 +4,7 @@ import {
   GraphQLString,
   GraphQLInt,
   GraphQLList
-} from 'graphql';
+} from 'graphql'
 
 export const userType = new GraphQLObjectType({
   name: 'User',
@@ -23,7 +23,7 @@ export const userType = new GraphQLObjectType({
       description: 'a user\'s messages'
     }
   })
-});
+})
 
 export const messageType = new GraphQLObjectType({
   name: 'Message',
@@ -38,4 +38,4 @@ export const messageType = new GraphQLObjectType({
       description: 'message text'
     }
   })
-});
+})

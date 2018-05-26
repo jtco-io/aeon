@@ -1,6 +1,6 @@
-import {GraphQLObjectType, GraphQLString, GraphQLList} from 'graphql';
-import {userType} from './types';
-import {resolveUsers} from './resolver';
+import {GraphQLObjectType, GraphQLString, GraphQLList} from 'graphql'
+import {userType} from './types'
+import {resolveUsers} from './resolver'
 
 const Query = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -20,6 +20,6 @@ const Query = new GraphQLObjectType({
       resolve: resolveUsers
     }
   }
-});
+})
 
-export default Query;
+export default Query

@@ -1,6 +1,6 @@
-import {GraphQLObjectType, GraphQLString} from 'graphql';
-import {userType, messageType} from './types';
-import {resolvePostMessage, resolveCreateUser} from './resolver';
+import {GraphQLObjectType, GraphQLString} from 'graphql'
+import {userType, messageType} from './types'
+import {resolvePostMessage, resolveCreateUser} from './resolver'
 
 const Mutation = new GraphQLObjectType({
   name: 'RootMutationType',
@@ -30,6 +30,6 @@ const Mutation = new GraphQLObjectType({
       resolve: resolvePostMessage
     }
   }
-});
+})
 
-export default Mutation;
+export default Mutation
