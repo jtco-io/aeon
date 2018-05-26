@@ -1,27 +1,39 @@
 {
-  "name": "prisma-boilerplate",
+  "name": "prion-server",
+  "engines": {
+    "node": ">=10.2.1",
+    "npm": "5.6.0"
+  },
   "scripts": {
-    "start": "nodemon ./src/index.js --exec babel"
+    "start": "nodemon ./src/index.js --exec babel-node"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-graphql": "^0.6.12",
     "graphql": "^0.13.2",
     "knex": "^0.14.6",
+    "ramda": "^0.25.0",
     "sqlite3": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.49",
     "@babel/core": "^7.0.0-beta.49",
-    "@babel/preset-stage-0": "^7.0.0-beta.49",
+    "@babel/node": "^7.0.0-beta.49",
+    "@babel/preset-env": "^7.0.0-beta.49",
     "nodemon": "^1.17.5"
   },
   "babel": {
     "presets": [
-      ["@babel/preset-stage-0", {
-        "decoratorsLegacy": true
-      }]
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "10.2.1"
+          }
+        }
+      ]
     ],
     "plugins": []
   }
