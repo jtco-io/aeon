@@ -1,4 +1,5 @@
 import knex from 'knex'
+/*eslint-disable no-unused-vars*/
 import {promisify} from 'bluebird'
 import {createTables, insertUsers, insertMessages} from './methods'
 

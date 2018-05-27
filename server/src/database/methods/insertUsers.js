@@ -1,3 +1,4 @@
+/*eslint-disable no-unused-vars*/
 import {promisify} from 'bluebird'
 
 function populateWithUsers(db){
