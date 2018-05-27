@@ -1,4 +1,5 @@
-var path = require('path')
+var webpack = require('webpack')
+require('dotenv').config()
 var HTMLPlugin = require('html-webpack-plugin')
 
 
@@ -9,6 +10,9 @@ module.exports = {
     new HTMLPlugin({
       inject: true,
       template: './src/index.html'
+    }),
+    new webpack.DefinePlugin({
+      GRAPHQL_URL: JSON.stringify(process.env.GRAPHQL_URL),
     })
   ],
   module: {
