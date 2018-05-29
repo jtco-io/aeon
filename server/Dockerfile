@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=node:9.6.1-alpine
+ARG BASE_IMAGE=node:10.2.1-alpine
 
 FROM $BASE_IMAGE as base-server
 
