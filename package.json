@@ -1,5 +1,9 @@
 {
   "name": "react-apollo-instagram-example",
+  "engines": {
+    "node": ">=10.2.1",
+    "npm": "5.6.0"
+  },
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
