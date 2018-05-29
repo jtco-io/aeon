@@ -1,17 +1,17 @@
 import {
   makeExecutableSchema,
   addMockFunctionsToSchema,
-} from 'graphql-tools';
+} from 'graphql-tools'
 import mocks from './mocks'
 
 const typeDefs = `
 type Query {
   testString: String
 }
-`;
+`
 
-const schema = makeExecutableSchema({ typeDefs });
+const schema = makeExecutableSchema({ typeDefs })
 
-addMockFunctionsToSchema({ schema, mocks });
+addMockFunctionsToSchema({ schema, mocks })
 
-export default schema;
+export default schema

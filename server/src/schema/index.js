@@ -11,7 +11,7 @@ export const databaseSchema = new GraphQLSchema({
 })
 
 export default function schema(){
-  let schema;
+  let schema
   if (process.env.DATABASE_TYPE === databaseType.MEMORY){
     schema = inMemorySchema
   }else {
