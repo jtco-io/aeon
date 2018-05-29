@@ -12,7 +12,7 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-graphql": "^0.6.12",
-    "graphql": "^0.13.2",
+    "graphql-tools": "^3.0.2",
     "knex": "^0.14.6",
     "ramda": "^0.25.0",
     "sqlite3": "^4.0.0"
@@ -21,6 +21,7 @@
     "@babel/cli": "^7.0.0-beta.49",
     "@babel/core": "^7.0.0-beta.49",
     "@babel/node": "^7.0.0-beta.49",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.49",
     "nodemon": "^1.17.5"
   },
@@ -35,6 +36,8 @@
         }
       ]
     ],
-    "plugins": []
+    "plugins": [
+      "@babel/plugin-proposal-export-default-from"
+    ]
   }
 }

@@ -10,7 +10,14 @@ A final ci step in which selenium is automatically ran is also featured.
 | Testing           | Jest                                                            | Not just for unit but also runs selenium browser test                               |
 | Node              | Node                                                            | Allows client and server side code to be shared                                     |
 
-
+* Technologies Used
+  * [yarn](#sqlite)
+  * [Server](#server)
+    * [node](#node)
+    * [sqlite](#sqlite)
+  * [Client](#client)
+    * [react](#sqlite)
+    * [webpack](#webpack)
 ## Dev
 
 Its a good idea to have docker and node installed.

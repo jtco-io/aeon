@@ -1,4 +1,4 @@
-import db from '../database/index'
+import db from './db'
 import {compose, prop, head} from 'ramda'
 // Hooray for Functional Programming //
 
@@ -17,9 +17,9 @@ export async function resolveUsers(rootValue, {name} ){
   let id = await getUserIdFromName(name)
 
   return [{
-    id: id, 
-    name: name, 
-    messages: await db.where('user_id', id).select('text', 'created_at').from('messages') 
+    id: id,
+    name: name,
+    messages: await db.where('user_id', id).select('text', 'created_at').from('messages')
   }]
 }
 
@@ -38,7 +38,7 @@ export async function resolvePostMessage(rootValue, {name, text}){
 
 export async function resolveCreateUser(rootValue, {name}){
   let newUser = {name: name}
-  
+
   await db('users').insert(newUser)
   return newUser
 }
