@@ -1,43 +1,36 @@
 {
   "name": "prion-server",
+  "author": "Nicholas Romero <ncrmro@gmail.com>",
+  "license": "MIT",
   "engines": {
-    "node": ">=10.2.1",
-    "npm": "5.6.0"
+    "node": ">=8.3.1",
+    "npm": ">=5.6.0"
   },
+  "version": "0.0.1",
   "scripts": {
-    "start": "nodemon ./src/index.js --exec babel-node"
+    "start": "webpack --watch --config webpack.config.js",
+    "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
+    "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\""
   },
   "dependencies": {
-    "bluebird": "^3.5.1",
-    "dotenv": "^5.0.1",
-    "express": "^4.16.3",
-    "express-graphql": "^0.6.12",
-    "graphql-tools": "^3.0.2",
-    "knex": "^0.14.6",
-    "ramda": "^0.25.0",
-    "sqlite3": "^4.0.0"
+    "@types/node": "^10.5.2",
+    "apollo-datasource-rest": "^2.0.0-rc.0",
+    "apollo-server": "^2.0.0-rc.0",
+    "dotenv": "^6.0.0",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
+    "ts-loader": "^4.4.2",
+    "webpack": "^4.14.0",
+    "webpack-cli": "^3.0.8"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.49",
-    "@babel/core": "^7.0.0-beta.49",
-    "@babel/node": "^7.0.0-beta.49",
-    "@babel/plugin-proposal-export-default-from": "^7.0.0-beta.49",
-    "@babel/preset-env": "^7.0.0-beta.49",
-    "nodemon": "^1.17.5"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "10.2.1"
-          }
-        }
-      ]
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-export-default-from"
-    ]
+    "graphql-cli": "2.16.3",
+    "prettier": "^1.13.7",
+    "prettier-tslint": "^0.4.0",
+    "ts-node": "6.1.0",
+    "tsc-watch": "^1.0.22",
+    "tslint": "^5.10.0",
+    "tslint-config-airbnb": "^5.9.2",
+    "typescript": "2.9.2"
   }
 }
