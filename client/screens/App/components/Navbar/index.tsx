@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 interface Route {
   name: string;
@@ -13,16 +13,16 @@ class Navbar extends React.Component<PageProps, {}> {
   public static defaultProps: Partial<PageProps> = {
     routes: [
       {
-        name: 'Home',
-        href: 'default.asp',
+        name: "Home",
+        href: "default.asp",
       },
       {
-        name: 'Contact',
-        href: 'contact.asp',
+        name: "Contact",
+        href: "contact.asp",
       },
       {
-        name: 'About',
-        href: 'about.asp',
+        name: "About",
+        href: "about.asp",
       },
     ],
   };

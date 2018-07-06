@@ -1,7 +1,7 @@
-import { history, routesList } from 'config/routes';
-import createBrowserHistory from 'history/createBrowserHistory';
-import * as React from 'react';
-import { Route, RouteProps, Router, Switch } from 'react-router';
+import { history, routesList } from "config/routes";
+import createBrowserHistory from "history/createBrowserHistory";
+import * as React from "react";
+import { Route, RouteProps, Router, Switch } from "react-router";
 
 /**
  * Used to mount routes from the routes.tsx file in config
