@@ -4,14 +4,14 @@ var HTMLPlugin = require('html-webpack-plugin')
 
 require('dotenv').config()
 
-const clientDir = path.resolve(__dirname),
-  publicDir = path.resolve(clientDir, 'public'),
-  configDir = path.resolve(clientDir, 'config'),
-  screensDir = path.resolve(clientDir, 'screens'),
-  sharedDir = path.resolve(clientDir, 'shared')
+const srcDir = path.resolve(__dirname),
+  publicDir = path.resolve(srcDir, 'public'),
+  configDir = path.resolve(srcDir, 'config'),
+  screensDir = path.resolve(srcDir, 'screens'),
+  sharedDir = path.resolve(srcDir, 'shared')
 
 const mode = process.env.NODE_ENV === 'production' || 'development',
-  entry = path.resolve(clientDir, 'index.tsx'),
+  entry = path.resolve(srcDir, 'index.tsx'),
   index = path.resolve(publicDir, 'index.html')
 
 module.exports = {

@@ -10,10 +10,11 @@
   "scripts": {
     "start": "yarn run dev:client:start",
     "dev:client:start": "cd ./client && yarn run start",
-    "dev:server:start": "webpack --watch --config ./server/webpack.config.js",
-    "prettier": "cd ./client && yarn run prettier fix && yarn run lint",
-    "lint": "cd ./client && yarn run lint",
-    "precommit": "yarn run prettier && yarn run lint"
+    "dev:server:start": "cd ./server && yarn run start",
+    "prettier": "cd ./client && yarn run prettier && cd ../server && yarn run prettier",
+    "lint": "cd ./client && yarn run lint && cd ../server && yarn run lint",
+    "precommit": "yarn run prettier && yarn run lint",
+    "prepush": "yarn run precommit"
   },
   "dependencies": {},
   "devDependencies": {

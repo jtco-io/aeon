@@ -7,16 +7,16 @@
     "target": "es5",
     "jsx": "react",
     "allowJs": false,
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {
       "config": [
-        "config"
+        "./config"
       ],
       "screens": [
-        "screens"
+        "./screens"
       ],
       "components": [
-        "screens/App/components"
+        "./screens/App/components"
       ]
     }
   },

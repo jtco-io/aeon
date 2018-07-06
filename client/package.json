@@ -13,14 +13,14 @@
     "enzyme-to-json": "^3.3.3",
     "prettier": "^1.13.7",
     "prettier-tslint": "^0.4.0",
-    "ts-loader": "^4.4.2",
     "tslint": "^5.10.0",
     "tslint-config-airbnb": "^5.9.2",
-    "typescript": "~2.8.3",
-    "webpack": "^4.15.1",
     "webpack-serve": "^1.0.4"
   },
   "dependencies": {
+    "typescript": "~2.8.3",
+    "webpack": "^4.15.1",
+    "ts-loader": "^4.4.2",
     "@types/history": "^4.6.2",
     "@types/react": "^16.3.18",
     "@types/react-dom": "^16.0.6",
@@ -52,8 +52,8 @@
   "scripts": {
     "start": "NODE_ENV=development webpack-serve webpack.config.js --port 5000",
     "build": "NODE_ENV=production webpack-cli",
-    "prettier": "prettier-tslint fix \"**/*.+(ts|tsx)\"",
-    "lint": "tslint --project ./ \"**/*.+(ts|tsx)\""
+    "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
+    "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\""
 
   }
 

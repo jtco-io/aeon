@@ -12,7 +12,7 @@
 
 
   },
-  "rulesDirectory": ["config"],
+  "rulesDirectory": [],
   "linterOptions": {
    "exclude": [
      "**/node_modules/**"
