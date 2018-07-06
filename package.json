@@ -1,0 +1,23 @@
+{
+  "name": "prion",
+  "author": "Nicholas Romero <ncrmro@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.3.1",
+    "npm": ">=5.6.0"
+  },
+  "version": "0.0.1",
+  "scripts": {
+    "start": "yarn run dev:client:start",
+    "dev:client:start": "cd ./client && yarn run start",
+    "dev:server:start": "webpack --watch --config ./server/webpack.config.js",
+    "prettier": "cd ./client && yarn run prettier fix && yarn run lint",
+    "lint": "cd ./client && yarn run lint",
+    "precommit": "yarn run prettier && yarn run lint"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "husky": "^0.14.3"
+  }
+}
