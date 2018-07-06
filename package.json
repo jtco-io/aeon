@@ -15,8 +15,7 @@
     "lint": "cd ./client && yarn run lint",
     "precommit": "yarn run prettier && yarn run lint"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "husky": "^0.14.3"
   }
