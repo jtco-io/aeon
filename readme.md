@@ -18,9 +18,25 @@ A final ci step in which selenium is automatically ran is also featured.
   * [Client](#client)
     * [react](#sqlite)
     * [webpack](#webpack)
+
 ## Dev
 
 Its a good idea to have docker and node installed.
+
+We use the latest lonterm release of node
+
+`nvm install --lts`
+
+`nvm alias default lts/carbon`
+
+`brew install yarn --without-node`
+
+```
+npm cache clean -f
+npm install -g npm
+ ```
+
+
 
 A first time spin up might look something like this.
 

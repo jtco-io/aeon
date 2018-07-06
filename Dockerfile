@@ -10,7 +10,7 @@ RUN yarn global add serve
 FROM $IMAGE_BASE_CLIENT_BUILDER as client-builder
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
-RUN yarn
+RUN install --production=true
 
 FROM client-builder as client-built
 COPY . .
