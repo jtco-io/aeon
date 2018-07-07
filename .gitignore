@@ -13,3 +13,4 @@ db.sqlite
 *.njsproj
 *.sln
 .env
+build

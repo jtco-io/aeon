@@ -9,6 +9,7 @@
   "version": "0.0.1",
   "scripts": {
     "start": "webpack --watch --config webpack.config.js",
+    "build": "webpack --config webpack.config.js",
     "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
     "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\""
   },

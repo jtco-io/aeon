@@ -1,16 +1,26 @@
 const webpack = require('webpack')
-const path = require('path')
+const {resolve} = require('path')
 
-const DEV = process.env.NODE_ENV !== 'production'
+require('dotenv').config({path: "../.env"})
+console.log('SERVER', process.env)
+
+const serverDir = resolve(__dirname),
+  srcDir = resolve(serverDir, 'src'),
+  buildDir = resolve(serverDir, '..', 'build', 'server')
+
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  DEV = mode !== 'production',
+  PROD = mode === 'production',
+  entry = resolve(srcDir, 'index.ts'),
+  devtool = PROD ? 'cheap-module-source-map' : 'source-map'
 
 module.exports = {
-  bail: !DEV,
-  mode: 'development',
-  devtool: DEV ? 'cheap-module-source-map' : 'source-map',
+  mode,
+  entry,
+  devtool,
   target: 'node',
-  entry: './src/index.ts',
   output: {
-    path: path.resolve(__dirname, 'build/server'),
+    path: buildDir,
     filename: 'bundle.js',
     publicPath: '/',
   },

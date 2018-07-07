@@ -1,23 +1,33 @@
 var webpack = require('webpack')
-var path = require('path')
+var {resolve} = require('path')
 var HTMLPlugin = require('html-webpack-plugin')
 
-require('dotenv').config()
+require('dotenv').config({path: "../.env"})
+console.log('CLIENT', process.env)
 
-const srcDir = path.resolve(__dirname),
-  publicDir = path.resolve(srcDir, 'public'),
-  configDir = path.resolve(srcDir, 'config'),
-  screensDir = path.resolve(srcDir, 'screens'),
-  sharedDir = path.resolve(srcDir, 'shared')
+const clientDir = resolve(__dirname),
+  srcDir = resolve(clientDir, 'src'),
+  buildDir = resolve(clientDir, '..', 'build', 'client'),
+  publicDir = resolve(srcDir, 'public'),
+  configDir = resolve(srcDir, 'config'),
+  screensDir = resolve(srcDir, 'screens'),
+  sharedDir = resolve(srcDir, 'shared')
 
-const mode = process.env.NODE_ENV === 'production' || 'development',
-  entry = path.resolve(srcDir, 'index.tsx'),
-  index = path.resolve(publicDir, 'index.html')
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  DEV = mode !== 'production',
+  PROD = mode === 'production',
+  entry = resolve(srcDir, 'index.tsx'),
+  index = resolve(publicDir, 'index.html')
 
 module.exports = {
   mode,
   entry,
   devtool: 'inline-source-map',
+  output: {
+    path: buildDir,
+    filename: 'bundle.js',
+    publicPath: '/',
+  },
   plugins: [
     new HTMLPlugin({
       inject: true,
