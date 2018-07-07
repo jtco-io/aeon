@@ -9,7 +9,7 @@ const startServer = async () => {
   });
 
   server.listen().then(({ url }: { url: string }) => {
-    console.log(`🚀 apollo server listening at ${url}`);
+    console.log(`apollo server listening at ${url}`);
   });
 };
 

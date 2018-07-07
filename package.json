@@ -8,11 +8,11 @@
   },
   "version": "0.0.1",
   "scripts": {
-    "start": "yarn run dev:client:start && yarn run dev:server:start",
+    "start": "concurrently --kill-others \"yarn run dev:client:start\" \"yarn run dev:server:start\"",
     "build": "yarn run dev:client:build && yarn run dev:server:build",
     "dev:client:start": "cd ./client && yarn run start",
-    "dev:server:start": "cd ./server && yarn run start",
     "dev:client:build": "cd ./client && yarn run build",
+    "dev:server:start": "cd ./server && yarn run start",
     "dev:server:build": "cd ./server && yarn run build",
     "prettier": "cd ./client && yarn run prettier && cd ../server && yarn run prettier",
     "lint": "cd ./client && yarn run lint && cd ../server && yarn run lint",
@@ -21,6 +21,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "husky": "^0.14.3"
+    "concurrently": "^3.6.0",
+    "husky": "^0.14.3",
+    "nodemon": "^1.17.5"
   }
 }

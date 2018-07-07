@@ -3,11 +3,10 @@ var {resolve} = require('path')
 var HTMLPlugin = require('html-webpack-plugin')
 
 require('dotenv').config({path: "../.env"})
-console.log('CLIENT', process.env)
 
 const clientDir = resolve(__dirname),
   srcDir = resolve(clientDir, 'src'),
-  buildDir = resolve(clientDir, '..', 'build', 'client'),
+  buildDir = resolve(clientDir, 'build'),
   publicDir = resolve(srcDir, 'public'),
   configDir = resolve(srcDir, 'config'),
   screensDir = resolve(srcDir, 'screens'),

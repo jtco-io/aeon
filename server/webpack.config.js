@@ -2,11 +2,10 @@ const webpack = require('webpack')
 const {resolve} = require('path')
 
 require('dotenv').config({path: "../.env"})
-console.log('SERVER', process.env)
 
 const serverDir = resolve(__dirname),
   srcDir = resolve(serverDir, 'src'),
-  buildDir = resolve(serverDir, '..', 'build', 'server')
+  buildDir = resolve(serverDir, 'build')
 
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development',
   DEV = mode !== 'production',
@@ -21,7 +20,7 @@ module.exports = {
   target: 'node',
   output: {
     path: buildDir,
-    filename: 'bundle.js',
+    filename: 'index.js',
     publicPath: '/',
   },
   externals: (context, request, callback) => {

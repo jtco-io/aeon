@@ -8,7 +8,9 @@
   },
   "version": "0.0.1",
   "scripts": {
-    "start": "webpack --watch --config webpack.config.js",
+    "start": "concurrently --kill-others \"yarn run dev:webpack\" \"yarn run dev:server\"",
+    "dev:webpack": "webpack --watch --config webpack.config.js",
+    "dev:server": "nodemon ./build",
     "build": "webpack --config webpack.config.js",
     "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
     "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\""
@@ -25,7 +27,9 @@
     "webpack-cli": "^3.0.8"
   },
   "devDependencies": {
+    "concurrently": "^3.6.0",
     "graphql-cli": "2.16.3",
+    "nodemon": "^1.17.5",
     "prettier": "^1.13.7",
     "prettier-tslint": "^0.4.0",
     "ts-node": "6.1.0",

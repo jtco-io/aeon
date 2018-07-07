@@ -1,6 +1,6 @@
 import * as History from "history";
 import Landing from "screens/App/screens/Home/screens/Landing";
-import * as ReactRouter from "react-router"
+import * as ReactRouter from "react-router";
 export const history = History.createBrowserHistory();
 export const routesList: ReactRouter.RouteProps[] = [
   {
