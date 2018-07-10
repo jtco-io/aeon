@@ -10,12 +10,39 @@ A final ci step in which selenium is automatically ran is also featured.
 | Testing           | Jest                                                            | Not just for unit but also runs selenium browser test                               |
 | Node              | Node                                                            | Allows client and server side code to be shared                                     |
 
+* Technologies Used
+  * [yarn](#sqlite)
+  * [Server](#server)
+    * [node](#node)
+    * [sqlite](#sqlite)
+  * [Client](#client)
+    * [react](#sqlite)
+    * [webpack](#webpack)
 
 ## Dev
 
 Its a good idea to have docker and node installed.
 
+We use the latest lonterm release of node
+
+`nvm install --lts`
+
+`nvm alias default lts/carbon`
+
+`brew install yarn --without-node`
+
+```
+npm cache clean -f
+npm install -g npm
+ ```
+
+
+
 A first time spin up might look something like this.
+
+```
+cp .env.sample .env
+```
 
 ```
 yarn d:dev
@@ -28,6 +55,11 @@ This will spin up the following
 * client code development server
 
 Next up we need to tell prisma to turn our graphql schema into a database and run any migration needed.
+
+## Docker
+We use docker and docker-compose throughout the project.
+
+docker images are tagged in the docker compose files using .env file and GITLAB_CI env variables this keeps everything configured through env variables
 
 ```
 yarn d:prisma-deploy

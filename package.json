@@ -1,97 +1,28 @@
 {
-  "name": "react-apollo-instagram-example",
+  "name": "prion",
+  "author": "Nicholas Romero <ncrmro@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.3.1",
+    "npm": ">=5.6.0"
+  },
   "version": "0.0.1",
-  "private": true,
-  "devDependencies": {
-    "babel-eslint": "8.2.3",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "enzyme-to-json": "^3.3.3",
-    "eslint": "^4.19.1",
-    "eslint-config-react-app": "2.1.0",
-    "eslint-plugin-flowtype": "2.46.3",
-    "eslint-plugin-import": "2.11.0",
-    "eslint-plugin-jsx-a11y": "5.1.1",
-    "eslint-plugin-react": "7.7.0",
-    "flow-bin": "^0.71.0",
-    "jwt-decode": "2.2.0",
-    "pre-commit": "^1.2.2",
-    "prettier-eslint-cli": "4.7.1",
-    "react-scripts": "1.1.4"
-  },
-  "dependencies": {
-    "apollo-boost": "^0.1.4",
-    "apollo-client": "2.2.8",
-    "apollo-client-preset": "1.0.8",
-    "apollo-link": "1.2.2",
-    "apollo-link-ws": "1.0.8",
-    "apollo-utilities": "1.0.11",
-    "babel-cli": "6.26.0",
-    "babel-plugin-flow-react-proptypes": "^24.0.0",
-    "eslint-config-prettier": "2.9.0",
-    "eslint-plugin-babel": "4.1.2",
-    "eslint-plugin-prettier": "2.6.0",
-    "graphql": "0.13.2",
-    "graphql-tag": "2.9.1",
-    "react": "16.3.2",
-    "react-apollo": "2.1.3",
-    "react-dom": "16.3.2",
-    "react-modal": "3.4.4",
-    "react-router-dom": "4.2.2",
-    "subscriptions-transport-ws": "0.9.8",
-    "tachyons": "4.9.1"
-  },
   "scripts": {
-    "flow": "flow",
-    "lint": "eslint . --fix",
-    "start": "PORT=5000 react-scripts start",
-    "build": "react-scripts build",
-    "test": "jest",
-    "eject": "react-scripts eject",
-    "prettier": "prettier-eslint --write \"src/**/*.+(js|jsx)\"",
-    "prettier-dry-run": "prettier-eslint \"src/**/*.+(js|jsx)\" -l debug",
-    "dc": "docker-compose -f docker-compose.yml -f ./server/docker-compose.yml",
-    "d:build": "yarn run dc -f ./testing/docker-compose.yml build",
-    "d:prisma-deploy": "yarn run dc -f ./testing/docker-compose.yml exec server yarn prisma deploy",
-    "d:dev": "yarn run dc up",
-    "d:selenium": "yarn run dc -f ./testing/docker-compose.yml up -d firefox chrome selenium_hub",
-    "d:test": "yarn run d:selenium && yarn run dc -f ./testing/docker-compose.yml up --exit-code-from selenium selenium",
-    "d:down": "yarn run dc -f ./testing/docker-compose.yml down",
-    "d:push": "yarn run dc -f ./testing/docker-compose.yml push"
+    "start": "concurrently --kill-others \"yarn run dev:client:start\" \"yarn run dev:server:start\"",
+    "build": "yarn run dev:client:build && yarn run dev:server:build",
+    "dev:client:start": "cd ./client && yarn run start",
+    "dev:client:build": "cd ./client && yarn run build",
+    "dev:server:start": "cd ./server && yarn run start",
+    "dev:server:build": "cd ./server && yarn run build",
+    "prettier": "cd ./client && yarn run prettier && cd ../server && yarn run prettier",
+    "lint": "cd ./client && yarn run lint && cd ../server && yarn run lint",
+    "precommit": "yarn run prettier && yarn run lint",
+    "prepush": "yarn run precommit"
   },
-  "pre-commit": [
-    "prettier",
-    "lint",
-    "flow",
-    "test"
-  ],
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
-  },
-  "jest": {
-    "setupFiles": [
-      "./jestSetup.js"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
-  },
-  "babel": {
-    "plugins": [],
-    "presets": [
-      [
-        "env",
-        {
-          "targets": {
-            "browsers": [
-              "last 2 Chrome versions"
-            ]
-          }
-        }
-      ],
-      "react"
-    ]
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^3.6.0",
+    "husky": "^0.14.3",
+    "nodemon": "^1.17.5"
   }
 }

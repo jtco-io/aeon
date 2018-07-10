@@ -1,4 +1,4 @@
-ARG IMAGE=node:9.6.1-alpine
+ARG IMAGE=node:10.2.1-alpine
 ARG IMAGE_BASE_CLIENT_SERVER=$IMAGE
 ARG IMAGE_BASE_CLIENT_BUILDER=$IMAGE
 ARG REACT_APP_GRAPHQL_URL=server:4000
@@ -10,7 +10,7 @@ RUN yarn global add serve
 FROM $IMAGE_BASE_CLIENT_BUILDER as client-builder
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
-RUN yarn
+RUN install --production=true
 
 FROM client-builder as client-built
 COPY . .
