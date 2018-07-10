@@ -18,6 +18,7 @@ export const typeDefs = gql`
   }
 
   type Query {
+    helloWorld: String!
     books: [Book]
     searchMovies(query: String!): [Movie]
     getMovie(movieId: Int!): Movie!

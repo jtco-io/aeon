@@ -9,8 +9,9 @@ const books = [
   },
 ];
 
-export const resolvers = {
+const resolvers = {
   Query: {
+    helloWorld: () => "Hello World!",
     books: () => books,
 
     getMovie: async (obj, { movieId }, { dataSources: { theMovieDbApi } }) =>
@@ -20,3 +21,5 @@ export const resolvers = {
       theMovieDbApi.searchMovies(query),
   },
 };
+
+export default resolvers;
