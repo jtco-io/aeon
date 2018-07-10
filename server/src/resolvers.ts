@@ -11,7 +11,7 @@ const books = [
 
 const resolvers = {
   Query: {
-    helloWorld: () => "Hello World!",
+    helloWorld: () => "Hello World from the GraphQL Server!",
     books: () => books,
 
     getMovie: async (obj, { movieId }, { dataSources: { theMovieDbApi } }) =>
