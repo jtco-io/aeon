@@ -6,6 +6,8 @@
   "jsRules": {},
   "rules": {
     "ter-arrow-parens": false,
+    "ter-prefer-arrow-callback": false,
+    "space-before-function-paren": false,
     "quotemark": false,
     "prefer-const": false,
     "no-parameter-reassignment": false

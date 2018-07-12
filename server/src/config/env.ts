@@ -7,3 +7,5 @@ declare const process: {
 
 export const THE_MOVIE_DB_API_KEY = process.env.THE_MOVIE_DB_API_KEY;
 export const THE_MOVIE_DB_BASE_URL = process.env.THE_MOVIE_DB_BASE_URL;
+
+export default process.env;
