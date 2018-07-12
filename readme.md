@@ -19,11 +19,26 @@ A final ci step in which selenium is automatically ran is also featured.
     * [react](#sqlite)
     * [webpack](#webpack)
 
-## Dev
+## Dev Setup
 
-Its a good idea to have docker and node installed.
+### NVM Instilation
+`brew update && brew install nvm`
 
-We use the latest lonterm release of node
+`mkdir ~/.nvm`
+Open .bash_profile and add the NVM environment variables
+`nano ~/.bash_profile`
+
+```
+export NVM_DIR=~/.nvm
+```
+
+`export NVM_DIR=~/.nvm`
+`source $(brew --prefix nvm)/nvm.sh`
+`source ~/.bash_profile`
+`echo $NVM_DIR`
+
+### Node & Yarn
+Now that we have NVM installed we can install the latest LTS version of Node.JS
 
 `nvm install --lts`
 
@@ -36,7 +51,7 @@ npm cache clean -f
 npm install -g npm
  ```
 
-
+### Development
 
 A first time spin up might look something like this.
 
@@ -45,21 +60,13 @@ cp .env.sample .env
 ```
 
 ```
-yarn d:dev
+yarn run start
 ```
 
 This will spin up the following
-* postgres database
-* prisma graphql api
 * server with our tasks and serving final graphql endpoint
 * client code development server
 
-Next up we need to tell prisma to turn our graphql schema into a database and run any migration needed.
-
-## Docker
-We use docker and docker-compose throughout the project.
-
-docker images are tagged in the docker compose files using .env file and GITLAB_CI env variables this keeps everything configured through env variables
 
 ```
 yarn d:prisma-deploy
@@ -75,19 +82,3 @@ Code is quickly checked pre commit and more extensively testing during CI.
 
 ### CI
 The first CI stage will run the same commands as pre-commit, while the second stage runs selenium test.
-
-#### Building cached base images
-
-Export lines in .env file to a single command.
-
-```
-sh -ac ' . ./.env ; printenv'
-```
-
-Build the base versions of each base image to cache any commands such a yarn install ommiting the image will make the build step revert to default node docker image.
-
-```
-sh -ac ' . ./.env ; docker build --target client-builder -t $IMAGE_BASE_CLIENT_SERVER . && docker push $IMAGE_BASE_CLIENT_SERVER'
-sh -ac ' . ./.env ; docker build --target client-server -t $IMAGE_BASE_CLIENT_BUILDER . && docker push $IMAGE_BASE_CLIENT_BUILDER'
-sh -ac ' . ./.env ; docker build --target client -t $REPO . && docker push $REPO'
-```
