@@ -17,7 +17,7 @@ class HelloWorld extends React.Component<any, any> {
   }
 
   public render(): any {
-    return <Query query={HELLO_WORLD}>{this.queryCb()}</Query>;
+    return <Query query={HELLO_WORLD}>{cb => this.queryCb(cb)}</Query>;
   }
 }
 
