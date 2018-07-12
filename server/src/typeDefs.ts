@@ -6,21 +6,15 @@ export const typeDefs = gql`
     author: String
   }
 
-  type Movie {
-    id: Int!
-    original_title: String!
-    budget: Int
-    overview: String
-    popularity: Float
-    poster_path: String
-    release_date: String
-    vote_count: Float
+  type User {
+    username: String
+    email: String
+    name: String
   }
 
   type Query {
     helloWorld: String!
     books: [Book]
-    searchMovies(query: String!): [Movie]
-    getMovie(movieId: Int!): Movie!
+    users: [User]
   }
 `;
