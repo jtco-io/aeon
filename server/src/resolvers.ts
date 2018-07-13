@@ -14,7 +14,17 @@ const resolvers = {
   Query: {
     helloWorld: () => "Hello World from the GraphQL Server!",
     books: () => books,
-    users: () => Users.fetchAll(),
+    users: async () => {
+      return Users.fetchAll ().then (collection=> {
+        console.log (collection)
+        const users = []
+        collection.map ((user) => {
+          console.log (user.attributes)
+          users.push (user.attributes)
+        })
+        return users
+      })
+    },
   },
 };
 
