@@ -17,7 +17,7 @@ class Navbar extends React.Component<PageProps, {}> {
         href: "/",
       },
       {
-        name: "Contactasdfasdf",
+        name: "Contact",
         href: "/contact",
       },
       {

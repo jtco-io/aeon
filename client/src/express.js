@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 //const initializeQqlServer = require('./server/src/index.ts');
 const app = express();
+const port = process.env.PORT || 8080
+app.set('port', port);
 
 if (process.env.NODE_ENV !== "production") {
   const webpack = require("webpack");

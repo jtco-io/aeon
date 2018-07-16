@@ -52,7 +52,7 @@
     "typescript": "~2.8.3"
   },
   "scripts": {
-    "start": "node ./src/express.js",
+    "start": "NODE_ENV=development node ./src/express.js",
     "build": "NODE_ENV=production webpack --config webpack.config.js",
     "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
     "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\""

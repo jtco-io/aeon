@@ -30,8 +30,15 @@ module.exports = [
     name: 'client',
     target: 'web',
     mode,
-    entry: resolve(clientSrc, 'index.tsx'),
+    entry: [
+      'react-hot-loader/patch',
+      'webpack-hot-middleware/client',
+      resolve(clientSrc, 'index.tsx')
+    ],
     devtool: 'inline-source-map',
+    devServer: {
+      hot: true
+    },
     output: {
       path: buildDir,
       filename: 'client.js'
@@ -44,6 +51,16 @@ module.exports = [
       new webpack.DefinePlugin({
         GRAPHQL_URL: JSON.stringify(process.env.GRAPHQL_URL),
       }),
+      new webpack.DefinePlugin({
+        // prettier-ignore
+        'process.env.NODE_ENV': JSON.stringify(DEV ? 'development' : 'production')
+      }),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1
+      }),
+      new webpack.NamedModulesPlugin()
     ],
     module: {
       rules: [
@@ -102,6 +119,13 @@ module.exports = [
         // prettier-ignore
         'process.env.NODE_ENV': JSON.stringify(DEV ? 'development' : 'production')
       }),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1
+      }),
+      new webpack.NamedModulesPlugin()
+
     ],
     node: {
       console: false,
