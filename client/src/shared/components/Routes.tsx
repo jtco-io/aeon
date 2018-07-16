@@ -1,5 +1,4 @@
-import { history, routesList } from "config/routes";
-import createBrowserHistory from "history/createBrowserHistory";
+import { routesList } from "config/routes";
 import * as React from "react";
 import { Route, RouteProps, Router, Switch } from "react-router";
 
@@ -8,8 +7,10 @@ import { Route, RouteProps, Router, Switch } from "react-router";
  * Each route is maped inside of a switch
  * That is mounter inside router component with history object
  */
-class Routes extends React.Component<RouteProps, {}> {
+class Routes extends React.Component<any, any> {
   public render(): JSX.Element {
+    const { history, routesList } = this.props;
+
     return (
       <Router history={history}>
         <Switch>
