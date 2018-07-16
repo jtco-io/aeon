@@ -16,12 +16,40 @@ const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development
   PROD = mode === 'production'
 
 
-const
+let
   alias = {
     config: resolve(clientSrc, 'config'),
     screens: resolve(clientSrc, 'screens'),
     shared: resolve(clientSrc, 'shared'),
     publicDir: resolve(clientSrc, 'public')
+  },
+  plugins = [
+    new webpack.DefinePlugin({
+      // prettier-ignore
+      'process.env.NODE_ENV': JSON.stringify(DEV ? 'development' : 'production')
+    })
+  ],
+  moduleRules = {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      }
+    ],
+  },
+  optimization = {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          chunks: 'initial',
+          name: 'vendor',
+          test: 'vendor',
+          enforce: true
+        }
+      }
+    },
+    runtimeChunk: true
   }
 
 module.exports = [
@@ -29,11 +57,14 @@ module.exports = [
     name: 'client',
     target: 'web',
     mode,
-    entry: [
-      'react-hot-loader/patch',
-      'webpack-hot-middleware/client',
-      resolve(clientSrc, 'index.tsx')
-    ],
+    entry: {
+      vendor: ['react', 'react-dom'],
+      client: [
+        'react-hot-loader/patch',
+        'webpack-hot-middleware/client',
+        resolve(clientSrc, 'index.tsx')
+      ]
+    },
     devtool: 'inline-source-map',
     devServer: {
       hot: true
@@ -42,6 +73,7 @@ module.exports = [
       path: buildDir,
       filename: 'client.js'
     },
+    optimization,
     plugins: [
       new HTMLPlugin({
         inject: true,
@@ -50,34 +82,10 @@ module.exports = [
       new webpack.DefinePlugin({
         GRAPHQL_URL: JSON.stringify(process.env.GRAPHQL_URL),
       }),
-      new webpack.DefinePlugin({
-        // prettier-ignore
-        'process.env.NODE_ENV': JSON.stringify(DEV ? 'development' : 'production')
-      }),
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoEmitOnErrorsPlugin(),
-      new webpack.optimize.LimitChunkCountPlugin({
-        maxChunks: 1
-      }),
-      new webpack.NamedModulesPlugin()
+      ...plugins
     ],
-    module: {
-      rules: [
-        {
-          test: /\.tsx?$/,
-          use: [
-            {
-              loader: 'babel-loader',
-              options: {
-                babelrc: false,
-                plugins: ['react-hot-loader/babel'],
-              },
-            },
-            'ts-loader', // (or awesome-typescript-loader)
-          ]
-        },
-      ],
-    },
+    module: moduleRules,
     resolve: {
       extensions: ['.js', '.ts', '.tsx'],
       alias,
@@ -100,32 +108,15 @@ module.exports = [
       }
       callback()
     },
-    module: {
-      rules: [
-        {
-          test: /\.tsx?$/,
-          use: 'ts-loader',
-          exclude: /node_modules/,
-        }
-      ],
-    },
+    module: moduleRules,
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      ...plugins
+    ],
     resolve: {
       extensions: ['.js', '.ts', '.tsx'],
       alias
     },
-    plugins: [
-      new webpack.DefinePlugin({
-        // prettier-ignore
-        'process.env.NODE_ENV': JSON.stringify(DEV ? 'development' : 'production')
-      }),
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoEmitOnErrorsPlugin(),
-      new webpack.optimize.LimitChunkCountPlugin({
-        maxChunks: 1
-      }),
-      new webpack.NamedModulesPlugin()
-
-    ],
     node: {
       console: false,
       global: false,
