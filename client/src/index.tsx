@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import apolloClient from "./config/apolloClient";
-import Root from "./Root";
+import apolloClient from "config/apolloClient";
+import Root from "shared/components/Root";
 import { AppContainer } from "react-hot-loader";
 
 ReactDOM.render(
@@ -12,8 +12,8 @@ ReactDOM.render(
 );
 
 if ((module as any).hot) {
-  (module as any).hot.accept("./Root", () => {
-    const NEXT_ROOT = require("./Root").default;
+  (module as any).hot.accept("shared/components/Root", () => {
+    const NEXT_ROOT = require("shared/components/Root").default;
     ReactDOM.render(
       <AppContainer>
         <NEXT_ROOT apolloClient={apolloClient} />

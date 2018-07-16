@@ -24,7 +24,6 @@ const
     publicDir: resolve(clientSrc, 'public')
   }
 
-console.log(alias)
 module.exports = [
   {
     name: 'client',
