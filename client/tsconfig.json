@@ -13,13 +13,13 @@
     "baseUrl": "./src",
     "paths": {
       "config": [
-        "./src/config"
+        "./config"
       ],
       "screens": [
         "./src/screens"
       ],
       "components": [
-        "./src//screens/App/components"
+        "./screens/App/components"
       ]
     }
   },

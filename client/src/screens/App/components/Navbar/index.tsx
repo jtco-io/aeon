@@ -14,15 +14,19 @@ class Navbar extends React.Component<PageProps, {}> {
     routes: [
       {
         name: "Home",
-        href: "default.asp",
+        href: "/",
       },
       {
-        name: "Contact",
-        href: "contact.asp",
+        name: "Contactasdfasdf",
+        href: "/contact",
       },
       {
         name: "About",
-        href: "about.asp",
+        href: "/about",
+      },
+      {
+        name: "Admin",
+        href: "/admin",
       },
     ],
   };
