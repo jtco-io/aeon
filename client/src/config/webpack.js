@@ -15,7 +15,6 @@ const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development
   DEV = mode !== 'production',
   PROD = mode === 'production'
 
-console.log(resolve(clientSrc, 'config'))
 let
   alias = {
     config: resolve(clientSrc, 'config'),
@@ -65,7 +64,7 @@ module.exports = [
         resolve(clientSrc, 'index.tsx')
       ]
     },
-    devtool: 'inline-source-map',
+    devtool: DEV ? 'cheap-module-source-map' : 'source-map',
     devServer: {
       hot: true
     },
