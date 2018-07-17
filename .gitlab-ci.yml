@@ -19,5 +19,5 @@ test_whitebox:
    - cd ../
   script:
    - yarn run lint
-   after_script:
+  after_script:
    - echo 'Prion brought to you by JTCO and JTX'
