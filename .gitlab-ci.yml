@@ -17,5 +17,7 @@ test_whitebox:
    - cd ./client && yarn install
    - cd ../server && yarn install
    - cd ../
+  after_script:
+     - yarn run lint
   script:
-   - echo 'JTX'
+   - echo 'Prion'
