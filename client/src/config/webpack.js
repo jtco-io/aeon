@@ -15,7 +15,7 @@ const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development
   DEV = mode !== 'production',
   PROD = mode === 'production'
 
-
+console.log(resolve(clientSrc, 'config'))
 let
   alias = {
     config: resolve(clientSrc, 'config'),
@@ -24,8 +24,8 @@ let
     publicDir: resolve(clientSrc, 'public')
   },
   plugins = [
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      // prettier-ignore
       'process.env.NODE_ENV': JSON.stringify(DEV ? 'development' : 'production')
     })
   ],
@@ -58,7 +58,7 @@ module.exports = [
     target: 'web',
     mode,
     entry: {
-      vendor: ['react', 'react-dom'],
+      vendor: ['react', 'react-dom', 'apollo-boost', 'history', 'react-router'],
       client: [
         'react-hot-loader/patch',
         'webpack-hot-middleware/client',
@@ -75,14 +75,9 @@ module.exports = [
     },
     optimization,
     plugins: [
-      new HTMLPlugin({
-        inject: true,
-        template: clientIndex,
-      }),
       new webpack.DefinePlugin({
         GRAPHQL_URL: JSON.stringify(process.env.GRAPHQL_URL),
       }),
-      new webpack.HotModuleReplacementPlugin(),
       ...plugins
     ],
     module: moduleRules,
@@ -95,11 +90,12 @@ module.exports = [
     name: 'server',
     target: 'node',
     mode,
-    entry: resolve(clientSrc, 'serve.js'),
+    entry: resolve(clientSrc, 'serve.tsx'),
     devtool: PROD ? 'cheap-module-source-map' : 'source-map',
     output: {
       path: buildDir,
-      filename: 'server.js'
+      filename: 'server.js',
+      libraryTarget: 'commonjs2'
     },
     externals: (context, request, callback) => {
       // Externalize all npm modules.
@@ -110,7 +106,6 @@ module.exports = [
     },
     module: moduleRules,
     plugins: [
-      new webpack.HotModuleReplacementPlugin(),
       ...plugins
     ],
     resolve: {

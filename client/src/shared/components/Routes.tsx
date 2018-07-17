@@ -1,20 +1,31 @@
-import { routesList } from "config/routes";
 import * as React from "react";
-import { Route, RouteProps, Router, Switch } from "react-router";
+import { Route, RouteProps, Router, Switch, StaticRouter } from "react-router";
 
+class RouteStatus extends React.Component<any, any> {
+  public render(): JSX.Element {
+    return <p>Static context: {JSON.stringify(this.props.staticContext)}</p>;
+  }
+}
+
+class PrintContext extends React.Component<any, any> {
+  public render(): JSX.Element {
+    return <p>Static context: {JSON.stringify(this.props.staticContext)}</p>;
+  }
+}
 /**
  * Used to mount routes from the routes.tsx file in config
  * Each route is maped inside of a switch
  * That is mounter inside router component with history object
  */
-class Routes extends React.Component<any, any> {
+
+class routes extends React.Component<any, any> {
   public render(): JSX.Element {
-    const { history, routesList } = this.props;
+    const { location, history, routes } = this.props;
 
     return (
-      <Router history={history}>
+      <StaticRouter location={location} context={{}}>
         <Switch>
-          {routesList.map((route: RouteProps, i: number) => (
+          {routes.map((route: RouteProps, i: number) => (
             <Route
               key={i}
               exact
@@ -22,10 +33,14 @@ class Routes extends React.Component<any, any> {
               component={route.component}
             />
           ))}
+          <RouteStatus statusCode={404}>
+            <p>Route with statusCode 404</p>
+            <PrintContext staticContext={{}} />
+          </RouteStatus>
         </Switch>
-      </Router>
+      </StaticRouter>
     );
   }
 }
 
-export default Routes;
+export default routes;

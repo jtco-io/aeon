@@ -1,21 +1,28 @@
-const express = require("express");
-const path = require("path");
+const
+  fallback = require('express-history-api-fallback'),
+  express = require("express"),
+  path = require("path");
+
 //const initializeQqlServer = require('./server/src/index.ts');
 const app = express();
 const port = process.env.PORT || 8080
 app.set('port', port);
 
 if (process.env.NODE_ENV !== "production") {
-  const webpack = require("webpack");
-  const webpackDevMiddleware = require("webpack-dev-middleware");
-  const webpackHotMiddleware = require("webpack-hot-middleware");
-  const webpackHotServerMiddleware = require("webpack-hot-server-middleware");
-  const config = require("./config/webpack.js");
+  const
+    webpack = require("webpack"),
+    webpackDevMiddleware = require("webpack-dev-middleware"),
+    webpackHotMiddleware = require("webpack-hot-middleware"),
+    webpackHotServerMiddleware = require("webpack-hot-server-middleware"),
+    config = require("./config/webpack.js")
+
   const compiler = webpack(config);
 
   app.use(
     webpackDevMiddleware(compiler, {
-      serverSideRender: true
+      serverSideRender: true,
+      publicPath: '/',
+      stats: 'minimal'
     })
   );
   app.use(
@@ -24,6 +31,9 @@ if (process.env.NODE_ENV !== "production") {
     )
   );
   app.use(webpackHotServerMiddleware(compiler));
+  app.use(express.static('public'));
+
+
   //app = initializeQqlServer(app)
   // gql server
 } else {
@@ -36,4 +46,5 @@ if (process.env.NODE_ENV !== "production") {
   app.use(serverRenderer(stats));
 }
 
+app.use(fallback('index.html'))
 app.listen(8080);
