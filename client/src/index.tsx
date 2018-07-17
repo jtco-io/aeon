@@ -6,24 +6,26 @@ import { routes, apolloClient } from "config";
 import Root from "shared/components/Root";
 
 const props = {
-  apolloClient, history, routes
-}
+  apolloClient,
+  history,
+  routes,
+};
 
-hydrate (
+hydrate(
   <AppContainer>
     <Root {...props} />
   </AppContainer>,
-  document.getElementById ("content"),
+  document.getElementById("content"),
 );
 
 if ((module as any).hot) {
-  (module as any).hot.accept ("shared/components/Root", () => {
-    const NEXT_ROOT = require ("shared/components/Root").default;
-    hydrate (
+  (module as any).hot.accept("shared/components/Root", () => {
+    const NEXT_ROOT = require("shared/components/Root").default;
+    hydrate(
       <AppContainer>
         <NEXT_ROOT {...props} />
       </AppContainer>,
-      document.getElementById ("root"),
+      document.getElementById("root"),
     );
   });
 }
