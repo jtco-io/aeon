@@ -65,6 +65,7 @@
     "build": "NODE_ENV=production webpack --config webpack.config.js",
     "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
     "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\"",
-    "precommit": "yarn run prettier && yarn run lint"
+    "precommit": "yarn run prettier && yarn run lint",
+    "prepush": "yarn run lint"
   }
 }
