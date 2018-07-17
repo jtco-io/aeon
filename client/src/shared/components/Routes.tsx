@@ -20,10 +20,10 @@ class PrintContext extends React.Component<any, any> {
 
 class routes extends React.Component<any, any> {
   public render(): JSX.Element {
-    const { location, history, routes } = this.props;
+    const { location, history, routes, context } = this.props;
 
     return (
-      <StaticRouter location={location} context={{}}>
+      <StaticRouter location={location} context={context}>
         <Switch>
           {routes.map((route: RouteProps, i: number) => (
             <Route

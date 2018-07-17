@@ -1,7 +1,11 @@
 import * as React from "react";
-import * as ReactDom from "react-dom/server";
-import { ApolloProvider } from "react-apollo";
-import { apolloClient, routes } from "./config";
+import * as ReactDOM from "react-dom/server";
+import fetch from "cross-fetch";
+import { ApolloClient } from "apollo-client";
+import { ApolloProvider, renderToStringWithData } from "react-apollo";
+import { routes } from "./config";
+import { HttpLink, createHttpLink } from "apollo-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
 
 // <ApolloProvider client={apolloClient} >
 //
@@ -12,19 +16,44 @@ import Html from "shared/components/Html";
 import Root from "shared/components/Root";
 import Routes from "shared/components/Routes";
 
-export default ({ clientStats }: any): any => {
-  // console.log (clientStats)
-  return (req: any, res: any, next: any): any => {
-    const url = req.url;
-    const markup = ReactDom.renderToStaticMarkup(
-      <Html>
-        <h1>Prion</h1>
-        <ApolloProvider client={apolloClient}>
-          <Routes location={url} routes={routes} />
-        </ApolloProvider>
-      </Html>,
-    );
+const uri = "http://localhost:4000/graphql";
+export const apolloClient = new ApolloClient ({
+  ssrMode: true,
+  link: createHttpLink ({
+    uri,
+    fetch,
+    credentials: "same-origin",
 
-    res.send(`<!doctype html>${markup}`);
-  };
+  }),
+  cache: new InMemoryCache (),
+});
+
+export default ({ clientStats }: any):any => {
+  // console.log (clientStats)
+  const context:any = {};
+
+
+  return (req:any, res:any, next:any):any => {
+    const component = (
+      <ApolloProvider client={apolloClient}>
+        <Routes location={req.url} routes={routes} context={context}/>
+      </ApolloProvider>
+    );
+    renderToStringWithData (component)
+      .then (content => {
+        res.status (200);
+        const html = <Html content={content} apolloClient={apolloClient}/>;
+        res.send (`<!doctype html>\n${ReactDOM.renderToStaticMarkup (html)}`);
+        res.end ();
+      }).catch (e => {
+      console.error ('RENDERING ERROR:', e); // eslint-disable-line no-console
+      res.status (500);
+      res.end (
+        `An error occurred.:\n\n${e.stack}`
+      );
+    });
+
+
+  }
+
 };
