@@ -3,7 +3,7 @@ import * as ReactRouterDom from "react-router-dom";
 import { ApolloProvider } from "react-apollo";
 import Routes from "shared/components/Routes";
 import { routesList } from "../../config/routes";
-import { hot } from 'react-hot-loader';
+import { hot } from "react-hot-loader";
 
 interface RootProps {
   apolloClient: any;
