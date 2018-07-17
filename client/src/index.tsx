@@ -1,30 +1,26 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { hydrate } from "react-dom";
 import apolloClient from "config/apolloClient";
 import Root from "shared/components/Root";
 import { AppContainer } from "react-hot-loader";
 import { history, routesList } from "config/routes";
 
-ReactDOM.render(
+hydrate(
   <AppContainer>
-    <Root
-      apolloClient={apolloClient}
-      history={history}
-      routesList={routesList}
-    />
+    <Root apolloClient={apolloClient} history={history} routes={routesList} />
   </AppContainer>,
-  document.getElementById("root"),
+  document.getElementById("content"),
 );
 
 if ((module as any).hot) {
   (module as any).hot.accept("shared/components/Root", () => {
     const NEXT_ROOT = require("shared/components/Root").default;
-    ReactDOM.render(
+    hydrate(
       <AppContainer>
         <NEXT_ROOT
           apolloClient={apolloClient}
           history={history}
-          routesList={routesList}
+          routes={routesList}
         />
       </AppContainer>,
       document.getElementById("root"),

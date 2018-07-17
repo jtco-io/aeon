@@ -22,7 +22,7 @@ if (process.env.NODE_ENV !== "production") {
     webpackDevMiddleware(compiler, {
       serverSideRender: true,
       publicPath: '/',
-      stats: 'minimal'
+      //stats: 'minimal'
     })
   );
   app.use(
@@ -31,7 +31,6 @@ if (process.env.NODE_ENV !== "production") {
     )
   );
   app.use(webpackHotServerMiddleware(compiler));
-  app.use(express.static('public'));
 
 
   //app = initializeQqlServer(app)

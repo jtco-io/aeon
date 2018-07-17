@@ -4,14 +4,14 @@ import Routes from "shared/components/Routes";
 import { routesList } from "../../config/routes";
 
 class Root extends React.Component<
-  { apolloClient: any; history: any; routesList: any },
+  { apolloClient: any; history: any; routes: any },
   any
 > {
   public render(): JSX.Element {
-    const { apolloClient, history, routesList } = this.props;
+    const { apolloClient, history, routes } = this.props;
     return (
       <ApolloProvider client={apolloClient}>
-        <Routes history={history} routesList={routesList} />
+        <Routes history={history} routes={routes} />
       </ApolloProvider>
     );
   }
