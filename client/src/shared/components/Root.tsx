@@ -3,6 +3,7 @@ import * as ReactRouterDom from "react-router-dom";
 import { ApolloProvider } from "react-apollo";
 import Routes from "shared/components/Routes";
 import { routesList } from "../../config/routes";
+import { hot } from 'react-hot-loader';
 
 interface RootProps {
   apolloClient: any;
@@ -21,4 +22,4 @@ class Root extends React.Component<RootProps, any> {
     );
   }
 }
-export default Root;
+export default hot(module)(Root);
