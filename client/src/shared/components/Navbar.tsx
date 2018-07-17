@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from 'react-router-dom'
 
 interface Route {
   name: string;
@@ -36,7 +37,7 @@ class Navbar extends React.Component<PageProps, {}> {
 
     return routes.map((route: Route, index: number) => (
       <li key={index}>
-        <a href={route.href}>{route.name}</a>
+        <Link to={route.href}>{route.name}</Link>
       </li>
     ));
   }
