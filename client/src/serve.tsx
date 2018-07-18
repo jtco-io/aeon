@@ -10,7 +10,10 @@ import { Route, RouteProps, Router, Switch, StaticRouter } from "react-router";
 import Html from "shared/components/Html";
 import Root from "shared/components/Root";
 
-const uri = "http://localhost:4000/graphql";
+const GRAPHQL_SERVER_HOST = process.env.SERVER_HOST || "localhost",
+  GRAPHQL_SERVER_PORT = process.env.SERVER_PORT || 4000,
+  uri = `http://${GRAPHQL_SERVER_HOST}:${GRAPHQL_SERVER_PORT}/graphql`;
+
 const apolloClient = new ApolloClient({
   ssrMode: true,
   link: createHttpLink({
