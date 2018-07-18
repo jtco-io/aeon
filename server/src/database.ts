@@ -15,16 +15,16 @@ export default class Database {
       );
     }
 
-    this.knex = Knex({
+    this.knex = knex({
       client: "sqlite3",
       connection: {
         filename: "./db.sqlite",
       },
     });
 
-    this.bookshelf = Bookshelf(this._knex);
+    this.bookshelf = bookshelf(this.knex);
 
-    Database.instance = this;
+    bookshelf.instance = this;
   }
 
   public static getInstance(): Database {

@@ -1,12 +1,23 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as ReactRouterDom from "react-router-dom";
+import { Router } from "react-router";
+import * as History from "history";
+import createBrowserHistory from "history/createBrowserHistory";
 import { ApolloProvider } from "react-apollo";
-import apolloClient from "config/apolloClient";
-import App from "screens/App";
+import { hydrate } from "react-dom";
+import { apolloClient } from "config";
+import Root from "shared/components/Root";
 
-ReactDOM.render(
-  <ApolloProvider client={apolloClient}>
-    <App />
+const props = {
+  apolloClient,
+  history: createBrowserHistory(),
+};
+
+hydrate(
+  <ApolloProvider client={props.apolloClient}>
+    <ReactRouterDom.Router history={props.history as any}>
+      <Root />
+    </ReactRouterDom.Router>
   </ApolloProvider>,
-  document.getElementById("root"),
+  document.getElementById("content"),
 );

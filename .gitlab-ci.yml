@@ -2,34 +2,23 @@ variables:
   DOCKER_DRIVER: overlay2
 
 stages:
-  - fast_test
-  - build_test_deploy
+  - test_whitebox
 
-fasttest:
-  stage: fast_test
-  image: node:latest
-  # This folder is cached between builds
-  # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+test_whitebox:
+  stage: test_whitebox
+  image: node:carbon
   cache:
     paths:
     - node_modules/
+    - server/node_modules/
+    - client/node_modules/
   before_script:
-   - ls ./
-  script:
    - yarn install
-   - yarn run lint
-   - yarn run flow check
-   - yarn run test
-
-build_test_deploy:
-  stage: build_test_deploy
-  image: ncrmro/ci-compose:latest
-  services:
-    - docker:dind
-  variables:
-    IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-  before_script:
-    - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    - yarn run d:build
+   - cd ./client && yarn install
+   - cd ../server && yarn install
+   - cd ../
   script:
-     - yarn run d:test
+   - yarn run lint
+  after_script:
+   - echo 'Prion brought to you by JTCO and JTX'
+   - echo 'To see more check out jtco.io and jtronics.exchange'
