@@ -56,7 +56,7 @@ module.exports = [
     target: 'web',
     mode,
     entry: {
-      vendor: ['react', 'react-dom', 'apollo-boost', 'history', 'react-router'],
+      vendor: ['react', 'react-dom', 'history', 'react-router'],
       client: [
         'react-hot-loader/patch',
         'webpack-hot-middleware/client',

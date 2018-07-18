@@ -1,9 +1,7 @@
 import * as React from "react";
 import Navbar from "shared/components/Navbar";
 
-interface LayoutProps {
-
-}
+interface LayoutProps {}
 class Layout extends React.Component<LayoutProps, any> {
   public render(): JSX.Element {
     return (
