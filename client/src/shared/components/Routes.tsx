@@ -20,8 +20,9 @@ class PrintContext extends React.Component<any, any> {
  */
 
 interface RoutesProps {
-  children: any;
+  children?: any;
   routes: any;
+  context?: any;
 }
 class Routes extends React.Component<RoutesProps, any> {
   renderRoutes() {

@@ -18,7 +18,7 @@ class Html extends React.Component<any, {}> {
           <script
             dangerouslySetInnerHTML={{
               __html: `window.__APOLLO_STATE__=${JSON.stringify(
-                apolloClient.extract()
+                apolloClient.extract(),
               )};`,
             }}
           />
