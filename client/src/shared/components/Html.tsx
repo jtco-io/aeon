@@ -1,6 +1,4 @@
 import * as React from "react";
-import { ApolloProvider } from "react-apollo";
-import Routes from "shared/components/Routes";
 
 interface HtmlProps {
   content: any;

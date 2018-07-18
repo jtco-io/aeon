@@ -1,29 +1,23 @@
 import * as React from "react";
+import * as ReactRouterDom from "react-router-dom";
+import { Router } from "react-router";
+import * as History from "history";
+import createBrowserHistory from "history/createBrowserHistory";
+import { ApolloProvider } from "react-apollo";
 import { hydrate } from "react-dom";
-import apolloClient from "config/apolloClient";
+import { apolloClient } from "config";
 import Root from "shared/components/Root";
-import { AppContainer } from "react-hot-loader";
-import { history, routesList } from "config/routes";
+
+const props = {
+  apolloClient,
+  history: createBrowserHistory(),
+};
 
 hydrate(
-  <AppContainer>
-    <Root apolloClient={apolloClient} history={history} routes={routesList} />
-  </AppContainer>,
+  <ApolloProvider client={props.apolloClient}>
+    <ReactRouterDom.Router history={props.history as any}>
+      <Root />
+    </ReactRouterDom.Router>
+  </ApolloProvider>,
   document.getElementById("content"),
 );
-
-if ((module as any).hot) {
-  (module as any).hot.accept("shared/components/Root", () => {
-    const NEXT_ROOT = require("shared/components/Root").default;
-    hydrate(
-      <AppContainer>
-        <NEXT_ROOT
-          apolloClient={apolloClient}
-          history={history}
-          routes={routesList}
-        />
-      </AppContainer>,
-      document.getElementById("root"),
-    );
-  });
-}

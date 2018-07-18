@@ -18,4 +18,7 @@ test_whitebox:
    - cd ../server && yarn install
    - cd ../
   script:
-   - echo 'JTX'
+   - yarn run lint
+  after_script:
+   - echo 'Prion brought to you by JTCO and JTX'
+   - echo 'To see more check out jtco.io and jtronics.exchange'

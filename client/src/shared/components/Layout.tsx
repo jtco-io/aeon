@@ -1,8 +1,9 @@
 import * as React from "react";
 import Navbar from "shared/components/Navbar";
 
-class Layout extends React.Component<any, any> {
-  public render(): any {
+interface LayoutProps {}
+class Layout extends React.Component<LayoutProps, any> {
+  public render(): JSX.Element {
     return (
       <div>
         <Navbar />
