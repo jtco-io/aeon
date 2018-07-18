@@ -1,14 +1,22 @@
+const {resolve, join} = require('path')
+
+const
+  srcDir = resolve(__dirname),
+  projRoot = resolve(srcDir, "..", ".."),
+  envFile = resolve(projRoot, ".env")
+
+require('dotenv').config({path: envFile})
+
+const
+  port = process.env.CLIENT_PORT || 8080,
+  PROD = process.env.NODE_ENV === "production"
+
 const
   fallback = require('express-history-api-fallback'),
   express = require("express"),
-  path = require("path");
+  app = express()
 
-//const initializeQqlServer = require('./server/src/index.ts');
-const app = express();
-const port = process.env.PORT || 8080
-app.set('port', port);
-
-if (process.env.NODE_ENV !== "production") {
+if (!PROD) {
   const
     webpack = require("webpack"),
     webpackDevMiddleware = require("webpack-dev-middleware"),
@@ -36,14 +44,17 @@ if (process.env.NODE_ENV !== "production") {
   //app = initializeQqlServer(app)
   // gql server
 } else {
-  const CLIENT_ASSETS_DIR = path.join(__dirname, "./build/client");
-  const CLIENT_STATS_PATH = path.join(CLIENT_ASSETS_DIR, "stats.json");
-  const SERVER_RENDERER_PATH = path.join(__dirname, "./build/server.js");
-  const serverRenderer = require(SERVER_RENDERER_PATH);
-  const stats = require(CLIENT_STATS_PATH);
+  const
+    CLIENT_ASSETS_DIR = join(__dirname, "./build/client"),
+    CLIENT_STATS_PATH = join(CLIENT_ASSETS_DIR, "stats.json"),
+    SERVER_RENDERER_PATH = join(__dirname, "./build/server.js");
+  const
+    serverRenderer = require(SERVER_RENDERER_PATH),
+    stats = require(CLIENT_STATS_PATH);
+
   app.use(express.static(CLIENT_ASSETS_DIR));
   app.use(serverRenderer(stats));
 }
 
 app.use(fallback('index.html'))
-app.listen(8080);
+app.listen(port);
