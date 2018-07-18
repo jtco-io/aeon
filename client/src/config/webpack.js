@@ -1,7 +1,6 @@
 const webpack = require('webpack')
 const {resolve, join} = require('path')
 
-require('dotenv').config({path: "../.env"})
 
 const
   buildDir = resolve(__dirname, "build"),

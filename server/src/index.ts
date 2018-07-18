@@ -1,6 +1,17 @@
 import { ApolloServer } from "apollo-server";
+import { resolve, join } from "path";
+import dotenv from "dotenv";
 import resolvers from "./resolvers";
 import { typeDefs } from "./typeDefs";
+
+const srcDir = resolve(__dirname),
+  projRoot = resolve(srcDir, "..", ".."),
+  envFile = resolve(projRoot, ".env");
+
+dotenv.config({ path: envFile });
+
+const GRAPHQL_SERVER_HOST = process.env.SERVER_HOST || "localhost",
+  GRAPHQL_SERVER_PORT = process.env.SERVER_PORT || 4000;
 
 const startServer = async () => {
   const server = new ApolloServer({
@@ -18,9 +29,11 @@ const startServer = async () => {
     },
   });
 
-  server.listen().then(({ url }: { url: string }) => {
-    console.log(`apollo server listening at ${url}`);
-  });
+  server
+    .listen(GRAPHQL_SERVER_PORT, GRAPHQL_SERVER_HOST)
+    .then(({ url }: { url: string }) => {
+      console.log(`apollo server listening at ${url}`);
+    });
 };
 
 startServer().catch((error: Error) => {

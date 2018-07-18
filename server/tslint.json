@@ -8,6 +8,7 @@
     "ter-arrow-parens": false,
     "ter-prefer-arrow-callback": false,
     "space-before-function-paren": false,
+    "one-variable-per-declaration": false,
     "quotemark": false,
     "prefer-const": false,
     "no-parameter-reassignment": false
