@@ -1,6 +1,5 @@
 const webpack = require('webpack')
 const {resolve, join} = require('path')
-const HTMLPlugin = require('html-webpack-plugin')
 
 require('dotenv').config({path: "../.env"})
 
