@@ -1,6 +1,4 @@
 import * as React from "react";
-import { ApolloProvider } from "react-apollo";
-import Routes from "shared/components/Routes";
 
 interface HtmlProps {
   content: any;
@@ -20,7 +18,7 @@ class Html extends React.Component<any, {}> {
           <script
             dangerouslySetInnerHTML={{
               __html: `window.__APOLLO_STATE__=${JSON.stringify(
-                apolloClient.extract(),
+                apolloClient.extract()
               )};`,
             }}
           />

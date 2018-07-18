@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Route, RouteProps, Router, Switch, StaticRouter } from "react-router";
-
+import App from "screens/App";
+import Landing from "screens/App/screens/Home/screens/Landing";
 class RouteStatus extends React.Component<any, any> {
   public render(): JSX.Element {
     return <p>Static context: {JSON.stringify(this.props.staticContext)}</p>;
@@ -18,18 +19,29 @@ class PrintContext extends React.Component<any, any> {
  * That is mounter inside router component with history object
  */
 
-class routes extends React.Component<any, any> {
-  public render(): JSX.Element {
-    const { location, history, routes, context } = this.props;
+interface RoutesProps {
+  children: any;
+  routes: any;
+}
+class Routes extends React.Component<RoutesProps, any> {
+  renderRoutes() {
+    const { children, routes } = this.props;
+    if (routes) {
+      return this.props.routes.map((route: RouteProps, i: number) => (
+        <Route key={i} exact path={route.path} component={route.component} />
+      ));
+    }
+    return children;
+  }
 
+  public render(): JSX.Element {
+    const { context } = this.props;
     return (
       <Switch>
-        {routes.map((route: RouteProps, i: number) => (
-          <Route key={i} exact path={route.path} component={route.component} />
-        ))}
+        {this.renderRoutes()}
         <RouteStatus statusCode={404}>
           <p>Route with statusCode 404</p>
-          <PrintContext staticContext={{}} />
+          <PrintContext staticContext={context} />
         </RouteStatus>
       </Switch>
     );

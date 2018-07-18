@@ -3,22 +3,15 @@ import * as ReactDOM from "react-dom/server";
 import fetch from "cross-fetch";
 import { ApolloClient } from "apollo-client";
 import { ApolloProvider, renderToStringWithData } from "react-apollo";
-import { routesList } from "./config/routes";
 import { HttpLink, createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { Route, RouteProps, Router, Switch, StaticRouter } from "react-router";
 
-// <ApolloProvider client={apolloClient} >
-//
-//
-// </ApolloProvider>
-
 import Html from "shared/components/Html";
 import Root from "shared/components/Root";
-import Routes from "shared/components/Routes";
 
 const uri = "http://localhost:4000/graphql";
-export const apolloClient = new ApolloClient({
+const apolloClient = new ApolloClient({
   ssrMode: true,
   link: createHttpLink({
     uri,
@@ -36,7 +29,7 @@ export default ({ clientStats }: any): any => {
     const component = (
       <ApolloProvider client={apolloClient}>
         <StaticRouter location={req.url} context={context}>
-          <Routes routes={routesList} />
+          <Root />
         </StaticRouter>
       </ApolloProvider>
     );

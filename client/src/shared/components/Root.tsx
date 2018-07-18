@@ -1,24 +1,22 @@
 import * as React from "react";
-import * as ReactRouterDom from "react-router-dom";
-import { ApolloProvider } from "react-apollo";
-import Routes from "shared/components/Routes";
-import { routesList } from "../../config/routes";
+import * as ReactRouter from "react-router";
+
 import { hot } from "react-hot-loader";
+import Routes from "./routes";
+import App from "screens/App";
+import Layout from "./Layout";
+import { routesList } from "../../routes";
 
 interface RootProps {
-  apolloClient: any;
-  history: any;
-  routes: any;
+  history?: any;
 }
+
 class Root extends React.Component<RootProps, any> {
   public render(): JSX.Element {
-    const { apolloClient, history, routes } = this.props;
     return (
-      <ApolloProvider client={apolloClient}>
-        <ReactRouterDom.BrowserRouter>
-          <Routes history={history} routes={routes} />
-        </ReactRouterDom.BrowserRouter>
-      </ApolloProvider>
+      <App>
+        <Routes routes={routesList} />
+      </App>
     );
   }
 }
