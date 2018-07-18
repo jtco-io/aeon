@@ -55,6 +55,8 @@ npm install -g npm
 
 A first time spin up might look something like this.
 
+The .env file is to be read based on the client and server configuartion.
+
 ```
 cp .env.sample .env
 ```
@@ -65,7 +67,7 @@ yarn run start
 
 This will spin up the following
 * server with our tasks and serving final graphql endpoint
-* client code development server
+* client code development server server up SSR
 
 
 ```
