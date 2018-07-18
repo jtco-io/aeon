@@ -17,7 +17,9 @@
     "db:rollback": "yarn run db migrate:rollback",
     "build": "webpack --config webpack.config.js",
     "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
-    "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\""
+    "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\"",
+    "precommit": "yarn run prettier && yarn run lint",
+    "prepush": "yarn run lint"
   },
   "dependencies": {
     "@types/bookshelf": "^0.9.8",

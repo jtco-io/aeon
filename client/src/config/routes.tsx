@@ -1,10 +1,16 @@
+import * as React from "react";
 import * as History from "history";
-import Landing from "screens/App/screens/Home/screens/Landing";
 import * as ReactRouter from "react-router";
-export const history = History.createBrowserHistory();
+import Landing from "screens/App/screens/Home/screens/Landing";
+
+export const history: any = [];
 export const routesList: ReactRouter.RouteProps[] = [
   {
     path: "/",
+    component: Landing,
+  },
+  {
+    path: "/admin",
     component: Landing,
   },
 ];

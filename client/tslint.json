@@ -8,9 +8,9 @@
     "no-unnecessary-initializer": false,
     "quotemark": false,
     "prefer-const": false,
-    "no-parameter-reassignment": false
-
-
+    "no-parameter-reassignment": false,
+    "import-name": false,
+    "ter-arrow-parens": false
   },
   "rulesDirectory": [],
   "linterOptions": {
