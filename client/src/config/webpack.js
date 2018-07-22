@@ -3,8 +3,8 @@ const {resolve, join} = require('path')
 
 
 const
-  buildDir = resolve(__dirname, "build"),
   clientDir = resolve(__dirname, "..", ".."),
+  buildDir = resolve(clientDir, "build"),
   clientSrc = resolve(clientDir, 'src'),
   clientPublicDir = resolve(clientSrc, 'public'),
   clientIndex = resolve(clientPublicDir, 'index.html')
@@ -14,6 +14,7 @@ const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development
   PROD = mode === 'production'
 
 let
+  clientEntry,
   alias = {
     config: resolve(clientSrc, 'config'),
     screens: resolve(clientSrc, 'screens'),
@@ -21,11 +22,11 @@ let
     publicDir: resolve(clientSrc, 'public')
   },
   plugins = [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(DEV ? 'development' : 'production')
     })
   ],
+  clientPlugins = plugins,
   moduleRules = {
     rules: [
       {
@@ -49,34 +50,51 @@ let
     runtimeChunk: true
   }
 
+
+clientPlugins.push(
+  new webpack.DefinePlugin({
+    GRAPHQL_URL: JSON.stringify(process.env.GRAPHQL_URL),
+  })
+)
+if (PROD) {
+  clientEntry = {
+    vendor: ['react', 'react-dom', 'history', 'react-router'],
+    client: resolve(clientSrc, 'index.tsx')
+  }
+  clientPlugins.push(
+    new webpack.HashedModuleIdsPlugin()
+  )
+} else if (!PROD) {
+  clientEntry = {
+    vendor: ['react', 'react-dom', 'history', 'react-router'],
+    client: [
+      'react-hot-loader/patch',
+      'webpack-hot-middleware/client',
+      resolve(clientSrc, 'index.tsx')
+    ]
+  }
+  clientPlugins.push(
+    new webpack.HotModuleReplacementPlugin()
+  )
+}
+
 module.exports = [
   {
     name: 'client',
     target: 'web',
     mode,
-    entry: {
-      vendor: ['react', 'react-dom', 'history', 'react-router'],
-      client: [
-        'react-hot-loader/patch',
-        'webpack-hot-middleware/client',
-        resolve(clientSrc, 'index.tsx')
-      ]
-    },
+    entry: clientEntry,
     devtool: DEV ? 'cheap-module-source-map' : 'source-map',
     devServer: {
       hot: true
     },
     output: {
-      path: buildDir,
-      filename: 'client.js'
+      path: resolve(buildDir, "client"),
+      filename: PROD ? '[name].[chunkhash].js' : '[name].js',
+      chunkFilename: PROD ? '[name].[chunkhash].chunk.js' : '[name].js',
     },
     optimization,
-    plugins: [
-      new webpack.DefinePlugin({
-        GRAPHQL_URL: JSON.stringify(process.env.GRAPHQL_URL),
-      }),
-      ...plugins
-    ],
+    plugins: clientPlugins,
     module: moduleRules,
     resolve: {
       extensions: ['.js', '.ts', '.tsx'],
@@ -90,8 +108,8 @@ module.exports = [
     entry: resolve(clientSrc, 'serve.tsx'),
     devtool: PROD ? 'cheap-module-source-map' : 'source-map',
     output: {
-      path: buildDir,
-      filename: 'server.js',
+      path: resolve(buildDir, "server"),
+      filename: 'index.js',
       libraryTarget: 'commonjs2'
     },
     externals: (context, request, callback) => {
