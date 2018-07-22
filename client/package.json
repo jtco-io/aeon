@@ -59,7 +59,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=development node ./src/express.js",
-    "build": "rm -r ./build && NODE_ENV=production webpack --config ./src/config/webpack.js",
+    "build": "rm -r ./build ; NODE_ENV=production webpack --config ./src/config/webpack.js",
     "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
     "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\"",
     "precommit": "yarn run prettier && yarn run lint",
