@@ -33,18 +33,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /(node_modules)/,
-      },
-      {
-        test: /\.tsx?$/,
+        test: /\.ts$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader',
       },
       {
         test: /\.(graphql|gql)$/,

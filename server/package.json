@@ -11,6 +11,7 @@
     "start": "concurrently --kill-others \"yarn run dev:webpack\" \"yarn run dev:server\"",
     "dev:webpack": "webpack --watch --config webpack.config.js",
     "dev:server": "nodemon ./build",
+    "prod:start": "node ./build",
     "db": "ts-node node_modules/.bin/knex",
     "db:seed": "yarn run db:migrate && yarn run db seed:run",
     "db:migrate": "yarn run db migrate:latest",
