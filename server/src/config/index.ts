@@ -18,7 +18,7 @@ const config: Config = {
   isProd: env.NODE_ENV === "production",
   serverHost: env.SERVER_HOST || "localhost",
   serverPort: env.SERVER_PORT || 4000,
-  serverGraphqlUrl: env.GRAPHQL_ENPOINT || "/graphql",
+  serverGraphqlUrl: env.GRAPHQL_ENPOINT || "graphql",
 };
 
 export default config;

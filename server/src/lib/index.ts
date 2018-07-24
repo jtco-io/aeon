@@ -1,1 +1,1 @@
-export { preflight } from "./preflight";
+export { default as log } from "./log";

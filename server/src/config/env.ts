@@ -5,7 +5,6 @@ const srcDir = resolve(__dirname),
   projRoot = resolve(srcDir, "..", ".."),
   envFile = resolve(projRoot, ".env");
 
-console.log(envFile);
 dotenv({ path: envFile });
 
 declare const process: {
