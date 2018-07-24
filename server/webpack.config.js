@@ -11,7 +11,13 @@ const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development
   DEV = mode !== 'production',
   PROD = mode === 'production',
   entry = resolve(srcDir, 'index.ts'),
-  devtool = PROD ? 'cheap-module-source-map' : 'source-map'
+  devtool = PROD ? 'cheap-module-source-map' : 'source-map',
+  alias = {
+    config: resolve(srcDir, 'config'),
+    //database: resolve(srcDir, 'database'),
+    //models: resolve(srcDir, 'database', 'models')
+
+  }
 
 module.exports = {
   mode,
@@ -20,7 +26,7 @@ module.exports = {
   target: 'node',
   output: {
     path: buildDir,
-    filename: 'index.js',
+    filename: '[name].js',
     publicPath: '/',
   },
   externals: (context, request, callback) => {
@@ -46,6 +52,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
+    alias
   },
   plugins: [
     new webpack.DefinePlugin({
