@@ -1,4 +1,4 @@
-import { Users } from "./database/models";
+import { Users } from "../database/models";
 const books = [
   {
     title: "Harry Potter and the Chamber of Secrets",
@@ -10,7 +10,7 @@ const books = [
   },
 ];
 
-const resolvers = {
+export const resolvers = {
   Query: {
     helloWorld: () => "Hello World from the GraphQL Server!",
     books: () => books,
@@ -22,5 +22,3 @@ const resolvers = {
     },
   },
 };
-
-export default resolvers;

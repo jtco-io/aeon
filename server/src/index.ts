@@ -1,10 +1,10 @@
 import { ApolloServer } from "apollo-server";
-import resolvers from "./resolvers";
+import { resolvers } from "./graphql";
 import { typeDefs } from "./typeDefs";
 import { initializeDatabase } from "./database";
 import config from "./config";
 import { Model } from "objection";
-import { preflight } from "./lib/preflight";
+import { log } from "./lib";
 
 async function startServer(): Promise<void> {
   // Bind all Models to a knex instance. If you only have one database in
@@ -30,11 +30,11 @@ async function startServer(): Promise<void> {
   server
     .listen(config.serverPort, config.serverHost)
     .then(({ url }: { url: string }) => {
-      console.log(`apollo server listening at ${url}`);
+      log.serverOnListen(url);
     });
 }
 
-preflight();
+log.serverPreflight();
 startServer().catch((error: Error) => {
   console.error(error);
 });
