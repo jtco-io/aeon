@@ -1,4 +1,5 @@
 import * as Knex from "knex";
+import { Model } from "objection";
 
 export function initializeDatabase(isProd): any {
   const knexConfig = require("../../knexfile");
@@ -8,8 +9,9 @@ export function initializeDatabase(isProd): any {
     knex = Knex(knexConfig.production);
   } else {
     knex = Knex(knexConfig.development);
+    knex.migrate.latest();
   }
 
-  knex.migrate.latest();
+  Model.knex(knex);
   return knex;
 }

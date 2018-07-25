@@ -3,7 +3,6 @@ import { resolvers } from "./graphql";
 import { typeDefs } from "./typeDefs";
 import { initializeDatabase } from "./database";
 import config from "./config";
-import { Model } from "objection";
 import { log } from "./lib";
 
 async function startServer(): Promise<void> {
@@ -11,9 +10,7 @@ async function startServer(): Promise<void> {
   // your server this is all you have to do. For multi database systems, see
   // the Model.bindKnex method.
 
-  const knex = initializeDatabase(config.isProd);
-  Model.knex(knex);
-
+  await initializeDatabase(config.isProd);
   const server = new ApolloServer({
     typeDefs,
     resolvers,
