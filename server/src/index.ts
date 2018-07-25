@@ -1,17 +1,13 @@
 import { ApolloServer } from "apollo-server";
 import { resolvers } from "./graphql";
 import { typeDefs } from "./typeDefs";
-import { initializeDatabase } from "./database";
 import config from "./config";
 import { log } from "./lib";
 
 async function startServer(): Promise<void> {
-  // Bind all Models to a knex instance. If you only have one database in
-  // your server this is all you have to do. For multi database systems, see
-  // the Model.bindKnex method.
-
-  await initializeDatabase(config.isProd);
-  const server = new ApolloServer({
+  await log.serverPreflight(config);
+  await require("./database");
+  const server = await new ApolloServer({
     typeDefs,
     resolvers,
     context: ({ req }) => {
@@ -26,12 +22,9 @@ async function startServer(): Promise<void> {
 
   server
     .listen(config.serverPort, config.serverHost)
-    .then(({ url }: { url: string }) => {
-      log.serverOnListen(url);
-    });
+    .then(({ url }: { url: string }) => log.serverOnListen(config, url));
 }
 
-log.serverPreflight();
 startServer().catch((error: Error) => {
   console.error(error);
 });

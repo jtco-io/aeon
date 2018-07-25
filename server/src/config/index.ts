@@ -7,7 +7,8 @@
 // export { default as subscription } from './subscription';
 import env from "./env";
 
-interface Config {
+export interface Config {
+  NODE_ENV: string;
   isProd: boolean;
   serverHost: string;
   serverPort: number;
@@ -15,6 +16,7 @@ interface Config {
 }
 
 const config: Config = {
+  NODE_ENV: env.NODE_ENV,
   isProd: env.NODE_ENV === "production",
   serverHost: env.SERVER_HOST || "localhost",
   serverPort: env.SERVER_PORT || 4000,

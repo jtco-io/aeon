@@ -1,4 +1,4 @@
-import config from "../config";
+import { Config } from "../config";
 
 const cyan = "\x1b[36m";
 const white = "\x1b[1m";
@@ -16,13 +16,17 @@ function logTwoTone(
   }
 }
 
-function serverPreflight(): void {
-  logTwoTone("Server:", "        Preflight check");
-  logTwoTone("Production:", `    ${config.isProd}`);
+function serverPreflight(config: Config): void {
+  logTwoTone("Server:", "                     Preflight check");
+  logTwoTone("NODE_ENV:", `                   ${config.NODE_ENV}`);
 }
 
-function serverOnListen(url) {
-  logTwoTone("GraphQL URL:", `   ${url}${config.serverGraphqlUrl}`);
+function serverOnListen(config: Config, url: string) {
+  logTwoTone("GraphQL Server:", `             Now Accepting Connections`);
+  logTwoTone(
+    "URL is:",
+    `                     ${url}${config.serverGraphqlUrl}`,
+  );
 }
 
 const log = {
