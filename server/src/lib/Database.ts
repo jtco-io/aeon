@@ -46,7 +46,6 @@ export default class Database {
       log.logTwoTone("Database:", "                   Initializing...");
       this.knex = Knex(this.knexConfig);
       Model.knex(this.knex);
-      console.log("MODEL!", model);
       log.logTwoTone("Database:", "                   Connection success!");
       this.initialized = true;
     }
