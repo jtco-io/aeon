@@ -46,7 +46,7 @@ export default class Database {
       log.logTwoTone("Database:", "                   Initializing...");
       this.knex = Knex(this.knexConfig);
       Model.knex(this.knex);
-      console.log('MODEL!', model)
+      console.log("MODEL!", model);
       log.logTwoTone("Database:", "                   Connection success!");
       this.initialized = true;
     }
@@ -54,18 +54,18 @@ export default class Database {
 
   public migrate() {
     if (this.initialized) {
-      this.knex.migrate.latest()
+      this.knex.migrate.latest();
     }
   }
-  public seed(){
-    this.knex.migrate.latest()
+  public seed() {
+    this.knex.migrate.latest();
   }
 
   public async close() {
     if (this.initialized) {
       log.logTwoTone("Database:", "                      Closing");
-      console.log(this.model)
-      await this.knex.destroy ()
+      console.log(this.model);
+      await this.knex.destroy();
       this.initialized = false;
     }
   }

@@ -9,7 +9,6 @@ beforeAll(async () => {
   console.log("beforeAll  db", database, knexfile);
 
   await database.connect();
-
 });
 
 afterAll(async () => {
@@ -17,7 +16,6 @@ afterAll(async () => {
   await database.close();
 
   console.log("Db should be closed", database);
-
 });
 
 // beforeEach (async () => {
