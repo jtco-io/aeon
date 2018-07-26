@@ -3,10 +3,13 @@ import { resolvers } from "./graphql";
 import { typeDefs } from "./typeDefs";
 import config from "./config";
 import { log } from "./lib";
+import Database from "./database"
 
 async function startServer(): Promise<void> {
   await log.serverPreflight(config);
-  await require("./database");
+  const knexConfig = await require ("../knexfile");
+  await new Database(config, knexConfig).connect();
+
   const server = await new ApolloServer({
     typeDefs,
     resolvers,
