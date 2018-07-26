@@ -63,7 +63,6 @@ export default class Database {
   public async close() {
     if (this.initialized) {
       log.logTwoTone("Database:", "                      Closing");
-      console.log(this.model);
       await this.knex.destroy();
       this.initialized = false;
     }
