@@ -9,9 +9,9 @@ FROM server-builder as server-built
 COPY . .
 RUN yarn run build
 
-#FROM client-server as client
-#COPY --from=client-built build build
-#
-#EXPOSE 5000
-#ENTRYPOINT ["serve"]
-#CMD ["-s", "build"]
+FROM server-built as server
+COPY --from=server-built build build
+
+EXPOSE 5000
+ENTRYPOINT ["serve"]
+CMD ["-s", "build"]
