@@ -30,6 +30,7 @@
     "@types/node": "^10.5.2",
     "apollo-datasource-rest": "^2.0.0-rc.0",
     "apollo-server": "^2.0.0-rc.0",
+    "ts-loader": "^4.4.2",
     "bcrypt": "^3.0.0",
     "bookshelf": "^0.13.3",
     "dotenv": "^6.0.0",
@@ -40,7 +41,8 @@
     "pg": "^7.4.3",
     "sqlite3": "^4.0.1",
     "webpack": "^4.14.0",
-    "webpack-cli": "^3.0.8"
+    "webpack-cli": "^3.0.8",
+    "typescript": "2.9.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.54",
@@ -54,7 +56,6 @@
     "prettier": "^1.13.7",
     "prettier-tslint": "^0.4.0",
     "ts-jest": "^23.0.1",
-    "ts-loader": "^4.4.2",
     "ts-node": "^7.0.0",
     "tsc-watch": "^1.0.22",
     "tslint": "^5.10.0",
