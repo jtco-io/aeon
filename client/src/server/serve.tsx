@@ -24,7 +24,7 @@ const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export function serverRenderer({clientStats}: any): any {
+export function serverRenderer({ clientStats }: any): any {
   // console.log (clientStats)
   const context: any = {};
 
@@ -51,4 +51,4 @@ export function serverRenderer({clientStats}: any): any {
   };
 }
 
-export default serverRenderer
+export default serverRenderer;
