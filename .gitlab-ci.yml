@@ -36,6 +36,8 @@ test_whitebox:
 build:
   stage: build
   image: ncrmro/ci-compose:latest
+  variables:
+    SERVER_HOST: docker
   services:
       - docker:dind
   before_script:
