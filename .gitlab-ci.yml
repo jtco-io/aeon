@@ -31,6 +31,8 @@ test_whitebox:
 build:
   stage: build
   image: ncrmro/ci-compose
+  services:
+      - docker:dind
   before_script:
     - yarn run dc:build
     - yarn run dc:start -d
