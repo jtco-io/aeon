@@ -13,13 +13,17 @@ test_whitebox:
     - server/node_modules/
     - client/node_modules/
   before_script:
-   - yarn install
-   - cd ./client && yarn install
-   - cd ../server && yarn install
-   - cd ../
+    - yarn install
+    - cd ./client && yarn install
+    - cd ../server && yarn install
+    - cd ../
+    - yarn run lint
+    - yarn run build
+    # Run command in background to allow CI to stat server and keep running commands
+    # https://documentation.codeship.com/basic/continuous-integration/run-a-command-in-the-background/
+    - nohup bash -c 'yarn run server:prod:start 2>&1 &'
   script:
-   - yarn run lint
-   - yarn run build
+    - curl http://localhost:8080
   after_script:
-   - echo 'Prion brought to you by JTCO and JTX'
-   - echo 'To see more check out jtco.io and jtronics.exchange'
+    - echo 'Prion brought to you by JTCO and JTX'
+    - echo 'To see more check out jtco.io and jtronics.exchange'
