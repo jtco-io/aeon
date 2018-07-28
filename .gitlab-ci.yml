@@ -20,6 +20,7 @@ test_whitebox:
     - yarn run lint
     - yarn run build
     - yarn run prod:start:background
+    - sleep 3s
   script:
     - curl http://localhost:8080
   after_script:
