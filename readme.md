@@ -115,8 +115,16 @@ We can look at how docker is deployed to easily check how one might run the prod
 Running `yarn run build` will build both the frontend and backend servers
 
 ### Docker
-The project can also be build using docker and orchistrated using docker-compose
-`docker-compose build`
+The project can also be built using docker and orchestrated using docker-compose. The idea being external tools should be hooked into the package.json when possible to keeps things DRY.
+
+Docker compose is aliased in the rootpackage.json
+
+* `docker-compose -v` becomes `yarn run dc -v`
+* `docker-compose build` becomes `yarn run dc build`
+* `docker-compose up` becomes `yarn run dc up`
+* `docker-compose push` becomes `yarn run dc push`
+
+.. so on so forth.
 
 ## Code and Software quality assurance.
 Code is quickly checked pre commit and more extensively testing during CI.
