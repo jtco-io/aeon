@@ -37,5 +37,6 @@ build:
   script:
     - curl http://localhost:8080
   after_script:
+    - yarn run dc down
     - echo 'Prion brought to you by JTCO and JTX'
     - echo 'To see more check out jtco.io and jtronics.exchange'
