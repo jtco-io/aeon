@@ -30,12 +30,13 @@ test_whitebox:
 
 build:
   stage: build
-  image: ncrmro/ci-compose
+  image: ncrmro/ci-compose:latest
   services:
       - docker:dind
   before_script:
     - yarn run dc:build
     - yarn run dc:start -d
+    - sleep 3s
   script:
     - curl http://localhost:8080
   after_script:
