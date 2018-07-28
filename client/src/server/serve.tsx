@@ -24,7 +24,7 @@ const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export default ({ clientStats }: any): any => {
+export function serverRenderer({clientStats}: any): any {
   // console.log (clientStats)
   const context: any = {};
 
@@ -49,4 +49,6 @@ export default ({ clientStats }: any): any => {
         res.end(`An error occurred.:\n\n${e.stack}`);
       });
   };
-};
+}
+
+export default serverRenderer

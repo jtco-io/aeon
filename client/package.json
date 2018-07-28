@@ -14,12 +14,9 @@
     "enzyme-to-json": "^3.3.3",
     "prettier": "^1.13.7",
     "prettier-tslint": "^0.4.0",
-    "ts-loader": "^4.4.2",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
     "tslint-config-airbnb": "^5.9.2",
-    "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8",
     "webpack-hot-middleware": "^2.22.2",
     "webpack-hot-server-middleware": "^0.5.0",
     "webpack-serve": "^1.0.4"
@@ -55,11 +52,16 @@
     "react-modal": "3.4.4",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "typescript": "~2.8.3"
+    "ts-loader": "^4.4.2",
+    "typescript": "~2.8.3",
+    "webpack": "4.14.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-stats-plugin": "^0.2.1"
   },
   "scripts": {
-    "start": "NODE_ENV=development node ./src/express.js",
-    "build": "rm -r ./build ; NODE_ENV=production webpack --config ./src/config/webpack.js",
+    "start": "NODE_ENV=development node ./src/server/express.js",
+    "build": "rm -rf ./build/* ; NODE_ENV=production webpack --config ./src/config/webpack.js",
+    "prod:start": "NODE_ENV=production node ./src/server/express.js",
     "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
     "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\"",
     "precommit": "yarn run prettier && yarn run lint",
