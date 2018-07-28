@@ -1,13 +1,27 @@
 version: '3.4'
 services:
-  client-serve:
-    image: $CI_REGISTRY_IMAGE/client
+  frontend:
+    container_name: frontend
+    image: registry.gitlab.com/jtco-io/jtx/frontend
+    build:
+      context: ./client
     restart: always
     ports:
-        - "5000:5000"
+        - 8080:8080
+    environment:
+      - CLIENT_PORT=8080
+      - SERVER_HOST=backend
+      - SERVER_PORT=8081
+
+
+  backend:
+    container_name: backend
+    image: registry.gitlab.com/jtco-io/jtx/backend
     build:
-      context: .
-      args:
-        IMAGE_BASE_CLIENT_SERVER: $CI_REGISTRY_IMAGE/base/client-server
-        IMAGE_BASE_CLIENT_BUILDER: $CI_REGISTRY_IMAGE/base/client-builder
-        REACT_APP_GRAPHQL_URL: 192.168.99.100:4000
+      context: ./server
+    restart: always
+    ports:
+        - 8081:8081
+    environment:
+          - SERVER_PORT=8081
+

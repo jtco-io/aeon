@@ -17,6 +17,7 @@ export const development = {
 }
 export const production = {
   client: 'sqlite3',
+  useNullAsDefault: true,
   connection: {
     filename: "./db.sqlite"
   },
