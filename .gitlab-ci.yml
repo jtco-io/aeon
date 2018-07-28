@@ -19,9 +19,7 @@ test_whitebox:
     - cd ../
     - yarn run lint
     - yarn run build
-    # Run command in background to allow CI to stat server and keep running commands
-    # https://documentation.codeship.com/basic/continuous-integration/run-a-command-in-the-background/
-    - nohup bash -c 'yarn run server:prod:start 2>&1 &'
+    - yarn run prod:start:background
   script:
     - curl http://localhost:8080
   after_script:
