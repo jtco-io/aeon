@@ -3,6 +3,7 @@ variables:
 
 stages:
   - test_whitebox
+  - build
 
 test_whitebox:
   stage: test_whitebox
@@ -21,6 +22,18 @@ test_whitebox:
     - yarn run build
     - yarn run prod:start:background
     - sleep 3s
+  script:
+    - curl http://localhost:8080
+  after_script:
+    - echo 'Prion brought to you by JTCO and JTX'
+    - echo 'To see more check out jtco.io and jtronics.exchange'
+
+build:
+  stage: build
+  image: ncrmro/ci-compose
+  before_script:
+    - yarn run dc:build
+    - yarn run dc:start -d
   script:
     - curl http://localhost:8080
   after_script:
