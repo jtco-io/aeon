@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactRouter from "react-router";
 
 import { hot } from "react-hot-loader";
-import Routes from "./routes";
+import Routes from "./Routes";
 import App from "screens/App";
 import Layout from "./Layout";
 import { routesList } from "../../routes";

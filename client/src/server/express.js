@@ -1,9 +1,13 @@
 const {resolve, join} = require('path')
 
 const
-  srcDir = resolve(__dirname),
-  projRoot = resolve(srcDir, "..", ".."),
+  clientServerDir = resolve(__dirname),
+  clientDir = resolve(clientServerDir, "..", ".."),
+  clientSrcDir = resolve(clientDir, "src"),
+  clientBuildDir = resolve(clientDir, "build"),
+  projRoot = resolve(clientDir, ".."),
   envFile = resolve(projRoot, ".env")
+
 
 require('dotenv').config({path: envFile})
 
@@ -22,7 +26,7 @@ if (!PROD) {
     webpackDevMiddleware = require("webpack-dev-middleware"),
     webpackHotMiddleware = require("webpack-hot-middleware"),
     webpackHotServerMiddleware = require("webpack-hot-server-middleware"),
-    config = require("./config/webpack.js")
+    config = require("../config/webpack.js")
 
   const compiler = webpack(config);
 
@@ -45,16 +49,15 @@ if (!PROD) {
   // gql server
 } else {
   const
-    CLIENT_ASSETS_DIR = join(__dirname, "./build/client"),
+    CLIENT_ASSETS_DIR = join(clientDir, "./build/client"),
     CLIENT_STATS_PATH = join(CLIENT_ASSETS_DIR, "stats.json"),
-    SERVER_RENDERER_PATH = join(__dirname, "./build/server.js");
+    SERVER_RENDERER_PATH = join(clientDir, "./build/server/index.js");
   const
-    serverRenderer = require(SERVER_RENDERER_PATH),
+    serverRenderer = require(SERVER_RENDERER_PATH).default,
     stats = require(CLIENT_STATS_PATH);
-
   app.use(express.static(CLIENT_ASSETS_DIR));
   app.use(serverRenderer(stats));
 }
 
 app.use(fallback('index.html'))
-app.listen(port);
+app.listen(port, () => console.log(`Express now listening on port ${port}!`));
