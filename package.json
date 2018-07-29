@@ -23,7 +23,7 @@
     "db:migrate": "cd ./server && yarn run db migrate:latest",
     "db:rollback": "cd ./server && yarn run db migrate:rollback",
     "test": "cd ./testing && yarn run start",
-    "dc": "docker-compose -f docker-compose.yml",
+    "dc": "docker-compose -f ops/docker/docker-compose.yml",
     "dc:selenium": "yarn run dc -f ./testing/docker-compose.yml",
     "dc:build": "yarn run dc build",
     "dc:start": "yarn run dc up",
