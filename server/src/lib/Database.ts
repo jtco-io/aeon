@@ -17,22 +17,22 @@ export default class Database {
     this.initialized = false;
   }
 
-  private log(message){
-    log.logTwoTone("Database:", `                   ${message}`)
+  private log(message) {
+    log.logTwoTone("Database:", `                   ${message}`);
   }
 
   private getConfig(knexConfig) {
     if (this.isProd) {
       knexConfig = knexConfig.production;
     } else if (this.environment === "test") {
-      this.log("Using in Memory sqlite from test settings")
+      this.log("Using in Memory sqlite from test settings");
       knexConfig = {
         client: "sqlite3",
         useNullAsDefault: true,
         connection: { filename: ":memory:" },
       };
     } else {
-      this.log("Using Development Settings")
+      this.log("Using Development Settings");
       knexConfig = knexConfig.development;
     }
 
@@ -41,18 +41,18 @@ export default class Database {
 
   public connect() {
     if (!this.initialized) {
-      this.log("Initializing...")
+      this.log("Initializing...");
       this.knex = Knex(this.knexConfig);
       Model.knex(this.knex);
-      this.log("Connection success")
+      this.log("Connection success");
       this.initialized = true;
     }
   }
 
   public migrate() {
     if (this.initialized) {
-      this.log("Running Latest Migrations...")
-      this.knex.migrate.latest().then(() => console.log('Migrations Ran!'));
+      this.log("Running Latest Migrations...");
+      this.knex.migrate.latest().then(() => console.log("Migrations Ran!"));
     }
   }
   public seed() {
@@ -61,7 +61,7 @@ export default class Database {
 
   public async close() {
     if (this.initialized) {
-      this.log("Closing")
+      this.log("Closing");
       await this.knex.destroy();
       this.initialized = false;
     }
