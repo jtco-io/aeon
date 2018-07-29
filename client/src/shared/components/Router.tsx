@@ -10,14 +10,13 @@ interface RouterProps {
   context?: any;
 }
 
-interface RouterHistory {
-}
+interface RouterHistory {}
 class Router extends React.Component<RouterProps, RouterHistory> {
-  constructor(props:any) {
-    super (props);
+  constructor(props: any) {
+    super(props);
   }
 
-  public render():JSX.Element {
+  public render(): JSX.Element {
     const { context, history, children, location, isServer } = this.props;
     if (isServer) {
       return (
