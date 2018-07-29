@@ -7,9 +7,7 @@ const {resolve, join} = require('path')
 const
   clientDir = resolve(__dirname, "..", ".."),
   buildDir = resolve(clientDir, "build"),
-  clientSrc = resolve(clientDir, 'src'),
-  clientPublicDir = resolve(clientSrc, 'public'),
-  clientIndex = resolve(clientPublicDir, 'index.html')
+  clientSrc = resolve(clientDir, 'src')
 
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development',
   DEV = mode !== 'production',
@@ -54,6 +52,7 @@ const optimization = {
 const clientPlugins = [
   new webpack.DefinePlugin({
     GRAPHQL_URL: JSON.stringify(process.env.GRAPHQL_URL),
+    __CLIENT_TRUE__: true,
   }),
   new StatsWriterPlugin({
     filename: "stats.json" // Default

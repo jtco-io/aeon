@@ -5,19 +5,17 @@ import * as History from "history";
 import createBrowserHistory from "history/createBrowserHistory";
 import { ApolloProvider } from "react-apollo";
 import { hydrate } from "react-dom";
-import { apolloClient } from "config";
+import config from "config";
 import Root from "shared/components/Root";
 
 const props = {
-  apolloClient,
+  // apolloClient,
   history: createBrowserHistory(),
 };
 
 hydrate(
-  <ApolloProvider client={props.apolloClient}>
-    <ReactRouterDom.Router history={props.history as any}>
-      <Root />
-    </ReactRouterDom.Router>
-  </ApolloProvider>,
+  <ReactRouterDom.Router history={props.history as any}>
+    <Root />
+  </ReactRouterDom.Router>,
   document.getElementById("content"),
 );
