@@ -20,7 +20,7 @@ const
 
 const environmentVariables = {
   '__PRODUCTION__': JSON.stringify(mode),
-  '__PROJECT_TITLE__': JSON.stringify('Prion'),
+  '__PROJECT_TITLE__': JSON.stringify(env.PROJECT_TITLE),
   '__GRAPHQL_URL__': JSON.stringify(env.GRAPHQL_URL),
   '__FRONTEND_HOST__': JSON.stringify(env.FRONTEND_HOST),
   '__FRONTEND_PORT__': JSON.stringify(env.FRONTEND_PORT),
