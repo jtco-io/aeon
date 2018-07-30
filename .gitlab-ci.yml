@@ -24,7 +24,6 @@ test_whitebox:
     - yarn run build
     - yarn run prod:start:background
     - sleep 3s
-    - cat ./nohup.out
   script:
     - curl http://$SERVER_HOST:$CLIENT_PORT
   after_script:
