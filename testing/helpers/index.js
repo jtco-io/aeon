@@ -1,11 +1,10 @@
-import { Builder } from 'selenium-webdriver'
+import {Selenium} from './selenium'
 
-const seleniumUrl = process.env.SELENIUM_URL || 'localhost:4000'
+export const selenium = new Selenium()
 
-export const driver = new Builder()
-  .forBrowser('chrome')
-  .usingServer(`http://${seleniumUrl}/wd/hub`)
-  .build()
+beforeAll(async () => {
+  await selenium.load().then(() => console.log('Selenium Driver Successfully Loaded'))
+})
 
 afterAll(async () => {
   // Cleanup `process.on('exit')` event handlers to prevent a memory leak caused by the combination of `jest` & `tmp`.
@@ -13,7 +12,8 @@ afterAll(async () => {
     listener()
     process.removeListener('exit', listener)
   }
-  await driver.quit()
+  await selenium.quit()
 })
+
 
 export const defaultTimeout = 10e3
