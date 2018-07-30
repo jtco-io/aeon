@@ -16,7 +16,7 @@
     "db:seed": "rm ./db.sqlite ; yarn run db:migrate && yarn run db seed:run",
     "db:migrate": "yarn run db migrate:latest",
     "db:rollback": "yarn run db migrate:rollback",
-    "build": "NODE_ENV=production webpack --config webpack.js",
+    "build": "NODE_ENV=production webpack --config src/config/webpack.js",
     "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
     "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\"",
     "test": "jest --coverage --forceExit --detectOpenHandles --runInBand.",
