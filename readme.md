@@ -102,6 +102,11 @@ Once you've got everything installed and working we can now copy the sample envi
 
 The .env file is to be read based on the client and server configuartion.
 
+### node_modules
+Thhe following command will install all required Node.JS dependencies.
+
+`yarn run install:all`
+
 #### Starting Development Server
 
 Finally we can spin up the develompment servers using the following command.
