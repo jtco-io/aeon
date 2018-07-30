@@ -2,11 +2,11 @@
   "name": "prion",
   "author": "Nicholas Romero <ncrmro@gmail.com>",
   "license": "MIT",
+  "version": "0.0.1",
   "engines": {
     "node": ">=8.3.1",
     "npm": ">=5.6.0"
   },
-  "version": "0.0.1",
   "scripts": {
     "start": "concurrently --kill-others \"yarn run client:dev:start\" \"yarn run server:dev:start\"",
     "build": "yarn run client:prod:build && yarn run server:prod:build",

@@ -2,11 +2,11 @@
   "name": "prion-server",
   "author": "Nicholas Romero <ncrmro@gmail.com>",
   "license": "MIT",
+  "version": "0.0.1",
   "engines": {
     "node": ">=8.3.1",
     "npm": ">=5.6.0"
   },
-  "version": "0.0.1",
   "scripts": {
     "start": "concurrently --kill-others \"yarn run dev:webpack\" \"yarn run dev:server\"",
     "dev:webpack": "NODE_ENV=development webpack --watch --config ./src/config/webpack.js",
