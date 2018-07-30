@@ -9,7 +9,7 @@
   "version": "0.0.1",
   "scripts": {
     "start": "concurrently --kill-others \"yarn run dev:webpack\" \"yarn run dev:server\"",
-    "dev:webpack": "NODE_ENV=development webpack --watch --config ./src/config/webpack.config.js",
+    "dev:webpack": "NODE_ENV=development webpack --watch --config ./src/config/webpack.js",
     "dev:server": "NODE_ENV=development nodemon ./build/main.js",
     "prod:start": "NODE_ENV=production node ./build/main.js",
     "db": "ts-node node_modules/.bin/knex",
