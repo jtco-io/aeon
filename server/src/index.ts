@@ -1,40 +1,33 @@
 import { ApolloServer } from "apollo-server";
-import { resolve, join } from "path";
-import dotenv from "dotenv";
-import resolvers from "./resolvers";
+import { resolvers } from "./graphql";
 import { typeDefs } from "./typeDefs";
+import config from "./config";
+import { log, Database } from "./lib";
 
-const srcDir = resolve(__dirname),
-  projRoot = resolve(srcDir, "..", ".."),
-  envFile = resolve(projRoot, ".env");
+async function startServer(): Promise<void> {
+  await log.serverPreflight(config);
+  const knexConfig = await require("../knexfile");
+  const database = await new Database(config, knexConfig);
+  await database.connect();
+  await database.migrate();
 
-dotenv.config({ path: envFile });
-
-const GRAPHQL_SERVER_HOST = process.env.SERVER_HOST || "localhost",
-  GRAPHQL_SERVER_PORT = process.env.SERVER_PORT || 4000;
-
-const startServer = async () => {
-  const server = new ApolloServer({
+  const server = await new ApolloServer({
     typeDefs,
     resolvers,
     context: ({ req }) => {
       // get the user token from the headers
-      const token = req.headers.authorization || "";
-
+      // const token = req.headers.authorization || "";
       // try to retrieve a user with the token
       // const user = getUser (token);
-
       // add the user to the context
       return { user: { username: "Nic" } };
     },
   });
 
   server
-    .listen(GRAPHQL_SERVER_PORT, GRAPHQL_SERVER_HOST)
-    .then(({ url }: { url: string }) => {
-      console.log(`apollo server listening at ${url}`);
-    });
-};
+    .listen(config.serverPort, config.serverHost)
+    .then(({ url }: { url: string }) => log.serverOnListen(config, url));
+}
 
 startServer().catch((error: Error) => {
   console.error(error);

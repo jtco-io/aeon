@@ -1,0 +1,45 @@
+version: '3.4'
+services:
+  frontend:
+    container_name: frontend
+    image: registry.gitlab.com/jtco-io/jtx/frontend
+    build:
+      context: ../../client
+    restart: always
+    environment:
+      - SERVER_HOST=backend
+    labels:
+      traefik.enable: 'true'
+      traefik.port: "${CLIENT_PORT}"
+      traefik.frontend.rule: "Host:${DOCKER_CLIENT_PROXY_HOST}"
+
+  backend:
+    container_name: backend
+    image: registry.gitlab.com/jtco-io/jtx/backend
+    build:
+      context: ../../server
+    restart: always
+    environment:
+          - SERVER_PORT="${SERVER_PORT}"
+
+  proxy:
+    container_name: proxy
+    image: traefik
+    restart: always
+    ports:
+        - 80:80
+        - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: >
+      -c /dev/null
+      --web
+      --docker
+      --docker.exposedbydefault=false
+      --docker.watch
+      --docker.domain=lemnos.local
+      --entrypoints='Name:http Address::80'
+      --defaultEntryPoints="http"
+      --logLevel="INFO"
+
+

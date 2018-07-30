@@ -6,8 +6,23 @@ interface HtmlProps {
 }
 
 class Html extends React.Component<any, {}> {
+  private initializeState() {
+    const { apolloClient } = this.props;
+    if (apolloClient) {
+      return (
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__APOLLO_STATE__=${JSON.stringify(
+              apolloClient.extract(),
+            )};`,
+          }}
+        />
+      );
+    }
+  }
+
   public render(): JSX.Element {
-    const { content, apolloClient } = this.props;
+    const { content, apolloClient, title } = this.props;
     return (
       <html>
         <head>
@@ -15,13 +30,7 @@ class Html extends React.Component<any, {}> {
         </head>
         <body>
           <div id="content" dangerouslySetInnerHTML={{ __html: content }} />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.__APOLLO_STATE__=${JSON.stringify(
-                apolloClient.extract(),
-              )};`,
-            }}
-          />
+          {this.initializeState()}
 
           <script src="/vendor.client.js" />
           <script src="/client.js" />

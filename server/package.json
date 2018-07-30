@@ -9,15 +9,18 @@
   "version": "0.0.1",
   "scripts": {
     "start": "concurrently --kill-others \"yarn run dev:webpack\" \"yarn run dev:server\"",
-    "dev:webpack": "webpack --watch --config webpack.config.js",
-    "dev:server": "nodemon ./build",
+    "dev:webpack": "NODE_ENV=development webpack --watch --config webpack.config.js",
+    "dev:server": "NODE_ENV=development nodemon ./build/main.js",
+    "prod:start": "NODE_ENV=production node ./build/main.js",
     "db": "ts-node node_modules/.bin/knex",
-    "db:seed": "yarn run db:migrate && yarn run db seed:run",
+    "db:seed": "rm ./db.sqlite ; yarn run db:migrate && yarn run db seed:run",
     "db:migrate": "yarn run db migrate:latest",
     "db:rollback": "yarn run db migrate:rollback",
-    "build": "webpack --config webpack.config.js",
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
     "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
     "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\"",
+    "test": "jest --coverage --forceExit --detectOpenHandles --runInBand.",
+    "test:watch": "jest --watch --coverage",
     "precommit": "yarn run prettier && yarn run lint",
     "prepush": "yarn run lint"
   },
@@ -30,24 +33,31 @@
     "bcrypt": "^3.0.0",
     "bookshelf": "^0.13.3",
     "dotenv": "^6.0.0",
+    "express": "^4.16.3",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
     "knex": "0.13",
+    "objection": "^1.2.0",
     "pg": "^7.4.3",
     "sqlite3": "^4.0.1",
     "ts-loader": "^4.4.2",
-    "webpack": "^4.14.0",
+    "typescript": "2.9.2",
+    "webpack": "4.14.0",
     "webpack-cli": "^3.0.8"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@types/jest": "^23.3.0",
     "concurrently": "^3.6.0",
     "faker": "^4.1.0",
     "graphql-cli": "2.16.3",
+    "jest": "^23.4.1",
+    "jest-cli": "^23.4.1",
     "nodemon": "^1.17.5",
     "prettier": "^1.13.7",
     "prettier-tslint": "^0.4.0",
+    "ts-jest": "^23.0.1",
     "ts-node": "^7.0.0",
-    "tsc-watch": "^1.0.22",
     "tslint": "^5.10.0",
     "tslint-config-airbnb": "^5.9.2",
     "typescript": "2.9.2"
@@ -65,5 +75,31 @@
         }
       ]
     ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      "\\.(ts|tsx)$": "ts-jest"
+    },
+    "roots": [
+      "src/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "./dist"
+    ],
+    "coverageReporters": [
+      "lcov",
+      "html"
+    ],
+    "moduleNameMapper": {
+      "^mongoose$": "<rootDir>/node_modules/mongoose"
+    }
   }
 }

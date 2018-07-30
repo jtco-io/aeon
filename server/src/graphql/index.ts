@@ -1,4 +1,4 @@
-import { Users } from "./models";
+import { Users } from "../database/models";
 const books = [
   {
     title: "Harry Potter and the Chamber of Secrets",
@@ -10,20 +10,15 @@ const books = [
   },
 ];
 
-const resolvers = {
+export const resolvers = {
   Query: {
     helloWorld: () => "Hello World from the GraphQL Server!",
     books: () => books,
     users: async () => {
-      return Users.fetchAll().then(collection => {
-        const users = [];
-        collection.map(user => {
-          users.push(user.attributes);
-        });
-        return users;
-      });
+      const users = await Users.query();
+      console.log(users);
+
+      return users;
     },
   },
 };
-
-export default resolvers;

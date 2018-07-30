@@ -3,6 +3,12 @@ variables:
 
 stages:
   - test_whitebox
+  - build
+
+variables:
+  CLIENT_PORT: 8080
+  SERVER_HOST: localhost
+  SERVER_PORT: 8081
 
 test_whitebox:
   stage: test_whitebox
@@ -13,12 +19,34 @@ test_whitebox:
     - server/node_modules/
     - client/node_modules/
   before_script:
-   - yarn install
-   - cd ./client && yarn install
-   - cd ../server && yarn install
-   - cd ../
+    - yarn install
+    - cd ./client && yarn install
+    - cd ../server && yarn install
+    - cd ../
+    - yarn run lint
+    - yarn run build
+    - yarn run prod:start:background
+    - sleep 3s
   script:
-   - yarn run lint
+    - curl http://$SERVER_HOST:$CLIENT_PORT
   after_script:
-   - echo 'Prion brought to you by JTCO and JTX'
-   - echo 'To see more check out jtco.io and jtronics.exchange'
+    - echo 'Prion brought to you by JTCO and JTX'
+    - echo 'To see more check out jtco.io and jtronics.exchange'
+
+build:
+  stage: build
+  image: ncrmro/ci-compose:latest
+  variables:
+    SERVER_HOST: docker
+  services:
+      - docker:dind
+  before_script:
+    - yarn run dc:build
+    - yarn run dc:start -d
+    - sleep 3s
+  script:
+    - curl http://$SERVER_HOST:$CLIENT_PORT
+  after_script:
+    - yarn run dc down
+    - echo 'Prion brought to you by JTCO and JTX'
+    - echo 'To see more check out jtco.io and jtronics.exchange'
