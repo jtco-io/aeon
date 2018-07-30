@@ -23,7 +23,7 @@ function serverPreflight(config: Config): void {
 
 function serverOnListen(config: Config, url: string) {
   logTwoTone("GraphQL Server:", `             Now Accepting Connections`);
-  logTwoTone("URL is:", `                     ${url}${config.env.GRAPHQL_URL}`);
+  logTwoTone("URL is:", `                     ${config.env.GRAPHQL_URL}`);
 }
 
 const log = {

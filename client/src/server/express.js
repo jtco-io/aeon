@@ -2,12 +2,11 @@ const {resolve, join} = require('path')
 
 const
   clientServerDir = resolve(__dirname),
-  clientDir = resolve(clientServerDir, "..", ".."),
-  clientSrcDir = resolve(clientDir, "src"),
+  clientSrcDir = resolve(clientServerDir, ".."),
+  clientDir = resolve(clientSrcDir, ".."),
   clientBuildDir = resolve(clientDir, "build"),
   projRoot = resolve(clientDir, ".."),
   envFile = resolve(projRoot, ".env")
-
 
 require('dotenv').config({path: envFile})
 
@@ -49,9 +48,9 @@ if (!PROD) {
   // gql server
 } else {
   const
-    CLIENT_ASSETS_DIR = join(clientDir, "./build/client"),
+    CLIENT_ASSETS_DIR = join(clientBuildDir, "./client"),
     CLIENT_STATS_PATH = join(CLIENT_ASSETS_DIR, "stats.json"),
-    SERVER_RENDERER_PATH = join(clientDir, "./build/server/index.js");
+    SERVER_RENDERER_PATH = join(clientBuildDir, "./server");
   const
     serverRenderer = require(SERVER_RENDERER_PATH).default,
     stats = require(CLIENT_STATS_PATH);
