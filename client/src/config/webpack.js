@@ -91,6 +91,7 @@ module.exports = [
     },
     output: {
       path: resolve(buildDir, "client"),
+      publicPath: '/public',
       filename: PROD ? '[name].[chunkhash].js' : '[name].js',
       chunkFilename: PROD ? '[name].[chunkhash].chunk.js' : '[name].js',
     },

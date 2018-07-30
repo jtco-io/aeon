@@ -33,7 +33,7 @@ if (!PROD) {
   app.use(
     webpackDevMiddleware(compiler, {
       serverSideRender: true,
-      publicPath: '/',
+      publicPath: '/public',
       //stats: 'minimal'
     })
   );

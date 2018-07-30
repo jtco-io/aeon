@@ -1,5 +1,4 @@
-ARG IMAGE=node:9.6.1-alpine
-ARG REACT_APP_GRAPHQL_URL=server:4000
+ARG IMAGE=node:carbon
 
 FROM $IMAGE as base-selenium
 

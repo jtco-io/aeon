@@ -1,9 +1,8 @@
-import { driver } from '../helpers'
-import { load } from '../pageObjects/index'
+import { loadSeleniumInitialPage } from '../pageObjects/index'
 
 describe('index', () => {
   it('should show the right title', async () => {
-    await load()
-    expect(await driver.getTitle()).toBe('Advanced React Boilerplate')
+    const driver = await loadSeleniumInitialPage()
+    expect(await driver.getTitle()).toBe('Prion')
   })
 })
