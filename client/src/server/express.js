@@ -12,7 +12,7 @@ const
 require('dotenv').config({path: envFile})
 
 const
-  port = process.env.BACKEND_PORT || 8080,
+  port = process.env.FRONTEND_PORT || 8080,
   PROD = process.env.NODE_ENV === "production"
 
 const
