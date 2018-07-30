@@ -31,7 +31,8 @@
     "lint": "cd ./client && yarn run lint && cd ../server && yarn run lint",
     "precommit": "cd ./server && yarn run precommit && cd ../client && yarn run precommit",
     "prepush": "cd ./server && yarn run prepush && cd ../client && yarn run prepush",
-    "install:all": "yarn && cd ./client && yarn && cd ../server && yarn"
+    "install:all": "yarn && cd ./client && yarn && cd ../server && yarn",
+    "upgrade:all": "yarn upgrade && cd ./client && yarn upgrade && cd ../server && yarn upgrade"
   },
   "dependencies": {},
   "devDependencies": {

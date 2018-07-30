@@ -106,6 +106,7 @@ The .env file is to be read based on the client and server configuartion.
 Thhe following command will install all required Node.JS dependencies.
 
 `yarn run install:all`
+`yarn run upgrade:all`
 
 #### Starting Development Server
 
