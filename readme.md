@@ -1,5 +1,9 @@
 A boilerplate featuring a client built using React fetching data from an apollo graphql server.
 
+
+* Master [![build status](https://gitlab.com/ncrmro/prion/badges/master/build.svg)](https://gitlab.com/ncrmro/prion/commits/master)
+* Development [![build status](https://gitlab.com/ncrmro/prion/badges/development/build.svg)](https://gitlab.com/ncrmro/prion/commits/development)
+
 It is automatically prettiefied, linted, and unit tested using jest both pre-commit and in CI.
 
 ## Stack
