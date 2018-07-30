@@ -3,6 +3,14 @@ import { resolvers } from "./graphql";
 import { typeDefs } from "./typeDefs";
 import config from "./config";
 import { log, Database } from "./lib";
+import { resolve } from "path";
+
+const dotenv = require("dotenv");
+
+const srcDir = resolve(__dirname),
+  envFile = resolve(srcDir, "..", ".env");
+console.log(envFile);
+dotenv.config({ path: envFile });
 
 async function startServer(): Promise<void> {
   await log.serverPreflight(config);
@@ -25,7 +33,7 @@ async function startServer(): Promise<void> {
   });
 
   server
-    .listen(config.serverPort, config.serverHost)
+    .listen(config.env.backend.graphql.port, config.env.backend.graphql.host)
     .then(({ url }: { url: string }) => log.serverOnListen(config, url));
 }
 
