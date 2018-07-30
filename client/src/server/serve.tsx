@@ -29,7 +29,7 @@ export function serverRenderer({ clientStats }: any): any {
         const html = (
           <Html
             content={content}
-            title={config.projTitle}
+            title={config.env.PROJECT_TITLE}
             clientStats={clientStats}
             apolloClient={apolloClient}
           />

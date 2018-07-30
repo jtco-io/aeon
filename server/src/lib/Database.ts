@@ -4,15 +4,15 @@ import { log } from "../lib";
 import { Config } from "../config";
 
 export default class Database {
-  environment: Config["NODE_ENV"];
+  environment: any;
   isProd: boolean;
   knexConfig: any;
   initialized: boolean;
   knex: Knex;
 
   constructor(config: Config, knexConfig) {
-    this.environment = config.NODE_ENV;
-    this.isProd = config.isProd;
+    this.environment = config.env.NODE_ENV;
+    this.isProd = config.env.PRODUCTION;
     this.knexConfig = this.getConfig(knexConfig);
     this.initialized = false;
   }

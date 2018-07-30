@@ -137,6 +137,19 @@ Code is quickly checked pre commit and more extensively testing during CI.
 ### CI
 The first CI stage will run the same commands as pre-commit, while the second stage runs selenium test.
 
+### Workflow
+
+1. Identifity Feature or Issue
+1. Create Issue on Gitlab
+  * Create Merge Request and Branch
+  * Or Make Sure Development branch is up to date
+    * Make new branch and push to Gitlab to have initial CI confirmation.
+1. Identify general files than will need to be changed marking with todos, or comments and move to changelist if needed
+1. Confirm these line up with orginal Feature or Issue intent
+1. Move and Rename files if needed without changed features or visa versa
+1. Confirm every thing works and commit initial changes
+1. Rename, move or add any features not added in initial round.
+1. Commit further changes
 
 # Further Reading
 
