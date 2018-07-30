@@ -1,10 +1,10 @@
-declare var __PRODUCTION__: boolean;
-declare var __PROJECT_TITLE__: string;
-declare var __GRAPHQL_URL__: string;
-declare var __FRONTEND_PORT__: number;
-declare var __FRONTEND_HOST__: string;
-declare var __BACKEND_PORT__: number;
-declare var __BACKEND_HOST__: string;
+declare const __PRODUCTION__: boolean;
+declare const __PROJECT_TITLE__: string;
+declare const __GRAPHQL_URL__: string;
+declare const __FRONTEND_PORT__: number;
+declare const __FRONTEND_HOST__: string;
+declare const __BACKEND_PORT__: number;
+declare const __BACKEND_HOST__: string;
 
 export interface Env {
   PRODUCTION: boolean;
@@ -40,5 +40,4 @@ export const env: Env = {
   },
 };
 
-console.log("env", env);
 export default env;

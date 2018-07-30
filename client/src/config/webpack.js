@@ -1,66 +1,48 @@
 const webpack = require('webpack')
+const dotenv = require('dotenv')
+const { resolve } = require('path')
 const { StatsWriterPlugin } = require("webpack-stats-plugin")
-
-const {resolve, join} = require('path')
 
 
 const
   clientDir = resolve(__dirname, "..", ".."),
   buildDir = resolve(clientDir, "build"),
-  clientSrc = resolve(clientDir, 'src')
+  clientSrc = resolve(clientDir, 'src'),
+  envFile = resolve(clientDir, '..', '.env')
 
-const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development',
-  DEV = mode !== 'production',
+require('dotenv').config({path: envFile})
+
+const
+  env = process.env,
+  mode = env.NODE_ENV === 'production' ? 'production' : 'development',
   PROD = mode === 'production'
 
-const alias = {
-  config: resolve(clientSrc, 'config'),
-  screens: resolve(clientSrc, 'screens'),
-  shared: resolve(clientSrc, 'shared'),
-  publicDir: resolve(clientSrc, 'public')
+
+const environmentVariables = {
+  '__PRODUCTION__': JSON.stringify(mode),
+  '__PROJECT_TITLE__': JSON.stringify('Prion'),
+  '__GRAPHQL_URL__': JSON.stringify(env.GRAPHQL_URL),
+  '__FRONTEND_HOST__': JSON.stringify(env.FRONTEND_HOST),
+  '__FRONTEND_PORT__': JSON.stringify(env.FRONTEND_PORT),
+  '__BACKEND_HOST__': JSON.stringify(env.BACKEND_HOST),
+  '__BACKEND_PORT__': JSON.stringify(env.BACKEND_PORT),
 }
 
-const plugins = [
-  new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify(DEV ? 'development' : 'production')
-  }),
-]
-
-const moduleRules = {
-  rules: [
-    {
-      test: /\.tsx?$/,
-      use: 'ts-loader',
-      exclude: /node_modules/,
-    }
-  ],
-}
-const optimization = {
-  splitChunks: {
-    cacheGroups: {
-      vendor: {
-        chunks: 'initial',
-        name: 'vendor',
-        test: 'vendor',
-        enforce: true
-      }
-    }
-  },
-  runtimeChunk: true
-}
 
 const clientPlugins = [
   new webpack.DefinePlugin({
-    GRAPHQL_URL: JSON.stringify(process.env.GRAPHQL_URL),
-    __CLIENT_TRUE__: true,
+    ...environmentVariables,
+    __CLIENT_TRUE__: JSON.stringify(true),
   }),
   new StatsWriterPlugin({
     filename: "stats.json" // Default
   })
 ]
 
+let clientEntry = [
+  resolve(clientSrc, 'index.tsx')
+]
 if (PROD) {
-  clientEntry = resolve(clientSrc, 'index.tsx')
   clientPlugins.push(
     new webpack.HashedModuleIdsPlugin()
   )
@@ -68,11 +50,27 @@ if (PROD) {
   clientEntry = [
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
-    resolve(clientSrc, 'index.tsx')
+    ...clientEntry
   ]
   clientPlugins.push(
     new webpack.HotModuleReplacementPlugin()
   )
+}
+const moduleRules = {
+  rules: [
+    {
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /node_modules/,
+    }
+  ]
+}
+
+const alias = {
+  config: resolve(clientSrc, 'config'),
+  screens: resolve(clientSrc, 'screens'),
+  shared: resolve(clientSrc, 'shared'),
+  publicDir: resolve(clientSrc, 'public')
 }
 
 module.exports = [
@@ -95,7 +93,19 @@ module.exports = [
       filename: PROD ? '[name].[chunkhash].js' : '[name].js',
       chunkFilename: PROD ? '[name].[chunkhash].chunk.js' : '[name].js',
     },
-    optimization,
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            chunks: 'initial',
+            name: 'vendor',
+            test: 'vendor',
+            enforce: true
+          }
+        }
+      },
+      runtimeChunk: true
+    },
     plugins: clientPlugins,
     module: moduleRules,
     resolve: {
@@ -123,7 +133,9 @@ module.exports = [
     },
     module: moduleRules,
     plugins: [
-      ...plugins
+      new webpack.DefinePlugin({
+        ...environmentVariables
+      })
     ],
     resolve: {
       extensions: ['.js', '.ts', '.tsx'],
