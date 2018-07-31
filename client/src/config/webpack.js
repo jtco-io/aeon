@@ -83,7 +83,7 @@ module.exports = [
       vendor: ['react', 'react-dom', 'history', 'react-router'],
       client: clientEntry
     },
-    devtool: !PROD ? 'cheap-module-source-map' : 'source-map',
+    devtool: !PROD ? 'inline-source-map' : 'source-map',
     devServer: {
       hot: true
     },
