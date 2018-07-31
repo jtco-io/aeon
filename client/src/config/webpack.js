@@ -8,6 +8,7 @@ const
   clientDir = resolve(__dirname, "..", ".."),
   buildDir = resolve(clientDir, "build"),
   clientSrc = resolve(clientDir, 'src'),
+  clientAssets = resolve(clientSrc, 'assets'),
   envFile = resolve(clientDir, '..', '.env')
 
 require('dotenv').config({path: envFile})
@@ -28,8 +29,8 @@ const environmentVariables = {
   '__BACKEND_PORT__': JSON.stringify(env.BACKEND_PORT),
 }
 
-
 const clientPlugins = [
+  new webpack.HashedModuleIdsPlugin(),
   new webpack.DefinePlugin({
     ...environmentVariables,
     __CLIENT_TRUE__: JSON.stringify(true),
@@ -43,9 +44,7 @@ let clientEntry = [
   resolve(clientSrc, 'index.tsx')
 ]
 if (PROD) {
-  clientPlugins.push(
-    new webpack.HashedModuleIdsPlugin()
-  )
+  clientPlugins.push()
 } else if (!PROD) {
   clientEntry = [
     'react-hot-loader/patch',
@@ -81,7 +80,7 @@ module.exports = [
     stats: true,
     entry: {
       vendor: ['react', 'react-dom', 'history', 'react-router'],
-      client: clientEntry
+      app: clientEntry
     },
     devtool: !PROD ? 'inline-source-map' : 'source-map',
     devServer: {
@@ -89,9 +88,9 @@ module.exports = [
     },
     output: {
       path: resolve(buildDir, "client"),
-      publicPath: '/public',
-      filename: PROD ? '[name].[chunkhash].js' : '[name].js',
-      chunkFilename: PROD ? '[name].[chunkhash].chunk.js' : '[name].js',
+      publicPath: '/',
+      filename: PROD ? '[name].[chunkhash].js' : '[name].[hash].js',
+      chunkFilename: PROD ? '[name].[chunkhash].chunk.js' : '[name].[hash].js',
     },
     optimization: {
       splitChunks: {

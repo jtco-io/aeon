@@ -1,30 +1,6 @@
 import * as React from "react";
 import createStore from "../shared/util/createStore";
-
-interface WebpackAsset {
-  chunkNames: any;
-  chunks: any;
-  emitted: any;
-  name: string;
-  size: number;
-}
-interface WebpackChunk {
-  entry: boolean;
-  files: any;
-  filteredModules: number;
-  id: number;
-  initial: boolean;
-  modules: any;
-  names: any;
-  origins: any;
-  parents: any;
-  rendered: boolean;
-  size: number;
-}
-interface WebpackClientStats {
-  assets: WebpackAsset[];
-  chunks: WebpackChunk[];
-}
+import WebpackStatsTransformer, { WebpackClientStats } from "../shared/util/WebpackStatsTransformer";
 
 interface HtmlProps {
   content: any;
@@ -34,6 +10,12 @@ interface HtmlProps {
 }
 
 class Html extends React.Component<HtmlProps, {}> {
+  assets: any
+  constructor(props: HtmlProps){
+    super(props)
+    this.assets = new WebpackStatsTransformer(props.clientStats)
+  }
+
   private initializeState() {
     const { apolloClient } = this.props;
     return (
@@ -48,15 +30,11 @@ class Html extends React.Component<HtmlProps, {}> {
   }
 
   private jsAssets(): any {
-    function isJS(asset: WebpackAsset): boolean {
-      return Boolean(asset.name.match(/\S+.js(?!.)/));
-    }
-    const jsAssets = this.props.clientStats.assets.filter(isJS);
-
-    return jsAssets.map(asset => (
-      <script key={asset.name} src={`/public/${asset.name}`} />
+    return this.assets.filenames.js.map((filename: string) => (
+      <script key={filename} src={`/${filename}`} />
     ));
   }
+
 
   public render(): JSX.Element {
     const { content, title } = this.props;
