@@ -3,7 +3,6 @@ const dotenv = require('dotenv')
 const { resolve } = require('path')
 const { StatsWriterPlugin } = require("webpack-stats-plugin")
 
-
 const
   clientDir = resolve(__dirname, "..", ".."),
   buildDir = resolve(clientDir, "build"),
@@ -27,6 +26,7 @@ const environmentVariables = {
   '__FRONTEND_PORT__': JSON.stringify(env.FRONTEND_PORT),
   '__BACKEND_HOST__': JSON.stringify(env.BACKEND_HOST),
   '__BACKEND_PORT__': JSON.stringify(env.BACKEND_PORT),
+  '__HTTPS__': JSON.stringify(env.HTTPS),
 }
 
 const clientPlugins = [

@@ -3,9 +3,11 @@ import createStore from "../shared/util/createStore";
 import WebpackStatsTransformer, {
   WebpackClientStats,
 } from "../shared/util/WebpackStatsTransformer";
+import { Config } from "../config";
 
 interface HtmlProps {
   content: any;
+  config: Config;
   title: string;
   apolloClient: any;
   clientStats: WebpackClientStats;
@@ -15,7 +17,7 @@ class Html extends React.Component<HtmlProps, {}> {
   assets: any;
   constructor(props: HtmlProps) {
     super(props);
-    this.assets = new WebpackStatsTransformer(props.clientStats);
+    this.assets = new WebpackStatsTransformer(props.config, props.clientStats);
   }
 
   private initializeState() {
