@@ -42,10 +42,6 @@ if (!PROD) {
     )
   );
   app.use(webpackHotServerMiddleware(compiler));
-
-
-  //app = initializeQqlServer(app)
-  // gql server
 } else {
   const
     CLIENT_ASSETS_DIR = join(clientBuildDir, "./client"),
