@@ -24,19 +24,18 @@ export interface WebpackClientStats {
   chunks: WebpackChunk[];
 }
 
-
 class WebpackStatsTransformer {
-  stats:  WebpackClientStats
+  stats: WebpackClientStats;
   filenames: {
-    js: string[]
-    img?: string[]
-  }
+    js: string[];
+    img?: string[];
+  };
 
   constructor(stats: WebpackClientStats) {
-    this.stats = stats
+    this.stats = stats;
     this.filenames = {
-      js: this.jsAssets()
-    }
+      js: this.jsAssets(),
+    };
   }
 
   private jsAssets(): any {
@@ -46,9 +45,6 @@ class WebpackStatsTransformer {
 
     return this.stats.assets.filter(isJS).map(asset => asset.name);
   }
-
-
-
 }
 
-export default WebpackStatsTransformer
+export default WebpackStatsTransformer;

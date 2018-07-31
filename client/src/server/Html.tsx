@@ -1,6 +1,8 @@
 import * as React from "react";
 import createStore from "../shared/util/createStore";
-import WebpackStatsTransformer, { WebpackClientStats } from "../shared/util/WebpackStatsTransformer";
+import WebpackStatsTransformer, {
+  WebpackClientStats,
+} from "../shared/util/WebpackStatsTransformer";
 
 interface HtmlProps {
   content: any;
@@ -10,10 +12,10 @@ interface HtmlProps {
 }
 
 class Html extends React.Component<HtmlProps, {}> {
-  assets: any
-  constructor(props: HtmlProps){
-    super(props)
-    this.assets = new WebpackStatsTransformer(props.clientStats)
+  assets: any;
+  constructor(props: HtmlProps) {
+    super(props);
+    this.assets = new WebpackStatsTransformer(props.clientStats);
   }
 
   private initializeState() {
@@ -34,7 +36,6 @@ class Html extends React.Component<HtmlProps, {}> {
       <script key={filename} src={`/${filename}`} />
     ));
   }
-
 
   public render(): JSX.Element {
     const { content, title } = this.props;
