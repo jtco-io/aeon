@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-import { Config } from "../../config";
+import { Config } from "../config";
 
 interface WebpackAsset {
   chunkNames: any;
@@ -27,29 +27,16 @@ export interface WebpackClientStats {
   chunks: WebpackChunk[];
 }
 
-function fetchFile(url: string) {
-  const options = {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    // body: JSON.stringify(data)
-  };
-
-  function handleJson(data: any) {
-    console.log(data.origin, data.json);
-  }
-
-  return fetch(url, options)
-    .then((response: any) => response.json())
-    .then(handleJson)
-    .catch(console.log);
+async function requestURL(url: any): Promise<any> {
+  const response = await fetch(url);
+  return await response.json();
 }
 
 class WebpackStatsTransformer {
   config: Config;
   stats: WebpackClientStats;
+  manifestURL: string;
+  manifest: any;
   filenames: {
     js: string[];
     img?: string[];
@@ -59,23 +46,48 @@ class WebpackStatsTransformer {
   constructor(config: Config, stats: WebpackClientStats) {
     this.config = config;
     this.stats = stats;
+    this.manifestURL = this.getManifestURL();
     this.filenames = {
       js: this.jsAssets(),
-      manifest: this.getManifest(),
+      img: this.imageAssets(),
+      // manifest,
     };
-    console.log("filenames", this.filenames);
-    console.log("filenames", this.config.env);
   }
 
-  private jsAssets(): any {
+  public async initialize() {
+    this.filenames.manifest = await this.fetchManifest();
+  }
+
+  private jsAssets(): string[] {
     function isJS(asset: WebpackAsset): boolean {
+      if (asset.name === "sw.js") {
+        return false;
+      }
       return Boolean(asset.name.match(/\S+.js(?!.)/));
     }
 
     return this.stats.assets.filter(isJS).map(asset => asset.name);
   }
 
-  private getManifest(): any {
+  private imageAssets(): string[] {
+    function isImage(asset: WebpackAsset): boolean {
+      return Boolean(asset.name.match(/\S+.png(?!.)/));
+    }
+
+    function getSize(filename: string): any {
+      return filename.match(/\d+(?=x)/)[0];
+    }
+
+    const nextImages: any = [];
+    let images = this.stats.assets.filter(isImage).map(asset => asset.name);
+    images.map(image => {
+      nextImages.push({ size: getSize(image), file: image });
+    });
+
+    return nextImages;
+  }
+
+  private getManifestURL(): string {
     function isManifest(asset: WebpackAsset): boolean {
       return Boolean(asset.name.match(/manifest.*.json/));
     }
@@ -83,8 +95,11 @@ class WebpackStatsTransformer {
     const manifest = this.stats.assets
       .filter(isManifest)
       .map(asset => asset.name)[0];
+    return `${this.config.env.FRONTEND_URL}/${manifest}`;
+  }
 
-    console.log(fetchFile(manifest));
+  private async fetchManifest(): Promise<any> {
+    return await requestURL(this.manifestURL);
   }
 }
 

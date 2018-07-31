@@ -9,14 +9,20 @@ import Root from "shared/components/Root";
 import Router from "shared/components/Router";
 import GraphQL from "shared/components/GraphQL";
 import createStore from "../shared/util/createStore";
+import WebpackStatsTransformer, {
+  WebpackClientStats,
+} from "./WebpackStatsTransformer";
 
 export function serverRenderer({ clientStats }: any): any {
   // console.log ('clientStats', clientStats)
 
   const context: any = {};
 
-  return (req: any, res: any, next: any): any => {
+  return async (req: any, res: any, next: any): Promise<any> => {
     const apolloClient = createStore(true);
+    const assets = new WebpackStatsTransformer(config, clientStats);
+    await assets.initialize();
+
     const component = (
       <GraphQL client={apolloClient}>
         <Router location={req.url} context={context} isServer>
@@ -30,8 +36,8 @@ export function serverRenderer({ clientStats }: any): any {
           <Html
             content={content}
             config={config}
+            assets={assets}
             title={config.env.PROJECT_TITLE}
-            clientStats={clientStats}
             apolloClient={apolloClient}
           />
         );

@@ -4,7 +4,7 @@ declare const __FRONTEND_PORT__: number;
 declare const __FRONTEND_HOST__: string;
 declare const __BACKEND_PORT__: number;
 declare const __BACKEND_HOST__: string;
-declare const __HTTPS__: boolean;
+declare const __HTTPS__: string;
 
 interface Backend {
   graphql: {
@@ -40,12 +40,13 @@ const backend = {
   },
 };
 
-const isHTTPS = __HTTPS__ ? "https" : "http";
+const HTTPS = __HTTPS__ === "true";
+const isHTTPS = HTTPS ? "https" : "http";
 
 export const env: Env = {
   frontend,
   backend,
-  HTTPS: __HTTPS__,
+  HTTPS,
   PRODUCTION: __PRODUCTION__,
   PROJECT_TITLE: __PROJECT_TITLE__,
   FRONTEND_URL: `${isHTTPS}://${frontend.host}:${frontend.port}`,

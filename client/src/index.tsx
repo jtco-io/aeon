@@ -7,12 +7,12 @@ import Root from "shared/components/Root";
 import GraphQL from "shared/components/GraphQL";
 import Router from "shared/components/Router";
 import createStore from "shared/util/createStore";
-// import ServiceWorker from 'shared/util/ServiceWorker'
+import ServiceWorker from "shared/util/ServiceWorker";
 
 const props = {
   apolloClient: createStore(),
   history: createBrowserHistory(),
-  //  serviceWorker: new ServiceWorker().install()
+  serviceWorker: new ServiceWorker().install(),
 };
 
 hydrate(

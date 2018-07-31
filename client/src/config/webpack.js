@@ -1,17 +1,17 @@
 const webpack = require('webpack')
 const dotenv = require('dotenv')
-const WebpackPwaManifest = require('webpack-pwa-manifest')
+const getClientPlugins =require('./webpack.clientPlugins')
 const { resolve } = require('path')
-const { StatsWriterPlugin } = require("webpack-stats-plugin")
 
-const
-  clientDir = resolve(__dirname, "..", ".."),
-  buildDir = resolve(clientDir, "build"),
-  clientSrc = resolve(clientDir, 'src'),
-  clientAssets = resolve(clientSrc, 'assets'),
-  envFile = resolve(clientDir, '..', '.env')
+const clientDir = resolve(__dirname, "..", "..")
 
-require('dotenv').config({path: envFile})
+const dirs = {
+  client: clientDir,
+  build: resolve(clientDir, "build"),
+  src: resolve(clientDir, 'src'),
+  assets: resolve(clientDir, 'src', 'assets'),
+}
+require('dotenv').config({path: resolve(clientDir, '..', '.env')})
 
 const
   env = process.env,
@@ -30,43 +30,16 @@ const environmentVariables = {
   '__HTTPS__': JSON.stringify(env.HTTPS),
 }
 
-const clientPlugins = [
-  new webpack.HashedModuleIdsPlugin(),
-  new webpack.DefinePlugin({
-    ...environmentVariables,
-    __CLIENT_TRUE__: JSON.stringify(true),
-  }),
-  new StatsWriterPlugin({
-    filename: "stats.json" // Default
-  }),
-  new WebpackPwaManifest({
-    name: env.PROJECT_TITLE,
-    short_name: env.PROJECT_TITLE,
-    description: 'A cutting edge Node.JS and React single page application boilerplate!',
-    background_color: '#ffffff',
-    icons: [
-      {
-        src: resolve(clientAssets, 'favicon.png'),
-        sizes: [96, 128, 192, 256, 384, 512, 1024]
-      }
-    ]
-  })
-]
 
 let clientEntry = [
-  resolve(clientSrc, 'index.tsx')
+  resolve(dirs.src, 'index.tsx')
 ]
-if (PROD) {
-  clientPlugins.push()
-} else if (!PROD) {
+if (!PROD) {
   clientEntry = [
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
     ...clientEntry
   ]
-  clientPlugins.push(
-    new webpack.HotModuleReplacementPlugin()
-  )
 }
 const moduleRules = {
   rules: [
@@ -79,10 +52,10 @@ const moduleRules = {
 }
 
 const alias = {
-  config: resolve(clientSrc, 'config'),
-  screens: resolve(clientSrc, 'screens'),
-  shared: resolve(clientSrc, 'shared'),
-  publicDir: resolve(clientSrc, 'public')
+  config: resolve(dirs.src, 'config'),
+  screens: resolve(dirs.src, 'screens'),
+  shared: resolve(dirs.src, 'shared'),
+  publicDir: resolve(dirs.src, 'public')
 }
 
 module.exports = [
@@ -100,7 +73,7 @@ module.exports = [
       hot: true
     },
     output: {
-      path: resolve(buildDir, "client"),
+      path: resolve(dirs.build, "client"),
       publicPath: '/',
       filename: PROD ? '[name].[chunkhash].js' : '[name].[hash].js',
       chunkFilename: PROD ? '[name].[chunkhash].chunk.js' : '[name].[hash].js',
@@ -118,7 +91,7 @@ module.exports = [
       },
       runtimeChunk: true
     },
-    plugins: clientPlugins,
+    plugins: getClientPlugins(PROD, environmentVariables, dirs),
     module: moduleRules,
     resolve: {
       extensions: ['.js', '.ts', '.tsx'],
@@ -129,10 +102,10 @@ module.exports = [
     name: 'server',
     target: 'node',
     mode,
-    entry: resolve(clientSrc, 'server', 'serve.tsx'),
+    entry: resolve(dirs.src, 'server', 'serve.tsx'),
     devtool: PROD ? 'cheap-module-source-map' : 'source-map',
     output: {
-      path: resolve(buildDir, "server"),
+      path: resolve(dirs.build, "server"),
       filename: 'index.js',
       libraryTarget: 'commonjs2'
     },

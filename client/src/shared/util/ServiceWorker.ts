@@ -1,4 +1,4 @@
-// import * as OfflinePluginRuntime from "offline-plugin/runtime";
+import * as OfflinePluginRuntime from "offline-plugin/runtime";
 
 class ServiceWorker {
   config: {
@@ -27,7 +27,7 @@ class ServiceWorker {
 
   private onUpdateReady(): any {
     console.log("onUpdateReady");
-    // OfflinePluginRuntime.applyUpdate();
+    OfflinePluginRuntime.applyUpdate();
   }
 
   private onUpdated(): any {
@@ -36,7 +36,7 @@ class ServiceWorker {
   }
 
   public install(): any {
-    // OfflinePluginRuntime.install(this.config);
+    OfflinePluginRuntime.install(this.config);
   }
 }
 
