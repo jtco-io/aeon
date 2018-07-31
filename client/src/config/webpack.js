@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const dotenv = require('dotenv')
+const WebpackPwaManifest = require('webpack-pwa-manifest')
 const { resolve } = require('path')
 const { StatsWriterPlugin } = require("webpack-stats-plugin")
 
@@ -37,6 +38,18 @@ const clientPlugins = [
   }),
   new StatsWriterPlugin({
     filename: "stats.json" // Default
+  }),
+  new WebpackPwaManifest({
+    name: env.PROJECT_TITLE,
+    short_name: env.PROJECT_TITLE,
+    description: 'A cutting edge Node.JS and React single page application boilerplate!',
+    background_color: '#ffffff',
+    icons: [
+      {
+        src: resolve(clientAssets, 'favicon.png'),
+        sizes: [96, 128, 192, 256, 384, 512, 1024]
+      }
+    ]
   })
 ]
 
