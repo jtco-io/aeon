@@ -29,7 +29,6 @@ const {
   HTTPS,
 } = process.env;
 
-
 interface Backend {
   graphql: {
     host: string;
@@ -50,31 +49,30 @@ export interface Env {
   GRAPHQL_URL: string;
   backend: Backend;
   frontend: Frontend;
-  HTTPS: boolean,
+  HTTPS: boolean;
 }
 
 const frontend = {
-  host: FRONTEND_HOST||"localhost",
-  port: FRONTEND_PORT||8080,
-}
-
+  host: FRONTEND_HOST || "localhost",
+  port: FRONTEND_PORT || 8080,
+};
 
 const backend = {
   graphql: {
-    host: BACKEND_HOST||"localhost",
-    port: BACKEND_PORT||8081,
+    host: BACKEND_HOST || "localhost",
+    port: BACKEND_PORT || 8081,
     directory: "graphql",
-  }
-}
+  },
+};
 
-const isHTTPS = HTTPS ? 'https' : 'http'
+const isHTTPS = HTTPS ? "https" : "http";
 
 export const env: Env = {
   NODE_ENV,
   PROJECT_TITLE,
   frontend,
   backend,
-  HTTPS: HTTPS,
+  HTTPS,
   PRODUCTION: NODE_ENV === "production",
   FRONTEND_URL: `${isHTTPS}://${frontend.host}:${frontend.port}`,
   GRAPHQL_URL: `${isHTTPS}://${backend.graphql.host}:${backend.graphql.port}`,

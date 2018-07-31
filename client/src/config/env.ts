@@ -1,10 +1,10 @@
-declare const __PRODUCTION__:boolean;
-declare const __PROJECT_TITLE__:string;
-declare const __FRONTEND_PORT__:number;
-declare const __FRONTEND_HOST__:string;
-declare const __BACKEND_PORT__:number;
-declare const __BACKEND_HOST__:string;
-declare const __HTTPS__:boolean;
+declare const __PRODUCTION__: boolean;
+declare const __PROJECT_TITLE__: string;
+declare const __FRONTEND_PORT__: number;
+declare const __FRONTEND_HOST__: string;
+declare const __BACKEND_PORT__: number;
+declare const __BACKEND_HOST__: string;
+declare const __HTTPS__: boolean;
 
 interface Backend {
   graphql: {
@@ -24,27 +24,25 @@ export interface Env {
   GRAPHQL_URL: string;
   backend: Backend;
   frontend: Frontend;
-  HTTPS: boolean
+  HTTPS: boolean;
 }
-
 
 const frontend = {
-  host: __FRONTEND_HOST__||"localhost",
-  port: __FRONTEND_PORT__||8080,
-}
-
+  host: __FRONTEND_HOST__ || "localhost",
+  port: __FRONTEND_PORT__ || 8080,
+};
 
 const backend = {
   graphql: {
-    host: __BACKEND_HOST__||"localhost",
-    port: __BACKEND_PORT__||8081,
+    host: __BACKEND_HOST__ || "localhost",
+    port: __BACKEND_PORT__ || 8081,
     directory: "graphql",
-  }
-}
+  },
+};
 
-const isHTTPS = __HTTPS__ ? 'https' : 'http'
+const isHTTPS = __HTTPS__ ? "https" : "http";
 
-export const env:Env = {
+export const env: Env = {
   frontend,
   backend,
   HTTPS: __HTTPS__,
