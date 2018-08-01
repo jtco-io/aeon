@@ -54,7 +54,7 @@ module.exports = function getClientPlugins(PROD, env, dirs){
         //]
       },
       externals: [
-        '/'
+        '/static/'
       ],
       excludes: ['**/*.map', '**/*.*/hot-update.js'],
       ServiceWorker: {

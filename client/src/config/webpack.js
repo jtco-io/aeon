@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 const dotenv = require('dotenv')
-const getClientPlugins =require('./webpack.clientPlugins')
+const getClientPlugins = require('./webpack.clientPlugins')
 const { resolve } = require('path')
 
 const clientDir = resolve(__dirname, "..", "..")
@@ -14,20 +14,25 @@ const dirs = {
 require('dotenv').config({path: resolve(clientDir, '..', '.env')})
 
 const
-  env = process.env,
-  mode = env.NODE_ENV === 'production' ? 'production' : 'development',
+  {stringify} = JSON,
+  env = process.env
+let {NODE_ENV, PROJECT_TITLE, FRONTEND_HOST, FRONTEND_PORT, BACKEND_HOST, BACKEND_PORT, PUBLIC_PATH, HTTPS } = env
+
+PUBLIC_PATH = PUBLIC_PATH || '/'
+
+const mode = NODE_ENV === 'production' ? 'production' : 'development',
   PROD = mode === 'production'
 
 
 const environmentVariables = {
-  '__PRODUCTION__': JSON.stringify(mode),
-  '__PROJECT_TITLE__': JSON.stringify(env.PROJECT_TITLE),
-  '__GRAPHQL_URL__': JSON.stringify(env.GRAPHQL_URL),
-  '__FRONTEND_HOST__': JSON.stringify(env.FRONTEND_HOST),
-  '__FRONTEND_PORT__': JSON.stringify(env.FRONTEND_PORT),
-  '__BACKEND_HOST__': JSON.stringify(env.BACKEND_HOST),
-  '__BACKEND_PORT__': JSON.stringify(env.BACKEND_PORT),
-  '__HTTPS__': JSON.stringify(env.HTTPS),
+  '__PRODUCTION__': stringify(mode),
+  '__PROJECT_TITLE__': stringify(PROJECT_TITLE),
+  '__FRONTEND_HOST__': stringify(FRONTEND_HOST),
+  '__FRONTEND_PORT__': stringify(FRONTEND_PORT),
+  '__BACKEND_HOST__': stringify(BACKEND_HOST),
+  '__BACKEND_PORT__': stringify(BACKEND_PORT),
+  '__PUBLIC_PATH__': stringify(PUBLIC_PATH),
+  '__HTTPS__': stringify(HTTPS),
 }
 
 
@@ -74,9 +79,9 @@ module.exports = [
     },
     output: {
       path: resolve(dirs.build, "client"),
-      publicPath: '/',
-      filename: PROD ? '[name].[chunkhash].js' : '[name].[hash].js',
-      chunkFilename: PROD ? '[name].[chunkhash].chunk.js' : '[name].[hash].js',
+      publicPath: PUBLIC_PATH + 'bundles',
+      filename: PROD ? '[name].[chunkhash].bundle.js' : '[name].[hash].bundle.js',
+      chunkFilename: PROD ? '[name].[chunkhash].bundle.js' : '[name].[hash].bundle.js',
     },
     optimization: {
       splitChunks: {

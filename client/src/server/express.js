@@ -20,6 +20,15 @@ const
   app = express()
 
 if (!PROD) {
+  const proxy = require('http-proxy-middleware');
+
+  function isSW(pathname, req) {
+    const isSW = /^\Wsw\.js/.test(pathname)
+    return isSW ? true : false
+  }
+
+  app.use(proxy(isSW, { target: 'http://localhost:6080/static/bundles/' }))
+
   const
     webpack = require("webpack"),
     webpackDevMiddleware = require("webpack-dev-middleware"),
@@ -32,7 +41,7 @@ if (!PROD) {
   app.use(
     webpackDevMiddleware(compiler, {
       serverSideRender: true,
-      publicPath: '/public',
+      publicPath: '/static',
       //stats: 'minimal'
     })
   );

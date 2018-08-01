@@ -25,12 +25,6 @@ class Html extends React.Component<HtmlProps, {}> {
     );
   }
 
-  private jsAssets(): any {
-    return this.props.assets.filenames.js.map((filename: string) => (
-      <script key={filename} src={`/${filename}`} />
-    ));
-  }
-
   private mapFavIcons() {
     const faviconSizes = [
       16,
@@ -66,41 +60,49 @@ class Html extends React.Component<HtmlProps, {}> {
     });
   }
 
-  private favicons(): any {
-    const { img } = this.props.assets.filenames;
-
-    return (
-      <React.Fragment>
-        <link
-          rel="apple-touch-icon-precomposed"
-          href={`${img.find((img: any) => 512).file}`}
-        />
-
-        {this.mapFavIcons()}
-
-        <meta name="msapplication-TileColor" content="#FFFFFF" />
-        <meta
-          name="msapplication-TileImage"
-          content={`${img.find((img: any) => 144).file}`}
-        />
-      </React.Fragment>
-    );
-  }
+  // private favicons(): any {
+  //  const { img } = this.props.assets.filenames;
+  //
+  //  return (
+  //    <React.Fragment>
+  //      <link
+  //        rel="apple-touch-icon-precomposed"
+  //        href={`${img.find((img: any) => 512).file}`}
+  //      />
+  //
+  //
+  //
+  //      <meta name="msapplication-TileColor" content="#FFFFFF" />
+  //      <meta
+  //        name="msapplication-TileImage"
+  //        content={`${img.find((img: any) => 144).file}`}
+  //      />
+  //    </React.Fragment>
+  //  );
+  // }
+  // {this.favicons()}
 
   public render(): JSX.Element {
-    const { content, title } = this.props;
+    const {
+      content,
+      title,
+      assets: {
+        byType: { js },
+      },
+    } = this.props;
     return (
       <html>
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>{title}</title>
           <link rel="manifest" href={this.props.assets.manifestURL} />
-          {this.favicons()}
         </head>
         <body>
           <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
           {this.initializeState()}
-          {this.jsAssets()}
+          {js.map((fileURL: string) => (
+            <script key={fileURL} src={fileURL} />
+          ))}
         </body>
       </html>
     );

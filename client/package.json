@@ -20,6 +20,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.3",
+    "http-proxy-middleware": "^0.18.0",
     "prettier": "^1.13.7",
     "prettier-tslint": "^0.4.0",
     "ts-node": "^7.0.0",

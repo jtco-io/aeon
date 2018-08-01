@@ -5,6 +5,7 @@ declare const __FRONTEND_HOST__: string;
 declare const __BACKEND_PORT__: number;
 declare const __BACKEND_HOST__: string;
 declare const __HTTPS__: string;
+declare const __PUBLIC_PATH__: string;
 
 interface Backend {
   graphql: {
@@ -25,6 +26,7 @@ export interface Env {
   backend: Backend;
   frontend: Frontend;
   HTTPS: boolean;
+  PUBLIC_PATH: string;
 }
 
 const frontend = {
@@ -51,6 +53,7 @@ export const env: Env = {
   PROJECT_TITLE: __PROJECT_TITLE__,
   FRONTEND_URL: `${isHTTPS}://${frontend.host}:${frontend.port}`,
   GRAPHQL_URL: `${isHTTPS}://${backend.graphql.host}:${backend.graphql.port}`,
+  PUBLIC_PATH: __PUBLIC_PATH__,
 };
 
 export default env;

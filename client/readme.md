@@ -18,3 +18,8 @@ const props = {
 ```
 
 Import the PWA plugins from webpackPWA.js into the client plugins.
+
+### Further reading
+
+
+[HTTP2](https://github.com/chimurai/http-proxy-middleware/issues/79)

@@ -25,6 +25,7 @@ interface WebpackChunk {
 export interface WebpackClientStats {
   assets: WebpackAsset[];
   chunks: WebpackChunk[];
+  assetsByChunkName: any[];
 }
 
 async function requestURL(url: any): Promise<any> {
@@ -37,8 +38,10 @@ class WebpackStatsTransformer {
   stats: WebpackClientStats;
   manifestURL: string;
   manifest: any;
-  filenames: {
+  chunkNames: string[];
+  byType: {
     js: string[];
+    css: string[];
     img?: string[];
     manifest?: any;
   };
@@ -46,27 +49,32 @@ class WebpackStatsTransformer {
   constructor(config: Config, stats: WebpackClientStats) {
     this.config = config;
     this.stats = stats;
-    this.manifestURL = this.getManifestURL();
-    this.filenames = {
-      js: this.jsAssets(),
-      img: this.imageAssets(),
-      // manifest,
-    };
+    if (!config.env.PRODUCTION) {
+      this.manifestURL = this.getManifestURL();
+    }
+    this.byType = { js: [], css: [], img: [] };
+  }
+
+  getFullBundleUrl(filename: string): string {
+    const { FRONTEND_URL, PUBLIC_PATH } = this.config.env;
+    return `${FRONTEND_URL}${PUBLIC_PATH}bundles/${filename}`;
+  }
+
+  isJS(filename: string): boolean {
+    return Boolean(filename.match(/\S+.js(?!.)/));
   }
 
   public async initialize() {
-    this.filenames.manifest = await this.fetchManifest();
-  }
+    // this.filenames.manifest = await this.fetchManifest ();
 
-  private jsAssets(): string[] {
-    function isJS(asset: WebpackAsset): boolean {
-      if (asset.name === "sw.js") {
-        return false;
-      }
-      return Boolean(asset.name.match(/\S+.js(?!.)/));
+    const { assetsByChunkName } = this.stats;
+    this.chunkNames = Object.keys(assetsByChunkName);
+
+    for (let chunkName in assetsByChunkName) {
+      const filename = assetsByChunkName[chunkName];
+      const fileURL = this.getFullBundleUrl(assetsByChunkName[chunkName]);
+      if (this.isJS(filename)) this.byType.js.push(fileURL);
     }
-
-    return this.stats.assets.filter(isJS).map(asset => asset.name);
   }
 
   private imageAssets(): string[] {
@@ -80,6 +88,7 @@ class WebpackStatsTransformer {
 
     const nextImages: any = [];
     let images = this.stats.assets.filter(isImage).map(asset => asset.name);
+
     images.map(image => {
       nextImages.push({ size: getSize(image), file: image });
     });
