@@ -1,10 +1,11 @@
-import * as webpack from "webpack";
-import * as WebpackPwaManifest from "webpack-pwa-manifest";
-import { StatsWriterPlugin } from "webpack-stats-plugin";
-import * as OfflinePlugin from "offline-plugin";
-const { resolve } = require("path");
+function getClientPlugins(PROD, env, dirs) {
+  const webpack = require('webpack')
+  const WebpackPwaManifest = require('webpack-pwa-manifest')
+  const { StatsWriterPlugin } = require("webpack-stats-plugin")
+  const OfflinePlugin = require('offline-plugin')
+  const { resolve } = require('path')
 
-function getClientPlugins(PROD: boolean, env: any, dirs: any) {
+
   const plugins = [
     new webpack.HashedModuleIdsPlugin(),
     new webpack.DefinePlugin({
@@ -15,10 +16,9 @@ function getClientPlugins(PROD: boolean, env: any, dirs: any) {
       filename: "stats.json", // Default
     }),
     new WebpackPwaManifest({
-      name: env.PROJECT_TITLE,
-      short_name: env.PROJECT_TITLE,
-      description:
-        "A cutting edge Node.JS and React single page application boilerplate!",
+      name: env.__PROJECT_TITLE__,
+      short_name: env.__PROJECT_TITLE__,
+      description: "A cutting edge Node.JS and React single page application boilerplate!",
       background_color: "#ffffff",
       icons: [
         {
@@ -71,9 +71,11 @@ function getClientPlugins(PROD: boolean, env: any, dirs: any) {
         events: true,
         publicPath: "/sw.js",
       },
-    }),
+    })
   );
   return plugins;
 }
 
-export default getClientPlugins;
+module.exports = {
+  getClientPlugins
+}

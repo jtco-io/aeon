@@ -88,10 +88,10 @@ export default class Server {
 
   public start() {
     this.useMiddlewares();
-    function onListen() {
-      console.log(`Client Server listening at: ${this.host}:${this.port}!`);
+    function onListen(host: string, port: number) {
+      console.log(`Client Server listening at: ${host}:${port}!`);
     }
 
-    this.app.listen(this.port, onListen);
+    this.app.listen(this.port, () => onListen(this.host, this.port));
   }
 }

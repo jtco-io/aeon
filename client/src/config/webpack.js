@@ -1,7 +1,6 @@
-import * as webpack from "webpack";
-import { config as dotenv } from "dotenv";
-import getClientPlugins from "./webpack.clientPlugins";
-const { resolve } = require("path");
+const webpack = require('webpack')
+const {getClientPlugins} = require('./webpack.clientPlugins')
+const { resolve } = require('path')
 
 const clientDir = resolve(__dirname, "..", "..");
 
@@ -11,7 +10,8 @@ const dirs = {
   src: resolve(clientDir, "src"),
   assets: resolve(clientDir, "src", "assets"),
 };
-dotenv({ path: resolve(clientDir, "..", ".env") });
+
+require('dotenv').config({path: resolve(clientDir, "..", ".env")});
 
 const { stringify } = JSON,
   env = process.env;
@@ -24,7 +24,7 @@ let {
   BACKEND_PORT,
   PUBLIC_PATH,
   HTTPS,
-} = env;
+  } = env;
 
 PUBLIC_PATH = PUBLIC_PATH || "/";
 
@@ -122,7 +122,7 @@ module.exports = [
       filename: "index.js",
       libraryTarget: "commonjs2",
     },
-    externals: (context: any, request: any, callback: any) => {
+    externals: (context, request, callback) => {
       // Externalize all npm modules.
       if (/^[a-z0-9-][a-z0-9-./]+$/.test(request)) {
         return callback(null, `commonjs ${request}`);
