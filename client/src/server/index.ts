@@ -50,7 +50,7 @@ if (!PROD) {
 } else {
   const CLIENT_ASSETS_DIR = join(clientBuildDir, "./client"),
     CLIENT_STATS_PATH = join(CLIENT_ASSETS_DIR, "stats.json"),
-    SERVER_RENDERER_PATH = join(clientBuildDir, "./server");
+    SERVER_RENDERER_PATH = join(clientBuildDir, "./serveRenderer.tsx");
   const serverRenderer = require(SERVER_RENDERER_PATH).default,
     stats = require(CLIENT_STATS_PATH);
   app.use(express.static(CLIENT_ASSETS_DIR));

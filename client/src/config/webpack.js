@@ -107,7 +107,7 @@ module.exports = [
     name: 'server',
     target: 'node',
     mode,
-    entry: resolve(dirs.src, 'server', 'serve.tsx'),
+    entry: resolve(dirs.src, 'server', 'serveRenderer.tsx'),
     devtool: PROD ? 'cheap-module-source-map' : 'source-map',
     output: {
       path: resolve(dirs.build, "server"),
