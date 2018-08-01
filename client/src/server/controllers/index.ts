@@ -1,13 +1,9 @@
 import { Router } from "express";
 import { serviceWorkerProxyController as ServiceWorkerProxy } from "./swProxy";
 import { webpackDevelopment as WebpackDevelopment } from "./webpackDevelopment";
+import { Controllers } from "../types";
 
-export interface Controllers {
-  ServiceWorkerProxy: Router;
-  WebpackDevelopment: Router;
-}
-
-export const controllers = {
+export const controllers: Controllers = {
   ServiceWorkerProxy,
   WebpackDevelopment,
 };

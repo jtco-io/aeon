@@ -1,8 +1,12 @@
 import { config as dotenv } from "dotenv";
-const { resolve, join } = require("path");
-
-dotenv({ path: join(__dirname, "..", "..", "..", ".env") });
 import { Env } from "../config/env";
+
+import { Router } from "express";
+
+export interface Controllers {
+  ServiceWorkerProxy: any;
+  WebpackDevelopment: any;
+}
 
 export interface DirectoryPaths {
   clientServer: string;
