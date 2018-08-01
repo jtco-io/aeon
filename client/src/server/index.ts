@@ -1,61 +1,96 @@
+import * as express from "express";
+import { Env } from "../config/env";
+import expressControllers from "./controllers";
+import {
+  config,
+  Directory,
+  DirectoryFiles,
+  DirectoryPaths,
+  FrontEndServerConfig,
+} from "./types";
 const { resolve, join } = require("path");
 
-const clientServerDir = resolve(__dirname),
-  clientSrcDir = resolve(clientServerDir, ".."),
-  clientDir = resolve(clientSrcDir, ".."),
-  clientBuildDir = resolve(clientDir, "build"),
-  projRoot = resolve(clientDir, ".."),
-  envFile = resolve(projRoot, ".env");
+class Server {
+  app: express.Application;
+  host: string;
+  port: number;
+  middlewares: any[];
+  config: FrontEndServerConfig;
+  controllers: any;
+  compiler: any;
+  directory: Directory;
 
-require("dotenv").config({ path: envFile });
+  constructor(config: FrontEndServerConfig, controllers: any) {
+    this.app = express();
+    this.host = config.env.frontend.host;
+    this.port = config.env.frontend.port;
+    this.config = config;
+    this.controllers = controllers;
+    this.middlewares = [];
 
-const port = process.env.FRONTEND_PORT || 8080,
-  PROD = process.env.NODE_ENV === "production";
-
-const fallback = require("express-history-api-fallback"),
-  express = require("express"),
-  app = express();
-
-if (!PROD) {
-  const proxy = require("http-proxy-middleware");
-
-  function isSW(pathname: string) {
-    const isSW = /^\Wsw\.js/.test(pathname);
-    return isSW ? true : false;
+    this.initialize();
   }
 
-  app.use(proxy(isSW, { target: "http://localhost:6080/static/bundles/" }));
+  private setDirectories() {
+    const clientServer = resolve(__dirname),
+      src = join(clientServer, ".."),
+      client = join(src, ".."),
+      build = join(client, "build");
 
-  const webpack = require("webpack"),
-    webpackDevMiddleware = require("webpack-dev-middleware"),
-    webpackHotMiddleware = require("webpack-hot-middleware"),
-    webpackHotServerMiddleware = require("webpack-hot-server-middleware"),
-    config = require("../config/webpack.js");
+    const paths: DirectoryPaths = {
+      clientServer,
+      src,
+      client,
+      build,
+      assets: join(build, "./client"),
+      projRoot: resolve(client, ".."),
+    };
+    const files: DirectoryFiles = {
+      stats: join(paths.assets, "stats.json"),
+      serverRenderer: join(paths.assets, "./serverRenderer"),
+    };
+    this.directory = { paths, files };
+  }
 
-  const compiler = webpack(config);
+  private initialize() {
+    this.setDirectories();
+    this.app.use(this.controllers.controllers.ServiceWorkerProxy);
 
-  app.use(
-    webpackDevMiddleware(compiler, {
-      serverSideRender: true,
-      publicPath: "/static",
-      // stats: 'minimal'
-    }),
-  );
-  app.use(
-    webpackHotMiddleware(
-      compiler.compilers.find((compiler: any) => compiler.name === "client"),
-    ),
-  );
-  app.use(webpackHotServerMiddleware(compiler));
-} else {
-  const CLIENT_ASSETS_DIR = join(clientBuildDir, "./client"),
-    CLIENT_STATS_PATH = join(CLIENT_ASSETS_DIR, "stats.json"),
-    SERVER_RENDERER_PATH = join(clientBuildDir, "./serveRenderer.tsx");
-  const serverRenderer = require(SERVER_RENDERER_PATH).default,
-    stats = require(CLIENT_STATS_PATH);
-  app.use(express.static(CLIENT_ASSETS_DIR));
-  app.use(serverRenderer(stats));
+    if (this.config.env.PRODUCTION) {
+      this.getMiddlewaresProduction();
+    } else {
+      this.app.use(WebpackDevelopment(require("../config/webpack")));
+    }
+    this.app.use(require("express-history-api-fallback")("index.html"));
+    this.app.use(require("morgan")("combined"));
+  }
+
+  private addMiddleware(middleware: any) {
+    this.middlewares.push(middleware);
+  }
+
+  public useMiddlewares() {
+    for (let middlewareKey in this.middlewares) {
+      this.app.use(this.middlewares[middlewareKey]);
+    }
+  }
+
+  private getMiddlewaresProduction() {
+    const { paths, files } = this.directory;
+    const SERVER_RENDERER_PATH = join(paths.build, "./serveRenderer.tsx");
+    const serverRenderer = require(SERVER_RENDERER_PATH).default;
+    const stats = require(files.stats);
+
+    this.addMiddleware(express.static(files.stats));
+    this.addMiddleware(serverRenderer(stats));
+  }
+
+  public start() {
+    this.useMiddlewares();
+    this.app.listen(this.port, () =>
+      console.log(`Express now listening on port ${this.port}!`),
+    );
+  }
 }
 
-app.use(fallback("index.html"));
-app.listen(port, () => console.log(`Express now listening on port ${port}!`));
+export default new Server(config, expressControllers).start();

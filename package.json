@@ -34,7 +34,9 @@
     "install:all": "yarn && cd ./client && yarn && cd ../server && yarn",
     "upgrade:all": "yarn upgrade && cd ./client && yarn upgrade && cd ../server && yarn upgrade"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/dotenv": "^4.0.3"
+  },
   "devDependencies": {
     "concurrently": "^3.6.0",
     "husky": "^0.14.3",

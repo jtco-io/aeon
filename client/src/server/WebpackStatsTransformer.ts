@@ -49,7 +49,7 @@ class WebpackStatsTransformer {
   constructor(config: Config, stats: WebpackClientStats) {
     this.config = config;
     this.stats = stats;
-    console.log(Object.keys(this.stats));
+    // console.log(Object.keys(this.stats));
     if (!config.env.PRODUCTION) {
       this.manifestURL = this.getManifestURL();
     }

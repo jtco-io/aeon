@@ -1,7 +1,25 @@
-import { join } from "path";
 import { config as dotenv } from "dotenv";
+const { resolve, join } = require("path");
 
-dotenv({ path: join(__dirname, "..", "..", ".env") });
+dotenv({ path: join(__dirname, "..", "..", "..", ".env") });
+import { Env } from "../config/env";
+
+export interface DirectoryPaths {
+  clientServer: string;
+  src: string;
+  client: string;
+  build: string;
+  assets: string;
+  projRoot: string;
+}
+export interface DirectoryFiles {
+  stats: string;
+  serverRenderer: any;
+}
+export interface Directory {
+  paths: DirectoryPaths;
+  files: DirectoryFiles;
+}
 
 declare const process: {
   ["env"]: {
@@ -16,7 +34,7 @@ declare const process: {
     ["PUBLIC_PATH"]: string;
   };
 };
-const {
+export const {
   NODE_ENV,
   PROJECT_TITLE,
   FRONTEND_HOST,
@@ -27,36 +45,16 @@ const {
   PUBLIC_PATH,
 } = process.env;
 
-interface Backend {
-  graphql: {
-    host: string;
-    port: number;
-    directory: string;
-  };
-}
-interface Frontend {
-  host: string;
-  port: number;
+export interface FrontEndServerConfig {
+  env: Env;
 }
 
-export interface Env {
-  NODE_ENV: string;
-  PRODUCTION: boolean;
-  PROJECT_TITLE: string;
-  FRONTEND_URL: string;
-  GRAPHQL_URL: string;
-  backend: Backend;
-  frontend: Frontend;
-  HTTPS: boolean;
-  PUBLIC_PATH: string;
-}
-
-const frontend = {
+export const frontend = {
   host: FRONTEND_HOST || "localhost",
   port: FRONTEND_PORT || 8080,
 };
 
-const backend = {
+export const backend = {
   graphql: {
     host: BACKEND_HOST || "localhost",
     port: BACKEND_PORT || 8081,
@@ -64,10 +62,9 @@ const backend = {
   },
 };
 
-const isHTTPS = HTTPS ? "https" : "http";
+export const isHTTPS = HTTPS ? "https" : "http";
 
-export const env: Env = {
-  NODE_ENV,
+export const env = {
   PROJECT_TITLE,
   frontend,
   backend,
@@ -77,4 +74,8 @@ export const env: Env = {
   FRONTEND_URL: `${isHTTPS}://${frontend.host}:${frontend.port}`,
   GRAPHQL_URL: `${isHTTPS}://${backend.graphql.host}:${backend.graphql.port}`,
 };
-export default env;
+
+export interface FrontEndServerConfig {
+  env: Env;
+}
+export const config = { env };
