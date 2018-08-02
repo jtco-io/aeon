@@ -90,7 +90,7 @@ export default class Server {
 
   private getMiddlewaresProduction() {
     const { paths, files } = this.directory;
-    const SERVER_RENDERER_PATH = join(paths.build, "./serveRenderer.tsx");
+    const SERVER_RENDERER_PATH = join(paths.build, "server", "./index");
     const serverRenderer = require(SERVER_RENDERER_PATH).default;
     const stats = require(files.stats);
 
