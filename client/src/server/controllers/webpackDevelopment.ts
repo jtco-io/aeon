@@ -13,7 +13,9 @@ export function webpackDevelopment(config: any): Router {
   );
   router.use(
     require("webpack-hot-middleware")(
-      compiler.compilers.find((compiler: any) => compiler.name === "client"),
+      compiler.compilers.find(
+        (compiler: { name: string }) => compiler.name === "client",
+      ),
     ),
   );
 

@@ -1,12 +1,11 @@
 import * as express from "express";
-import { resolve, join } from "path";
-import { Env } from "../config/env";
+import { join, resolve } from "path";
 import {
+  Controllers,
   Directory,
   DirectoryFiles,
   DirectoryPaths,
   FrontEndServerConfig,
-  Controllers,
 } from "./types";
 
 export default class Server {
@@ -16,16 +15,21 @@ export default class Server {
   middlewares: any[];
   config: FrontEndServerConfig;
   controllers: Controllers;
-  compiler: any;
   directory: Directory;
+  webpackConfig: Object;
 
-  constructor(config: FrontEndServerConfig, controllers: Controllers) {
+  constructor(
+    config: FrontEndServerConfig,
+    controllers: Controllers,
+    webpackConfig: Object,
+  ) {
     this.app = express();
     this.host = config.env.frontend.host;
     this.port = config.env.frontend.port;
     this.config = config;
     this.controllers = controllers;
     this.middlewares = [];
+    this.webpackConfig = webpackConfig;
 
     this.initialize();
   }
@@ -51,19 +55,14 @@ export default class Server {
     this.directory = { paths, files };
   }
 
-  private initialize() {
-    this.setDirectories();
-    this.app.use(this.controllers.ServiceWorkerProxy);
+  public start() {
+    this.useMiddlewares();
 
-    if (this.config.env.PRODUCTION) {
-      this.getMiddlewaresProduction();
-    } else {
-      this.app.use(
-        this.controllers.WebpackDevelopment(require("../config/webpack")),
-      );
+    function onListen(host: string, port: number) {
+      console.log(`Client Server listening at: ${host}:${port}!`);
     }
-    this.app.use(require("express-history-api-fallback")("index.html"));
-    this.app.use(require("morgan")("combined"));
+
+    this.app.listen(this.port, () => onListen(this.host, this.port));
   }
 
   private addMiddleware(middleware: any) {
@@ -76,6 +75,19 @@ export default class Server {
     }
   }
 
+  private initialize() {
+    this.setDirectories();
+    this.app.use(this.controllers.ServiceWorkerProxy);
+
+    if (this.config.env.PRODUCTION) {
+      this.getMiddlewaresProduction();
+    } else {
+      this.app.use(this.controllers.WebpackDevelopment(this.webpackConfig));
+    }
+    this.app.use(require("express-history-api-fallback")("index.html"));
+    this.app.use(require("morgan")("combined"));
+  }
+
   private getMiddlewaresProduction() {
     const { paths, files } = this.directory;
     const SERVER_RENDERER_PATH = join(paths.build, "./serveRenderer.tsx");
@@ -84,14 +96,5 @@ export default class Server {
 
     this.addMiddleware(express.static(files.stats));
     this.addMiddleware(serverRenderer(stats));
-  }
-
-  public start() {
-    this.useMiddlewares();
-    function onListen(host: string, port: number) {
-      console.log(`Client Server listening at: ${host}:${port}!`);
-    }
-
-    this.app.listen(this.port, () => onListen(this.host, this.port));
   }
 }

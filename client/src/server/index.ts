@@ -1,15 +1,16 @@
 import { config as dotenv } from "dotenv";
 import { join, resolve } from "path";
-import expressControllers from "./controllers";
 import Server from "./Server";
 
-const envPath = join(resolve(__dirname), "..", "..", "..", ".env");
-dotenv({ path: envPath });
+const projRoot = resolve(__dirname, "..", "..", "..");
+
+dotenv({ path: join(projRoot, ".env") });
 
 const server = new Server(
   // Require Types after dotenv above.
   require("./types").config,
-  expressControllers,
+  require("./controllers").default,
+  require(join(projRoot, "client", "webpack.config.js")),
 );
 
 export default server.start();

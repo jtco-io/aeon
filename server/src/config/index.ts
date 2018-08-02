@@ -7,14 +7,12 @@
 // export { default as subscription } from './subscription';
 import { env, Env } from "./env";
 
+export interface Config {
+  env: Env;
+}
+
 export const config: Config = {
   env,
 };
 
 export default config;
-
-declare module "config" {
-  export interface Config {
-    env: Env;
-  }
-}

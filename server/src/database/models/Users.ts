@@ -123,17 +123,17 @@ export default class User extends Model {
   }
 
   $parseDatabaseJson(json: object) {
-    json = super.$parseDatabaseJson(json);
-    toDate(json, "createdAt");
-    toDate(json, "updatedAt");
-    return json;
+    const jsonSparse = super.$parseDatabaseJson(json);
+    toDate(jsonSparse, "createdAt");
+    toDate(jsonSparse, "updatedAt");
+    return jsonSparse;
   }
 
   $formatDatabaseJson(json: object) {
-    json = super.$formatDatabaseJson(json);
-    toTime(json, "createdAt");
-    toTime(json, "updatedAt");
-    return json;
+    const jsonSparse = super.$formatDatabaseJson(json);
+    toTime(jsonSparse, "createdAt");
+    toTime(jsonSparse, "updatedAt");
+    return jsonSparse;
   }
 }
 

@@ -1,14 +1,16 @@
-const webpack = require('webpack')
+const webpackConfig = require('webpack')
 const {getClientPlugins} = require('./webpack.clientPlugins')
-const { resolve } = require('path')
+const { resolve,join } = require('path')
 
-const clientDir = resolve(__dirname, "..", "..");
+const projRoot = resolve(__dirname, "..");
+
+const clientDir = join( projRoot, "client" );
 
 const dirs = {
   client: clientDir,
-  build: resolve(clientDir, "build"),
-  src: resolve(clientDir, "src"),
-  assets: resolve(clientDir, "src", "assets"),
+  build: join(clientDir, "build"),
+  src: join(clientDir, "src"),
+  assets: join(clientDir, "src", "assets"),
 };
 
 require('dotenv').config({path: resolve(clientDir, "..", ".env")});
@@ -42,7 +44,7 @@ const environmentVariables = {
   __HTTPS__: stringify(HTTPS),
 };
 
-let clientEntry = [resolve(dirs.src, "index.tsx")];
+let clientEntry = [join(dirs.src, "index.tsx")];
 if (!PROD) {
   clientEntry = [
     "react-hot-loader/patch",
@@ -61,10 +63,10 @@ const moduleRules = {
 };
 
 const alias = {
-  config: resolve(dirs.src, "config"),
-  screens: resolve(dirs.src, "screens"),
-  shared: resolve(dirs.src, "shared"),
-  publicDir: resolve(dirs.src, "public"),
+  config: join(dirs.src, "config"),
+  screens: join(dirs.src, "screens"),
+  shared: join(dirs.src, "shared"),
+  publicDir: join(dirs.src, "public"),
 };
 
 module.exports = [
@@ -82,7 +84,7 @@ module.exports = [
       hot: true,
     },
     output: {
-      path: resolve(dirs.build, "client"),
+      path: join(dirs.build, "client"),
       publicPath: PUBLIC_PATH + "bundles",
       filename: PROD
         ? "[name].[chunkhash].bundle.js"
@@ -115,10 +117,10 @@ module.exports = [
     mode,
     name: "server",
     target: "node",
-    entry: resolve(dirs.src, "server", "serveRenderer.tsx"),
+    entry: join(dirs.src, "server", "serveRenderer.tsx"),
     devtool: PROD ? "cheap-module-source-map" : "source-map",
     output: {
-      path: resolve(dirs.build, "server"),
+      path: join(dirs.build, "server"),
       filename: "index.js",
       libraryTarget: "commonjs2",
     },
@@ -131,7 +133,7 @@ module.exports = [
     },
     module: moduleRules,
     plugins: [
-      new webpack.DefinePlugin({
+      new webpackConfig.DefinePlugin({
         ...environmentVariables,
       }),
     ],

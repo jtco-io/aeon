@@ -1,7 +1,4 @@
-import { config as dotenv } from "dotenv";
 import { Env } from "../config/env";
-
-import { Router } from "express";
 
 export interface Controllers {
   ServiceWorkerProxy: any;

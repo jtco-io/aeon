@@ -10,8 +10,7 @@
     "space-before-function-paren": false,
     "one-variable-per-declaration": false,
     "quotemark": false,
-    "prefer-const": false,
-    "no-parameter-reassignment": false
+    "prefer-const": false
   },
   "rulesDirectory": [
   ],

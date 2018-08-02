@@ -1,10 +1,10 @@
 function getClientPlugins(PROD, env, dirs) {
+  const { resolve } = require( 'path' )
   const webpack = require('webpack')
   const WebpackPwaManifest = require('webpack-pwa-manifest')
   const { StatsWriterPlugin } = require("webpack-stats-plugin")
   const OfflinePlugin = require('offline-plugin')
-  const { resolve } = require('path')
-
+  const TSLintPlugin = require( 'tslint-webpack-plugin' );
 
   const plugins = [
     new webpack.HashedModuleIdsPlugin(),
@@ -43,6 +43,9 @@ function getClientPlugins(PROD, env, dirs) {
         },
       ],
     }),
+    new TSLintPlugin( {
+      files: ['./src/**/*.ts', './src/**/*.tsx']
+    } )
   ];
   if (!PROD) {
     plugins.push(new webpack.HotModuleReplacementPlugin());

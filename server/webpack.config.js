@@ -1,13 +1,11 @@
-const webpack = require('webpack')
-const dotenv = require('dotenv')
-const {resolve} = require('path')
+const {resolve, join} = require('path')
+const TSLintPlugin = require('tslint-webpack-plugin');
 
+const projRoot = resolve(__dirname, "..");
 
 const
-  serverDir = resolve(__dirname, "..", ".."),
-  srcDir = resolve(serverDir, 'src'),
-  envFile = resolve(serverDir, '..', '.env')
-
+  serverDir = join(projRoot, "server"),
+  srcDir = join(serverDir, 'src', 'index.ts')
 
 const
   env = process.env,
@@ -16,11 +14,11 @@ const
 
 module.exports = {
   mode,
-  entry: resolve(srcDir, 'index.ts'),
+  entry: join(serverDir, 'src', 'index.ts'),
   devtool: PROD ? 'cheap-module-source-map' : 'source-map',
   target: 'node',
   output: {
-    path: resolve(serverDir, 'build'),
+    path: join(serverDir, 'build'),
     filename: '[name].js',
     publicPath: '/',
   },
@@ -48,11 +46,13 @@ module.exports = {
   resolve: {
     extensions: ['.ts'],
     alias: {
-      config: resolve(srcDir, 'config'),
+      config: join(srcDir, 'config'),
     }
   },
   plugins: [
-
+    new TSLintPlugin({
+      files: ['./src/**/*.ts', './src/**/*.tsx']
+    })
   ],
   node: {
     console: false,

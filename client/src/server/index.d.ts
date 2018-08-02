@@ -12,6 +12,7 @@ declare module "server" {
     stats: string;
     serverRenderer: any;
   }
+
   export interface Directory {
     paths: DirectoryPaths;
     files: DirectoryFiles;
