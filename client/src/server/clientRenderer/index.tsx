@@ -8,7 +8,7 @@ import createStore from "shared/util/createStore";
 
 import config from "../config";
 
-import Html from "../Html";
+import Html from "./Html";
 
 interface Assets {
   byType: {
