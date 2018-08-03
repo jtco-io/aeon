@@ -80,7 +80,7 @@ class WebpackStatsTransformer {
     for (let chunkName in assetsByChunkName) {
       const filename = assetsByChunkName[chunkName];
       const fileURL = this.getFullBundleUrl(assetsByChunkName[chunkName]);
-      if (this.isJS(filename)) this.byType.js.push(fileURL);
+      if (WebpackStatsTransformer.isJS(filename)) this.byType.js.push(fileURL);
     }
   }
 
