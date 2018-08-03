@@ -1,7 +1,5 @@
 import * as React from "react";
-import createStore from "../shared/util/createStore";
-import { WebpackClientStats } from "./WebpackStatsTransformer";
-import { Config } from "../config";
+import { Config } from "./config";
 
 interface HtmlProps {
   content: any;
@@ -24,63 +22,6 @@ class Html extends React.Component<HtmlProps, {}> {
       />
     );
   }
-
-  private mapFavIcons() {
-    const faviconSizes = [
-      16,
-      32,
-      57,
-      76,
-      96,
-      128,
-      144,
-      152,
-      180,
-      192,
-      256,
-      384,
-      512,
-      1024,
-    ];
-    const { img } = this.props.assets.filenames;
-    return faviconSizes.map((size: number) => {
-      const file = img.find((imageFile: any) => {
-        return Number(imageFile.size) === Number(size);
-      });
-      if (file) {
-        return (
-          <link
-            rel="icon"
-            key={file.file}
-            href={file.file}
-            sizes={`${size}x${size}`}
-          />
-        );
-      }
-    });
-  }
-
-  // private favicons(): any {
-  //  const { img } = this.props.assets.filenames;
-  //
-  //  return (
-  //    <React.Fragment>
-  //      <link
-  //        rel="apple-touch-icon-precomposed"
-  //        href={`${img.find((img: any) => 512).file}`}
-  //      />
-  //
-  //
-  //
-  //      <meta name="msapplication-TileColor" content="#FFFFFF" />
-  //      <meta
-  //        name="msapplication-TileImage"
-  //        content={`${img.find((img: any) => 144).file}`}
-  //      />
-  //    </React.Fragment>
-  //  );
-  // }
-  // {this.favicons()}
 
   public render(): JSX.Element {
     const {

@@ -1,28 +1,31 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom/server";
 import { renderToStringWithData } from "react-apollo";
+import * as ReactDOM from "react-dom/server";
+import GraphQL from "shared/components/GraphQL";
+import Root from "shared/components/Root";
+import Router from "shared/components/Router";
+import createStore from "shared/util/createStore";
 
 import config from "../config";
 
-import Html from "./Html";
-import Root from "shared/components/Root";
-import Router from "shared/components/Router";
-import GraphQL from "shared/components/GraphQL";
-import createStore from "../shared/util/createStore";
-import WebpackStatsTransformer, {
-  WebpackClientStats,
-} from "./WebpackStatsTransformer";
+import Html from "../Html";
 
-export function serverRenderer({ clientStats }: any): any {
-  // console.log ('clientStats', clientStats)
+interface Assets {
+  byType: {
+    js: any[];
+  };
+}
 
+export function clientRenderer({ clientStats }: any): any {
   const context: any = {};
 
   return async (req: any, res: any, next: any): Promise<any> => {
     const apolloClient = createStore(true);
-    const assets = new WebpackStatsTransformer(config, clientStats);
-    await assets.initialize();
-
+    const assets: Assets = {
+      byType: {
+        js: [],
+      },
+    };
     const component = (
       <GraphQL client={apolloClient}>
         <Router location={req.url} context={context} isServer>
@@ -53,4 +56,4 @@ export function serverRenderer({ clientStats }: any): any {
   };
 }
 
-export default serverRenderer;
+export default clientRenderer;

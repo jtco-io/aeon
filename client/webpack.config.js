@@ -1,6 +1,6 @@
-const webpackConfig = require('webpack')
-const {getClientPlugins} = require('./webpack.clientPlugins')
-const { resolve,join } = require('path')
+const webpackConfig = require( "webpack" );
+const { getClientPlugins } = require( "./webpack.clientPlugins" );
+const { resolve, join } = require( "path" );
 
 const projRoot = resolve(__dirname, "..");
 
@@ -117,7 +117,7 @@ module.exports = [
     mode,
     name: "server",
     target: "node",
-    entry: join(dirs.src, "server", "serveRenderer.tsx"),
+    entry: join( dirs.src, "server", "clientRenderer" ),
     devtool: PROD ? "cheap-module-source-map" : "source-map",
     output: {
       path: join(dirs.build, "server"),

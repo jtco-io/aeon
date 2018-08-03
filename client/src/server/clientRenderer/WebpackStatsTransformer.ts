@@ -1,14 +1,20 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 import { Config } from "../config";
 
-interface WebpackAsset {
+async function requestURL(url: any): Promise<any> {
+  const response = await fetch(url);
+  return await response.json();
+}
+
+export interface WebpackAsset {
   chunkNames: any;
   chunks: any;
   emitted: any;
   name: string;
   size: number;
 }
-interface WebpackChunk {
+
+export interface WebpackChunk {
   entry: boolean;
   files: any;
   filteredModules: number;
@@ -28,11 +34,6 @@ export interface WebpackClientStats {
   assetsByChunkName: any[];
 }
 
-async function requestURL(url: any): Promise<any> {
-  const response = await fetch(url);
-  return await response.json();
-}
-
 class WebpackStatsTransformer {
   config: Config;
   stats: WebpackClientStats;
@@ -48,25 +49,30 @@ class WebpackStatsTransformer {
 
   constructor(config: Config, stats: WebpackClientStats) {
     this.config = config;
+    if (stats) {
+    }
+
     this.stats = stats;
     // console.log(Object.keys(this.stats));
-    if (!config.env.PRODUCTION) {
+    if (!config.production) {
       this.manifestURL = this.getManifestURL();
     }
     this.byType = { js: [], css: [], img: [] };
   }
 
-  getFullBundleUrl(filename: string): string {
-    const { FRONTEND_URL, PUBLIC_PATH } = this.config.env;
-    return `${FRONTEND_URL}${PUBLIC_PATH}bundles/${filename}`;
+  static isJS(filename: string): boolean {
+    return Boolean(filename.match(/\S+.js(?!.)/));
   }
 
-  isJS(filename: string): boolean {
-    return Boolean(filename.match(/\S+.js(?!.)/));
+  getFullBundleUrl(filename: string): string {
+    const { frontend, publicPath } = this.config;
+    return `${frontend.url}${publicPath}bundles/${filename}`;
   }
 
   public async initialize() {
     // this.filenames.manifest = await this.fetchManifest ();
+    // this.statsURL = this.getFullBundleUrl("stats");
+    console.log(this.getFullBundleUrl("stats.json"));
 
     const { assetsByChunkName } = this.stats;
     this.chunkNames = Object.keys(assetsByChunkName);
@@ -105,10 +111,10 @@ class WebpackStatsTransformer {
     const manifest = this.stats.assets
       .filter(isManifest)
       .map(asset => asset.name)[0];
-    return `${this.config.env.FRONTEND_URL}/${manifest}`;
+    return this.getFullBundleUrl(manifest);
   }
 
-  private async fetchManifest(): Promise<any> {
+  private async fetchURL(): Promise<any> {
     return await requestURL(this.manifestURL);
   }
 }

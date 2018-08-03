@@ -1,4 +1,3 @@
-import * as webpack from "webpack";
 import { Router } from "express";
 
 export function webpackDevelopment(config: any): Router {
@@ -20,6 +19,6 @@ export function webpackDevelopment(config: any): Router {
   );
 
   router.use(require("webpack-hot-server-middleware")(compiler));
-
+  console.log("Client Server: Webpack Controller returned as Express route");
   return router;
 }

@@ -6,7 +6,12 @@ A boilerplate featuring a client built using React fetching data from an apollo 
 
 It is automatically prettiefied, linted, and unit tested using jest both pre-commit and in CI.
 
-## Stack
+## Stack Philosophy
+Aim for library level functionality without the library.
+Using a few core libraries we use in a constructs(classes, helpers, utils, components, etc) designed to be as agnostic as possible.
+
+* React JS Library and Domain Specific Language (DSL)
+
 
 ### Frontend Client
 The client and server are designed to be cleanly separate entities.
