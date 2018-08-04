@@ -1,7 +1,12 @@
 import * as express from "express";
 import { join, resolve } from "path";
 import { Config } from "./config";
-import { Controllers, Directory, DirectoryFiles, DirectoryPaths } from "./types";
+import {
+  Controllers,
+  Directory,
+  DirectoryFiles,
+  DirectoryPaths,
+} from "./types";
 
 export default class Server {
   app: express.Application;
@@ -56,17 +61,20 @@ export default class Server {
 
   private initialize() {
     // Make sure to set these bad boys first for logging and service worker proxy.
-    const app = this.app;
+    const app = this.app,
+      { production } = this.config,
+      { WebpackDevelopment, ServiceWorkerProxy } = this.controllers;
+
     app.use(require("morgan")("combined"));
-    app.use(this.controllers.ServiceWorkerProxy);
+    app.use(ServiceWorkerProxy);
     this.setDirectories();
 
-    if (this.config.production) {
+    if (production) {
       console.log("Client Server: Using Production");
       this.getMiddlewaresProduction();
     } else {
       console.log("Client Server: Using Development");
-      app.use(this.controllers.WebpackDevelopment(this.webpackConfig));
+      app.use(WebpackDevelopment(this.webpackConfig));
     }
   }
 
