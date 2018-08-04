@@ -1,3 +1,5 @@
+import { config as dotenv } from "dotenv";
+import { join, resolve } from "path";
 import * as React from "react";
 import { renderToStringWithData } from "react-apollo";
 import * as ReactDOM from "react-dom/server";
@@ -10,6 +12,9 @@ import config from "../config";
 import Html from "./Html";
 import { Assets } from "./types";
 import WebpackStatsTransformer from "./WebpackStatsTransformer";
+
+const projRoot = resolve(__dirname, "..", "..", "..");
+dotenv({ path: join(projRoot, ".env") });
 
 export function clientRenderer({ clientStats }: any): any {
   const context: any = {};
