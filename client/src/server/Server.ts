@@ -55,17 +55,19 @@ export default class Server {
   }
 
   private initialize() {
+    // Make sure to set these bad boys first for logging and service worker proxy.
+    const app = this.app;
+    app.use(require("morgan")("combined"));
+    app.use(this.controllers.ServiceWorkerProxy);
     this.setDirectories();
-    // this.app.use(this.controllers.ServiceWorkerProxy);
 
     if (this.config.production) {
+      console.log("Client Server: Using Production");
       this.getMiddlewaresProduction();
     } else {
       console.log("Client Server: Using Development");
-      this.app.use(this.controllers.WebpackDevelopment(this.webpackConfig));
+      app.use(this.controllers.WebpackDevelopment(this.webpackConfig));
     }
-    // this.app.use(require("express-history-api-fallback")("index.html"));
-    // this.app.use(require("morgan")("combined"));
   }
 
   private getMiddlewaresProduction() {
