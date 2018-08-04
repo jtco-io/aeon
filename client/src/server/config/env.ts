@@ -1,5 +1,6 @@
 import { Env } from "./types";
 
+// Booleans come in as strings from .env
 declare const process: {
   ["env"]: {
     ["NODE_ENV"]: "production" | "development" | "testing";
@@ -8,7 +9,7 @@ declare const process: {
     ["FRONTEND_PORT"]: number;
     ["BACKEND_HOST"]: string;
     ["BACKEND_PORT"]: number;
-    ["HTTPS"]: boolean;
+    ["HTTPS"]: "true" | "false";
     ["PUBLIC_PATH"]: string;
   };
 };
@@ -30,6 +31,6 @@ export const env: Env = {
   FRONTEND_PORT,
   BACKEND_HOST,
   BACKEND_PORT,
-  HTTPS,
   PUBLIC_PATH,
+  HTTPS: HTTPS === "true",
 };
