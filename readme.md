@@ -5,9 +5,6 @@ frameworks like [Django](https://www.djangoproject.com/), [Ruby on Rails](https:
 [![build status](https://gitlab.com/ncrmro/prion/badges/master/build.svg)](https://gitlab.com/ncrmro/prion/commits/master)
 [![build status](https://gitlab.com/ncrmro/prion/badges/development/build.svg)](https://gitlab.com/ncrmro/prion/commits/development)
 
-
-
-
 ## Stack & Project Philosophy
 
 Designed with a minimil\[ist] libraries to build constructs designed to
@@ -21,19 +18,20 @@ Constructs in this context are:
 * helpers
 * utils
 
-It should be viewed as the engine in which you build a few projects around
-thus any projects utilizing this codebase can get synergistic knowledge,
-without hiding complex features deep in packages..
-
-While initially on a short time line software QA tools seem to be a time sink.
+Prion is the code base and engine in which you your projects workflow and services
+is build. Eg anytime your building a Webpack you'll prob use Webpack and
+need it's Development server.
 
 ### Reason for Initial Complexity
 
-On a long enough timeline with enough complex entropy (dependencies, features, etc),
-you can find many hours lost to manual testing, updates or dependencies
-that suddenly stop working because of package changes
-(hint, this is why you want nightly, weekly, monthly etc builds even if nothings changed).
+While initially on a short time line such as an MVP, software QA tools seem to be a time sink.
 
+On a long enough timeline with enough complex projects and entropy (dependencies, features, etc),
+you'll find using a boilerplate will actually allow much high quality code and early error catching aiding rapid prototyping.
+
+Much momentum can be lost to manual testing, updates or dependencies that suddenly
+stop working because of package changes (hint, this is why you want nightly,
+weekly, monthly etc builds even if nothings changed).
 
 QA tools such as prettier, linters, precommit/prepush, CI and CI can unlock *huge multipliers*
 As you've automated whole days (or devs) away, with quick feedback look on if package updates or feature changes
@@ -70,7 +68,6 @@ Entirely devoted to frontend rendering the client, bunlding assets and deliverin
 * [Knex.JS](https://knexjs.org/): SQL query builder for Postgres, MSSQL, MySQL, MariaDB, SQLite3, Oracle
 * [Objection.js]( ): ORM for Node.js built on Knex
 * [SQLite](https://sqlite.org/index.html) or [PostgresQL](https://www.postgresql.org), see Knex ^ etc
-
 
 ### Workflow
 
