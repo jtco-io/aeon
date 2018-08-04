@@ -5,26 +5,25 @@ import GraphQL from "shared/components/GraphQL";
 import Root from "shared/components/Root";
 import Router from "shared/components/Router";
 import createStore from "shared/util/createStore";
-
 import config from "../config";
 
 import Html from "./Html";
-
-interface Assets {
-  byType: {
-    js: any[];
-  };
-}
+import { Assets } from "./types";
+import WebpackStatsTransformer from "./WebpackStatsTransformer";
 
 export function clientRenderer({ clientStats }: any): any {
   const context: any = {};
 
   return async (req: any, res: any, next: any): Promise<any> => {
     const apolloClient = createStore(true);
+    let stats;
+
+    if (!stats) {
+      stats = await new WebpackStatsTransformer(config, stats);
+      await stats.initialize();
+    }
     const assets: Assets = {
-      byType: {
-        js: [],
-      },
+      ...stats.assetsByFileType,
     };
     const component = (
       <GraphQL client={apolloClient}>

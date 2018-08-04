@@ -1,67 +1,20 @@
 import fetch from "node-fetch";
 import { Config } from "../config";
+import { Assets, WebpackClientStats } from "./types";
 
 async function requestURL(url: any): Promise<any> {
   const response = await fetch(url);
   return await response.json();
 }
 
-export interface WebpackAsset {
-  chunkNames: any;
-  chunks: any;
-  emitted: any;
-  name: string;
-  size: number;
-}
-
-export interface WebpackChunk {
-  entry: boolean;
-  files: any;
-  filteredModules: number;
-  id: number;
-  initial: boolean;
-  modules: any;
-  names: any;
-  origins: any;
-  parents: any;
-  rendered: boolean;
-  size: number;
-}
-
-export interface WebpackClientStats {
-  assets: WebpackAsset[];
-  chunks: WebpackChunk[];
-  assetsByChunkName: any[];
-}
-
 class WebpackStatsTransformer {
   config: Config;
   stats: WebpackClientStats;
-  manifestURL: string;
-  manifest: any;
-  chunkNames: string[];
-  byType: {
-    js: string[];
-    css: string[];
-    img?: string[];
-    manifest?: any;
-  };
+  assetsByFileType: Assets;
 
-  constructor(config: Config, stats: WebpackClientStats) {
+  constructor(config: Config, stats: WebpackClientStats | null) {
     this.config = config;
-    if (stats) {
-    }
-
     this.stats = stats;
-    // console.log(Object.keys(this.stats));
-    if (!config.production) {
-      this.manifestURL = this.getManifestURL();
-    }
-    this.byType = { js: [], css: [], img: [] };
-  }
-
-  static isJS(filename: string): boolean {
-    return Boolean(filename.match(/\S+.js(?!.)/));
   }
 
   getFullBundleUrl(filename: string): string {
@@ -69,53 +22,37 @@ class WebpackStatsTransformer {
     return `${frontend.url}${publicPath}bundles/${filename}`;
   }
 
+  static isJS(filename: string): boolean {
+    return Boolean(filename.match(/\S+.js(?!.)/));
+  }
+
+  private async massageStats() {
+    const { assetsByChunkName } = await this.stats;
+    const chunks = assetsByChunkName;
+
+    this.assetsByFileType = {
+      js: [],
+    };
+
+    for (let chunkName in chunks) {
+      let chunkFilename = chunks[chunkName];
+      if (WebpackStatsTransformer.isJS(chunkFilename)) {
+        this.assetsByFileType.js.push({
+          chunkName,
+          url: this.getFullBundleUrl(chunkFilename),
+        });
+      }
+    }
+    await this.assetsByFileType;
+  }
+
   public async initialize() {
-    // this.filenames.manifest = await this.fetchManifest ();
-    // this.statsURL = this.getFullBundleUrl("stats");
-    console.log(this.getFullBundleUrl("stats.json"));
-
-    const { assetsByChunkName } = this.stats;
-    this.chunkNames = Object.keys(assetsByChunkName);
-
-    for (let chunkName in assetsByChunkName) {
-      const filename = assetsByChunkName[chunkName];
-      const fileURL = this.getFullBundleUrl(assetsByChunkName[chunkName]);
-      if (WebpackStatsTransformer.isJS(filename)) this.byType.js.push(fileURL);
+    if (!this.stats) {
+      const statsURL = this.getFullBundleUrl("stats.json");
+      this.stats = await requestURL(statsURL);
+      await this.stats;
     }
-  }
-
-  private imageAssets(): string[] {
-    function isImage(asset: WebpackAsset): boolean {
-      return Boolean(asset.name.match(/\S+.png(?!.)/));
-    }
-
-    function getSize(filename: string): any {
-      return filename.match(/\d+(?=x)/)[0];
-    }
-
-    const nextImages: any = [];
-    let images = this.stats.assets.filter(isImage).map(asset => asset.name);
-
-    images.map(image => {
-      nextImages.push({ size: getSize(image), file: image });
-    });
-
-    return nextImages;
-  }
-
-  private getManifestURL(): string {
-    function isManifest(asset: WebpackAsset): boolean {
-      return Boolean(asset.name.match(/manifest.*.json/));
-    }
-
-    const manifest = this.stats.assets
-      .filter(isManifest)
-      .map(asset => asset.name)[0];
-    return this.getFullBundleUrl(manifest);
-  }
-
-  private async fetchURL(): Promise<any> {
-    return await requestURL(this.manifestURL);
+    this.massageStats();
   }
 }
 
