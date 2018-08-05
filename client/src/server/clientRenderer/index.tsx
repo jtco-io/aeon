@@ -10,7 +10,6 @@ import createStore from "shared/util/createStore";
 import config from "../config";
 
 import Html from "./Html";
-import { Assets } from "./types";
 import WebpackStatsTransformer from "./WebpackStatsTransformer";
 
 const projRoot = resolve(__dirname, "..", "..", "..");
@@ -21,15 +20,9 @@ export function clientRenderer({ clientStats }: any): any {
 
   return async (req: any, res: any, next: any): Promise<any> => {
     const apolloClient = createStore(true);
-    let stats;
 
-    if (!stats) {
-      stats = await new WebpackStatsTransformer(config, stats);
-      await stats.initialize();
-    }
-    const assets: Assets = {
-      ...stats.assetsByFileType,
-    };
+    const stats = await new WebpackStatsTransformer(config, clientStats);
+
     const component = (
       <GraphQL client={apolloClient}>
         <Router location={req.url} context={context} isServer>
@@ -43,7 +36,7 @@ export function clientRenderer({ clientStats }: any): any {
           <Html
             content={content}
             config={config}
-            assets={assets}
+            assets={stats.assetsByFileType}
             title={config.env.PROJECT_TITLE}
             apolloClient={apolloClient}
           />

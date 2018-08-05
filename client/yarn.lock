@@ -102,12 +102,6 @@
   dependencies:
     "@types/express" "*"
 
-"@types/node-fetch@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.1.2.tgz#8c5da14d70321e4c4ecd5db668e3f93cf6c7399f"
-  dependencies:
-    "@types/node" "*"
-
 "@types/node@*":
   version "10.5.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.5.tgz#8e84d24e896cd77b0d4f73df274027e3149ec2ba"

@@ -1,11 +1,5 @@
-import fetch from "node-fetch";
 import { Config } from "../config";
 import { Assets, WebpackClientStats } from "./types";
-
-async function requestURL(url: any): Promise<any> {
-  const response = await fetch(url);
-  return await response.json();
-}
 
 class WebpackStatsTransformer {
   config: Config;
@@ -15,6 +9,12 @@ class WebpackStatsTransformer {
   constructor(config: Config, stats: WebpackClientStats | null) {
     this.config = config;
     this.stats = stats;
+    this.assetsByFileType = {
+      js: [],
+      map: [],
+      css: [],
+    };
+    this.initialize();
   }
 
   getFullBundleUrl(filename: string): string {
@@ -22,37 +22,45 @@ class WebpackStatsTransformer {
     return `${frontend.url}${publicPath}bundles/${filename}`;
   }
 
-  static isJS(filename: string): boolean {
-    return Boolean(filename.match(/\S+.js(?!.)/));
-  }
+  private assetDetector(chunkName: string) {
+    let assets = this.stats.assetsByChunkName[chunkName];
 
-  private async massageStats() {
-    const { assetsByChunkName } = await this.stats;
-    const chunks = assetsByChunkName;
+    /**
+     * During Production chunk assets are returned as an array, in dev let
+     * just make an array.
+     * */
+    if (!Array.isArray(assets)) {
+      assets = [assets];
+    }
 
-    this.assetsByFileType = {
-      js: [],
-    };
+    const jsRegex = /\S+.js(?!.)/,
+      mapRegex = /\S+.map(?!.)/,
+      cssRegex = /\S+.css(?!.)/;
 
-    for (let chunkName in chunks) {
-      let chunkFilename = chunks[chunkName];
-      if (WebpackStatsTransformer.isJS(chunkFilename)) {
-        this.assetsByFileType.js.push({
-          chunkName,
-          url: this.getFullBundleUrl(chunkFilename),
-        });
+    for (let asset of assets) {
+      let fileType;
+      const falseInput = { input: false };
+      switch (asset) {
+        case (asset.match(jsRegex) || falseInput).input:
+          fileType = this.assetsByFileType.js;
+          break;
+        case (asset.match(mapRegex) || falseInput).input:
+          fileType = this.assetsByFileType.map;
+          break;
+        case (asset.match(cssRegex) || falseInput).input:
+          fileType = this.assetsByFileType.css;
+          break;
       }
+      fileType.push({ chunkName, url: this.getFullBundleUrl(asset) });
     }
-    await this.assetsByFileType;
   }
 
-  public async initialize() {
-    if (!this.stats) {
-      const statsURL = this.getFullBundleUrl("stats.json");
-      this.stats = await requestURL(statsURL);
-      await this.stats;
+  private initialize() {
+    const { assetsByChunkName } = this.stats;
+
+    for (let chunkName of Object.keys(assetsByChunkName)) {
+      this.assetDetector(chunkName);
     }
-    this.massageStats();
   }
 }
 

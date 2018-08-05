@@ -64,6 +64,7 @@ export interface Asset {
 
 export interface Assets {
   ["js"]: Asset[];
+  ["map"]: Asset[];
   ["css"]?: Asset[];
   ["img"]?: Asset[];
   manifest?: Asset;

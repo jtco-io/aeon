@@ -84,6 +84,7 @@ export default class Server {
     const serverRenderer = require(SERVER_RENDERER_PATH).default;
 
     this.app.use(express.static(files.stats));
-    this.app.use(serverRenderer(require(files.stats)));
+    // Stats passed here!
+    this.app.use(serverRenderer({ clientStats: require(files.stats) }));
   }
 }
