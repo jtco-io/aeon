@@ -63,10 +63,11 @@ export default class Server {
     // Make sure to set these bad boys first for logging and service worker proxy.
     const app = this.app,
       { production } = this.config,
-      { WebpackDevelopment, ServiceWorkerProxy } = this.controllers;
+      { WebpackDevelopment, serviceWorkerProxy, isFaviconProxy } = this.controllers;
 
-    app.use(require("morgan")("combined"));
-    app.use(ServiceWorkerProxy);
+    app.use(require("morgan")("dev"));
+    app.use(serviceWorkerProxy);
+    app.use(isFaviconProxy);
     this.setDirectories();
 
     if (production) {

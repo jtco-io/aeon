@@ -1,5 +1,6 @@
 export interface Controllers {
-  ServiceWorkerProxy: any;
+  serviceWorkerProxy: any;
+  isFaviconProxy: any;
   WebpackDevelopment: any;
 }
 
