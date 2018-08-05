@@ -1,4 +1,5 @@
 import * as express from "express";
+import { proxyMiddleware } from "http-proxy-middleware";
 import { join, resolve } from "path";
 import { Config } from "./config";
 import {
@@ -40,13 +41,17 @@ export default class Server {
       clientServer,
       src,
       client,
-      build,
-      assets: join(build, "./client"),
+      build: {
+        client: join(build, "client"),
+        server: join(build, "server"),
+      },
+      assets: join(src, "./assets"),
       projRoot: join(client, ".."),
     };
     const files: DirectoryFiles = {
       stats: join(paths.assets, "stats.json"),
-      serverRenderer: join(paths.assets, "./serverRenderer"),
+      serverRenderer: join(paths.build.server, "./index"),
+      favicon: join(paths.assets, "./favicon.ico"),
     };
     this.directory = { paths, files };
   }
@@ -63,12 +68,13 @@ export default class Server {
     // Make sure to set these bad boys first for logging and service worker proxy.
     const app = this.app,
       { production } = this.config,
-      { WebpackDevelopment, serviceWorkerProxy, isFaviconProxy } = this.controllers;
+      { WebpackDevelopment, serviceWorkerProxy } = this.controllers;
 
     app.use(require("morgan")("dev"));
     app.use(serviceWorkerProxy);
-    app.use(isFaviconProxy);
     this.setDirectories();
+
+    app.use("/favicon.ico", express.static(this.directory.files.favicon));
 
     if (production) {
       console.log("Client Server: Using Production");
@@ -80,9 +86,8 @@ export default class Server {
   }
 
   private getMiddlewaresProduction() {
-    const { paths, files } = this.directory;
-    const SERVER_RENDERER_PATH = join(paths.build, "server", "./index");
-    const serverRenderer = require(SERVER_RENDERER_PATH).default;
+    const { files } = this.directory;
+    const serverRenderer = require(files.serverRenderer).default;
 
     this.app.use(express.static(files.stats));
     // Stats passed here!

@@ -8,7 +8,10 @@ export interface DirectoryPaths {
   clientServer: string;
   src: string;
   client: string;
-  build: string;
+  build: {
+    client: string;
+    server: string;
+  };
   assets: string;
   projRoot: string;
 }
@@ -16,6 +19,7 @@ export interface DirectoryPaths {
 export interface DirectoryFiles {
   stats: string;
   serverRenderer: any;
+  favicon: any;
 }
 
 export interface Directory {

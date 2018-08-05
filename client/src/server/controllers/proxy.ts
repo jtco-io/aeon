@@ -1,6 +1,6 @@
-import {Controllers} from "../types";
+import { Controllers } from "../types";
 
-const proxyMiddleware = require("http-proxy-middleware")
+const proxyMiddleware = require("http-proxy-middleware");
 
 export const serviceWorkerProxy = proxyMiddleware(
   (pathname: any) => /^\Wsw\.js/.test(pathname),
@@ -21,7 +21,6 @@ export const isFaviconProxy = proxyMiddleware(
     // onProxyReq: (proxyReq:any, req:any, res:any) => console.log(proxyReq)
   },
 );
-
 
 const proxies = {
   serviceWorkerProxy,
