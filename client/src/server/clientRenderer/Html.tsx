@@ -27,14 +27,14 @@ class Html extends React.Component<HtmlProps, {}> {
     const {
       content,
       title,
-      assets: { js },
+      assets: { js, manifest },
     } = this.props;
     return (
       <html>
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>{title}</title>
-          {/*<link rel="manifest" href={this.props.assets.manifestURL} />*/}
+          <link rel="manifest" href={manifest.url}/>
         </head>
         <body>
           <div id="root" dangerouslySetInnerHTML={{ __html: content }} />

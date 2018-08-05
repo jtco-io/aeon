@@ -90,7 +90,7 @@ module.exports = [
     },
     output: {
       path: join(dirs.build, "client"),
-      publicPath: PUBLIC_PATH + "bundles",
+      publicPath: PUBLIC_PATH + "bundles/",
       filename: PROD
         ? "[name].[chunkhash].bundle.js"
         : "[name].[hash].bundle.js",

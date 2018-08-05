@@ -7,7 +7,7 @@ export function webpackDevelopment(config: any): Router {
     require("webpack-dev-middleware")(compiler, {
       serverSideRender: true,
       publicPath: "/static",
-      stats: "minimal",
+      // stats: "minimal",
     }),
   );
   router.use(

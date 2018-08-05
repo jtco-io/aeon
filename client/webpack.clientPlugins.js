@@ -5,6 +5,8 @@ function getClientPlugins(PROD, env, dirs) {
   const { StatsWriterPlugin } = require("webpack-stats-plugin")
   const OfflinePlugin = require('offline-plugin')
   const TSLintPlugin = require( 'tslint-webpack-plugin' );
+  const ManifestPlugin = require('webpack-manifest-plugin');
+
 
   const plugins = [
     new webpack.HashedModuleIdsPlugin(),
@@ -15,6 +17,7 @@ function getClientPlugins(PROD, env, dirs) {
     new StatsWriterPlugin({
       filename: "stats.json", // Default
     }),
+    new ManifestPlugin(),
     new WebpackPwaManifest({
       name: env.__PROJECT_TITLE__,
       short_name: env.__PROJECT_TITLE__,
@@ -23,7 +26,7 @@ function getClientPlugins(PROD, env, dirs) {
       icons: [
         {
           // https://github.com/audreyr/favicon-cheat-sheet#id11
-          src: resolve(dirs.assets, "favicon.ico"),
+          src: resolve(dirs.assets, "favicon.png"),
           sizes: [
             16,
             32,

@@ -1,3 +1,4 @@
+const fetch = require("node-fetch");
 import { Config } from "../config";
 import { Assets, WebpackClientStats } from "./types";
 
@@ -5,6 +6,7 @@ class WebpackStatsTransformer {
   config: Config;
   stats: WebpackClientStats;
   assetsByFileType: Assets;
+  manifest: any;
 
   constructor(config: Config, stats: WebpackClientStats | null) {
     this.config = config;
@@ -40,6 +42,7 @@ class WebpackStatsTransformer {
     for (let asset of assets) {
       let fileType;
       const falseInput = { input: false };
+      console.log("asset", asset);
       switch (asset) {
         case (asset.match(jsRegex) || falseInput).input:
           fileType = this.assetsByFileType.js;
@@ -55,7 +58,27 @@ class WebpackStatsTransformer {
     }
   }
 
-  private initialize() {
+  private async getWebpackManifest(): Promise<any> {
+    const manifest = await fetch(this.getFullBundleUrl("manifest.json"));
+    this.manifest = await manifest.json();
+  }
+
+  private async getServiceWorkerManifest() {
+    await this.getWebpackManifest();
+
+    function isManifest(asset: any): boolean {
+      return Boolean(asset.match(/manifest.*.json/));
+    }
+
+    const manifest = Object.keys(this.manifest).filter(isManifest);
+    this.assetsByFileType.manifest = {
+      chunkName: "service-worker",
+      url: this.getFullBundleUrl(manifest[0]),
+    };
+  }
+
+  private async initialize() {
+    await this.getServiceWorkerManifest();
     const { assetsByChunkName } = this.stats;
 
     for (let chunkName of Object.keys(assetsByChunkName)) {

@@ -49,7 +49,7 @@ export default class Server {
       projRoot: join(client, ".."),
     };
     const files: DirectoryFiles = {
-      stats: join(paths.assets, "stats.json"),
+      stats: join(paths.build.client, "stats.json"),
       serverRenderer: join(paths.build.server, "./index"),
       favicon: join(paths.assets, "./favicon.ico"),
     };
@@ -89,7 +89,10 @@ export default class Server {
     const { files } = this.directory;
     const serverRenderer = require(files.serverRenderer).default;
 
-    this.app.use(express.static(files.stats));
+    this.app.use(
+      "/static/bundles",
+      express.static(this.directory.paths.build.client),
+    );
     // Stats passed here!
     this.app.use(serverRenderer({ clientStats: require(files.stats) }));
   }
