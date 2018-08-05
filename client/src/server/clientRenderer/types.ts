@@ -1,31 +1,60 @@
 export { Config } from "../config";
 
-export interface WebpackAsset {
-  chunkNames: any;
-  chunks: any;
-  emitted: any;
+export interface WebpackAssetsByChunkName {
+  [s: string]: string | string[];
+}
+
+export interface WebpackReason {
+  loc: string;
+  module: string;
+  moduleId: number;
+  moduleIdentifier: string;
+  moduleName: string;
+  type: string;
+  userRequest: string;
+}
+
+export interface WebpackOrgin {
+  loc: string;
+  module: string;
+  moduleId: number;
+  moduleIdentifier: string;
+  moduleName: string;
   name: string;
-  size: number;
+  reasons: WebpackReason[];
 }
 
 export interface WebpackChunk {
   entry: boolean;
-  files: any;
+  files: string[];
   filteredModules: number;
   id: number;
   initial: boolean;
-  modules: any;
-  names: any;
-  origins: any;
-  parents: any;
+  modules: string[];
+  names: string[];
+  origins: WebpackOrgin[];
+  parents: any[];
   rendered: boolean;
   size: number;
 }
 
+export interface WebpackAsset {
+  chunkNames: [];
+  chunks: number[];
+  emitted: boolean;
+  name: string;
+  size: number;
+}
+
 export interface WebpackClientStats {
+  version: string;
+  hash: string;
+  time: number;
+  filteredModules: number;
+  outputPath: string;
+  assetsByChunkName: WebpackAssetsByChunkName;
   assets: WebpackAsset[];
   chunks: WebpackChunk[];
-  assetsByChunkName: any[];
 }
 
 export interface Asset {
