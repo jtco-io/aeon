@@ -23,7 +23,7 @@ function getClientPlugins(PROD, env, dirs) {
       icons: [
         {
           // https://github.com/audreyr/favicon-cheat-sheet#id11
-          src: resolve(dirs.assets, "favicon.png"),
+          src: resolve(dirs.assets, "favicon.ico"),
           sizes: [
             16,
             32,

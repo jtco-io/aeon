@@ -16,35 +16,23 @@ const dirs = {
 require('dotenv').config({path: resolve(clientDir, "..", ".env")});
 
 const { stringify } = JSON,
-  env = process.env;
-let {
-  NODE_ENV,
-  PROJECT_TITLE,
-  FRONTEND_HOST,
-  FRONTEND_PORT,
-  BACKEND_HOST,
-  BACKEND_PORT,
-  PUBLIC_PATH,
-  HTTPS,
-  } = env;
-
-PUBLIC_PATH = PUBLIC_PATH || "/";
-
-const mode = NODE_ENV === "production" ? "production" : "development",
-  PROD = mode === "production";
-
-const environmentVariables = {
+  env = process.env,
+  { NODE_ENV, PUBLIC_PATH } = env,
+  mode = NODE_ENV === "production" ? "production" : "development",
+  PROD = mode === "production",
+  environmentVariables = {
   __PRODUCTION__: stringify(mode),
-  __PROJECT_TITLE__: stringify(PROJECT_TITLE),
-  __FRONTEND_HOST__: stringify(FRONTEND_HOST),
-  __FRONTEND_PORT__: stringify(FRONTEND_PORT),
-  __BACKEND_HOST__: stringify(BACKEND_HOST),
-  __BACKEND_PORT__: stringify(BACKEND_PORT),
-  __PUBLIC_PATH__: stringify(PUBLIC_PATH),
-  __HTTPS__: stringify(HTTPS),
+    __PROJECT_TITLE__: stringify( env.PROJECT_TITLE ),
+    __FRONTEND_HOST__: stringify( env.FRONTEND_HOST ),
+    __FRONTEND_PORT__: stringify( env.FRONTEND_PORT ),
+    __BACKEND_HOST__: stringify( env.BACKEND_HOST ),
+    __BACKEND_PORT__: stringify( env.BACKEND_PORT ),
+    __PUBLIC_PATH__: stringify( env.PUBLIC_PATH ),
+    __HTTPS__: stringify( env.HTTPS )
 };
 
 let clientEntry = [join(dirs.src, "index.tsx")];
+
 if (!PROD) {
   clientEntry = [
     "react-hot-loader/patch",
@@ -52,6 +40,7 @@ if (!PROD) {
     ...clientEntry,
   ];
 }
+
 const moduleRules = {
   rules: [
     {
@@ -59,14 +48,30 @@ const moduleRules = {
       use: "ts-loader",
       exclude: /node_modules/,
     },
+    {
+      test: /\.(ico|png|jpg|gif)$/,
+      use: [
+        {
+          loader: "file-loader",
+          options: {
+            emitFile: false,
+          }
+        }
+      ]
+    }
   ],
 };
 
-const alias = {
-  config: join(dirs.src, "config"),
-  screens: join(dirs.src, "screens"),
-  shared: join(dirs.src, "shared"),
-  publicDir: join(dirs.src, "public"),
+
+const wpResolve = {
+  alias: {
+    config: join( dirs.src, "config" ),
+    screens: join( dirs.src, "screens" ),
+    shared: join( dirs.src, "shared" ),
+    publicDir: join( dirs.src, "public" ),
+    assets: join( dirs.src, "assets" )
+  },
+  extensions: [".js", ".ts", ".tsx", ".ico", ".png"]
 };
 
 module.exports = [
@@ -108,10 +113,7 @@ module.exports = [
     },
     plugins: getClientPlugins(PROD, environmentVariables, dirs),
     module: moduleRules,
-    resolve: {
-      alias,
-      extensions: [".js", ".ts", ".tsx"],
-    },
+    resolve: wpResolve
   },
   {
     mode,
@@ -137,10 +139,7 @@ module.exports = [
         ...environmentVariables,
       }),
     ],
-    resolve: {
-      alias,
-      extensions: [".js", ".ts", ".tsx"],
-    },
+    resolve: wpResolve,
     node: {
       console: false,
       global: false,
