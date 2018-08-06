@@ -34,7 +34,7 @@ class Html extends React.Component<HtmlProps, {}> {
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>{title}</title>
-          <link rel="manifest" href={manifest.url}/>
+          <link rel="manifest" href={manifest.url} />
         </head>
         <body>
           <div id="root" dangerouslySetInnerHTML={{ __html: content }} />

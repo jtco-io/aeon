@@ -7,7 +7,7 @@ import GraphQL from "shared/components/GraphQL";
 import Root from "shared/components/Root";
 import Router from "shared/components/Router";
 import createStore from "shared/util/createStore";
-import config from "../config";
+import config from "../../config";
 
 import Html from "./Html";
 import WebpackStatsTransformer from "./WebpackStatsTransformer";

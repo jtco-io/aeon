@@ -1,8 +1,8 @@
 import * as express from "express";
 import { proxyMiddleware } from "http-proxy-middleware";
 import { join, resolve } from "path";
-import { Config } from "./config";
 import {
+  Config,
   Controllers,
   Directory,
   DirectoryFiles,

@@ -1,4 +1,4 @@
-export { Config } from "../config";
+export { Config } from "config";
 
 export interface WebpackAssetsByChunkName {
   [s: string]: string | string[];

@@ -21,14 +21,14 @@ const { stringify } = JSON,
   mode = NODE_ENV === "production" ? "production" : "development",
   PROD = mode === "production",
   environmentVariables = {
-  __PRODUCTION__: stringify(mode),
-    __PROJECT_TITLE__: stringify( env.PROJECT_TITLE ),
-    __FRONTEND_HOST__: stringify( env.FRONTEND_HOST ),
-    __FRONTEND_PORT__: stringify( env.FRONTEND_PORT ),
-    __BACKEND_HOST__: stringify( env.BACKEND_HOST ),
-    __BACKEND_PORT__: stringify( env.BACKEND_PORT ),
-    __PUBLIC_PATH__: stringify( env.PUBLIC_PATH ),
-    __HTTPS__: stringify( env.HTTPS )
+    PRODUCTION: stringify(mode),
+    PROJECT_TITLE: stringify( env.PROJECT_TITLE ),
+    FRONTEND_HOST: stringify( env.FRONTEND_HOST ),
+    FRONTEND_PORT: stringify( env.FRONTEND_PORT ),
+    BACKEND_HOST: stringify( env.BACKEND_HOST ),
+    BACKEND_PORT: stringify( env.BACKEND_PORT ),
+    PUBLIC_PATH: stringify( env.PUBLIC_PATH ),
+    HTTPS: stringify( env.HTTPS )
 };
 
 let clientEntry = [join(dirs.src, "index.tsx")];
@@ -136,7 +136,7 @@ module.exports = [
     module: moduleRules,
     plugins: [
       new webpackConfig.DefinePlugin({
-        ...environmentVariables,
+        //"process.env": env,
       }),
     ],
     resolve: wpResolve,

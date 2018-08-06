@@ -1,3 +1,5 @@
+export { Config } from "config";
+
 export interface Controllers {
   serviceWorkerProxy: any;
   isFaviconProxy: any;

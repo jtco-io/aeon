@@ -11,7 +11,7 @@ function getClientPlugins(PROD, env, dirs) {
   const plugins = [
     new webpack.HashedModuleIdsPlugin(),
     new webpack.DefinePlugin({
-      ...env,
+      "process.env": env,
       __CLIENT_TRUE__: JSON.stringify(true),
     }),
     new StatsWriterPlugin({

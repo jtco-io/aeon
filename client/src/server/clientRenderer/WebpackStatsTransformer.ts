@@ -1,6 +1,5 @@
 const fetch = require("node-fetch");
-import { Config } from "../config";
-import { Assets, WebpackClientStats } from "./types";
+import { Config, Assets, WebpackClientStats } from "./types";
 
 class WebpackStatsTransformer {
   config: Config;
