@@ -51,11 +51,12 @@ export default class Server {
   }
 
   private getMiddlewaresProduction() {
-    const { files, paths } = this.config.directories;
+    const config = this.config;
+    const { files, paths } = config.directories;
     const serverRenderer = require(files.serverRenderer).default;
 
     this.app.use("/static/bundles", express.static(paths.build.client));
     // Stats passed here!
-    this.app.use(serverRenderer({ clientStats: require(files.stats) }));
+    this.app.use(serverRenderer({config, clientStats: require(files.stats) }));
   }
 }
