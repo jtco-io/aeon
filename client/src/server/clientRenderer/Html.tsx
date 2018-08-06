@@ -1,11 +1,12 @@
 import * as React from "react";
-import createStore from "../shared/util/createStore";
+import { Asset, Assets, Config } from "./types";
 
 interface HtmlProps {
   content: any;
+  config: Config;
   title: string;
   apolloClient: any;
-  clientStats: any;
+  assets: Assets;
 }
 
 class Html extends React.Component<HtmlProps, {}> {
@@ -23,21 +24,24 @@ class Html extends React.Component<HtmlProps, {}> {
   }
 
   public render(): JSX.Element {
-    const { content, apolloClient, title, clientStats } = this.props;
-
+    const {
+      content,
+      title,
+      assets: { js, manifest },
+    } = this.props;
     return (
       <html>
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>{title}</title>
+          <link rel="manifest" href={manifest.url} />
         </head>
         <body>
           <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
           {this.initializeState()}
-
-          <script src="/public/runtime~client.js" />
-          <script src="/public/vendor.js" />
-          <script src="/public/client.js" />
+          {js.map(({ chunkName, url }: Asset) => (
+            <script key={chunkName} src={url} />
+          ))}
         </body>
       </html>
     );

@@ -9,22 +9,21 @@
   },
   "scripts": {
     "start": "concurrently --kill-others \"yarn run dev:webpack\" \"yarn run dev:server\"",
-    "dev:webpack": "NODE_ENV=development webpack --watch --config ./src/config/webpack.js",
+    "dev:webpack": "NODE_ENV=development webpack --watch",
     "dev:server": "NODE_ENV=development nodemon ./build/main.js",
     "prod:start": "NODE_ENV=production node ./build/main.js",
     "db": "ts-node node_modules/.bin/knex",
     "db:seed": "rm ./db.sqlite ; yarn run db:migrate && yarn run db seed:run",
     "db:migrate": "yarn run db migrate:latest",
     "db:rollback": "yarn run db migrate:rollback",
-    "build": "NODE_ENV=production webpack --config src/config/webpack.js",
-    "prettier": "prettier-tslint fix \"src/**/*.+(ts|tsx)\"",
+    "build": "NODE_ENV=production webpack",
+    "prettier": "prettier --trailing-comma all --write \"src/**/*.+(ts|tsx)\"",
     "lint": "tslint --project ./ \"src/**/*.+(ts|tsx)\"",
     "test": "jest --coverage --forceExit --detectOpenHandles --runInBand.",
-    "test:watch": "jest --watch --coverage",
-    "precommit": "yarn run prettier && yarn run lint",
-    "prepush": "yarn run lint"
+    "test:watch": "jest --watch --coverage"
   },
   "dependencies": {
+    "@types/dotenv": "^4.0.3",
     "@types/bookshelf": "^0.9.8",
     "@types/knex": "^0.14.15",
     "@types/node": "^10.5.2",
@@ -39,11 +38,11 @@
     "pg": "^7.4.3",
     "sqlite3": "^4.0.1",
     "ts-loader": "^4.4.2",
-    "typescript": "2.9.2",
+    "tslint-config-prettier": "^1.14.0",
+    "tslint-webpack-plugin": "^1.2.2",
+    "typescript": "^3.0.1",
     "webpack": "4.14.0",
-    "webpack-cli": "^3.0.8"
-  },
-  "devDependencies": {
+    "webpack-cli": "^3.0.8",
     "@types/jest": "^23.3.0",
     "babel-core": "^6.26.3",
     "concurrently": "^3.6.0",
@@ -53,12 +52,10 @@
     "jest-cli": "^23.4.1",
     "nodemon": "^1.17.5",
     "prettier": "^1.13.7",
-    "prettier-tslint": "^0.4.0",
     "ts-jest": "^23.0.1",
     "ts-node": "^7.0.0",
-    "tslint": "^5.10.0",
-    "tslint-config-airbnb": "^5.9.2",
-    "typescript": "2.9.2"
+    "tslint": "^5.9.1",
+    "tslint-config-airbnb": "^5.9.2"
   },
   "babel": {
     "presets": [

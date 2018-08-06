@@ -1,43 +1,32 @@
-import { ApolloClient } from "apollo-client";
-import { HttpLink, createHttpLink } from "apollo-link-http";
-import { onError } from "apollo-link-error";
-import { ApolloLink } from "apollo-link";
+import { createHttpLink } from "apollo-link-http";
 
 import fetch from "cross-fetch";
-import { createApolloFetch } from "apollo-fetch";
-import { env, Env } from "./env";
+import { Config } from "./types";
 
-function getUri({
-  backend: {
-    graphql: { host, port, directory },
-  },
-}: Env) {
-  return `http://${host}:${port}/${directory}`;
+export default function getApolloConfig(config: Partial<Config>) {
+  const {
+    backend: {
+      graphql: { host, port, directory },
+    },
+  } = config;
+
+  const apolloClientConfig = {
+    link: createHttpLink({
+      fetch,
+      uri: `http://${host}:${port}/${directory}\``,
+      credentials: "same-origin",
+    }),
+  };
+
+  return {
+    client: {
+      ssrForceFetchDelay: 100,
+      connectToDevTools: true,
+      ...apolloClientConfig,
+    },
+    server: {
+      ssrMode: true,
+      ...apolloClientConfig,
+    },
+  };
 }
-
-const apolloClientConfig = {
-  link: createHttpLink({
-    fetch,
-    uri: getUri(env),
-    credentials: "same-origin",
-  }),
-};
-
-export interface ApolloConfig {
-  client: any;
-  server: any;
-}
-
-export const apollo: ApolloConfig = {
-  client: {
-    ssrForceFetchDelay: 100,
-    connectToDevTools: true,
-    ...apolloClientConfig,
-  },
-  server: {
-    ssrMode: true,
-    ...apolloClientConfig,
-  },
-};
-
-export default apollo;

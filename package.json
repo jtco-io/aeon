@@ -29,12 +29,14 @@
     "dc:start": "yarn run dc up",
     "prettier": "cd ./client && yarn run prettier && cd ../server && yarn run prettier",
     "lint": "cd ./client && yarn run lint && cd ../server && yarn run lint",
-    "precommit": "cd ./server && yarn run precommit && cd ../client && yarn run precommit",
-    "prepush": "cd ./server && yarn run prepush && cd ../client && yarn run prepush",
+    "precommit": "yarn run prettier",
+    "prepush": "yarn run build",
     "install:all": "yarn && cd ./client && yarn && cd ../server && yarn",
     "upgrade:all": "yarn upgrade && cd ./client && yarn upgrade && cd ../server && yarn upgrade"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/dotenv": "^4.0.3"
+  },
   "devDependencies": {
     "concurrently": "^3.6.0",
     "husky": "^0.14.3",

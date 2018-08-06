@@ -1,50 +1,92 @@
-A boilerplate featuring a client built using React fetching data from an apollo graphql server.
+Prion next gen frontend and backend boilerplate codebase allowing quick
+iteration on on your next project with. We aim to achieve parity with
+frameworks like [Django](https://www.djangoproject.com/), [Ruby on Rails](https://rubyonrails.org/), but being closer to [CRA](https://github.com/facebook/create-react-app) and [Flask](http://flask.pocoo.org/).
 
 
-* Master [![build status](https://gitlab.com/ncrmro/prion/badges/master/build.svg)](https://gitlab.com/ncrmro/prion/commits/master)
-* Development [![build status](https://gitlab.com/ncrmro/prion/badges/development/build.svg)](https://gitlab.com/ncrmro/prion/commits/development)
+[![build status](https://gitlab.com/ncrmro/prion/badges/master/build.svg)](https://gitlab.com/ncrmro/prion/commits/master)
+[![build status](https://gitlab.com/ncrmro/prion/badges/development/build.svg)](https://gitlab.com/ncrmro/prion/commits/development)
 
-It is automatically prettiefied, linted, and unit tested using jest both pre-commit and in CI.
+## Stack & Project Philosophy
 
-## Stack
+Designed with a minimil\[ist] libraries to build constructs designed to
+be as agnostic, descriptive, as possible.
 
-### Frontend Client
-The client and server are designed to be cleanly separate entities.
+Constructs in this context are:
+* Node.JS modules
+* React components
+* Classes
+* Functions
+* helpers
+* utils
 
-This means the client contains a server itself capable of proxying graphql requests to the graphql server.
+Prion is the code base and engine in which you your projects workflow and services
+is build. Eg anytime your building a Webpack you'll prob use Webpack and
+need it's Development server.
 
-This means the client server
-* Proxy's Request
-  * Graphql Server
-  * Other Backends
-* Asset Server & Bundles
-  * Production simply serves static files
-  * Development allows for the hot reload server to work.
+### Reason for Initial Complexity
 
-This client server would normally be be commingled with the graphql server and other backend dependencies when it actually consists of a few packages.
-* Typescript
-* Express
-* webpack
-  * Webpack/CLI
-  * ts-loader
-  * Webpack-Hot-Middleware
-  * Webpack-Hot-server-middleware
+While initially on a short time line such as an MVP, software QA tools seem to be a time sink.
 
-which as more features are added to project that started from this boilerplate.
-Instead your free to modify say the server and know the client server it untouched.
+On a long enough timeline with enough complex projects and entropy (dependencies, features, etc),
+you'll find using a boilerplate will actually allow much high quality code and early error catching aiding rapid prototyping.
 
-### Backend Server
+Much momentum can be lost to manual testing, updates or dependencies that suddenly
+stop working because of package changes (hint, this is why you want nightly,
+weekly, monthly etc builds even if nothings changed).
 
-The backend server consists of the following stack.
+QA tools such as prettier, linters, precommit/prepush, CI and CI can unlock *huge multipliers*
+As you've automated whole days (or devs) away, with quick feedback look on if package updates or feature changes
+have upset any parts of your code base and services.
+
+
+### Stack
+The project consists of a few groups with the frontend and backend
+partitioned to make sure they each excel at their designated task rather
+than shoehorning a Webpack Build Server, SSR Renderer, GraphQL+Database backend
+into a single monolith which is still possible to tie the two express server
+together if needed but easier to proxy a la cate.
+
+#### General Tools
+
 * [Node.JS](https://nodejs.org/en/)
-* [Express.JS](http://expressjs.com) - Web framework
+* [Typescript](https://www.typescriptlang.org/) typed superset of javascript
+* [Express.JS](http://expressjs.com): minimalist web framework
+* [Webpack](https://webpack.js.org/): static module bundler
+* [GraphQL](https://graphql.org/): DSL Query language for API
 * [Apollo](https://www.apollographql.com) - GraphQL API
-* SQL Database - [SQLite](https://sqlite.org/index.html), [PostgresQL](https://www.postgresql.org) etc
-  * [Knex.JS](https://knexjs.org) - Schema, Migrations, and Seeds
-  * [Objection.js](https://vincit.github.io/objection.js/) - ORM (Object Relationial Manager)
 
 
-## Workflow
+#### Frontend
+Entirely devoted to frontend rendering the client, bunlding assets and delivering the assets as need.
+
+* Development Server
+* SSR Client Renderer (Various Tools are used see `./client/server/clientRenderer`
+* [Express Proxy Middleware](https://github.com/chimurai/http-proxy-middleware)
+  * [Service Worker](https://github.com/NekR/offline-plugin)
+* [React](https://reactjs.org/): library for building user interfaces
+
+#### Backend
+* [Knex.JS](https://knexjs.org/): SQL query builder for Postgres, MSSQL, MySQL, MariaDB, SQLite3, Oracle
+* [Objection.js]( ): ORM for Node.js built on Knex
+* [SQLite](https://sqlite.org/index.html) or [PostgresQL](https://www.postgresql.org), see Knex ^ etc
+
+### Workflow
+
+The workflow once once catalyzed should allow for momentous and agile workflow.
+
+Any time you might change something that could make prion and any other apps using it more composiable,
+go ahead and work it out on a Prion Fork with out cluttering your project commits with experiments.
+
+Next up plan out your sprints, what features can you get to in that sprint and what can what.. nice to have?
+
+Is Prion right or do I need to add any external packages to my codebase that I started from Prion before actually iterating on features (chores).
+
+That is we would like to keep our CI success rate high in our orginal projects.
+
+We acheive this Software Quality Assurance (QA) through pre-commit, pre-push, continuous integration etc
+
+Such as typechecking, linting, unit and browser testing.
+
 
 ### Environment: Development
 Currently documentation only covers MacOS using [Homebrew](https://brew.sh), most brew commands work on Windows with [Chocolatey](https://chocolatey.org)
@@ -79,7 +121,6 @@ source $(brew --prefix nvm)/nvm.sh
 ```
 Now load the changes and you should see the location of the NVM dir echoed into the terminal.
 `source ~/.bash_profile && echo $NVM_DIR``
-
 
 
 ##### [Node](https://nodejs.org/en/)
@@ -172,10 +213,7 @@ complex functionality inside a black box the user has to dive into their package
 
 Node modules are the promise of reusable components. They just can be copied and modified freely.
 
-
-
 ## [The Twelve-Factor App](https://12factor.net)
-
 
 * Use declarative formats for setup automation, to minimize time and cost for new developers joining the project;
 * Have a clean contract with the underlying operating system, offering maximum portability between execution environments;

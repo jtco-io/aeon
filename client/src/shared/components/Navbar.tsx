@@ -40,7 +40,7 @@ class Navbar extends React.Component<PageProps, {}> {
         <Link to={route.href}>{route.name}</Link>
       </li>
     ));
-  }
+  };
 
   public render(): JSX.Element {
     return <ul>{this.renderRoutes()}</ul>;

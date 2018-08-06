@@ -10,7 +10,7 @@ WORKDIR $INSTALL_PATH
 
 COPY ./package.json $INSTALL_PATH/package.json
 COPY ./yarn.lock $INSTALL_PATH/yarn.lock
-RUN yarn install --production=true
+RUN yarn install
 
 FROM client-builder as client-built
 COPY . $INSTALL_PATH
