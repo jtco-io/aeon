@@ -20,12 +20,9 @@ test_whitebox:
     - client/node_modules/
   before_script:
     - yarn run install:all
-    - yarn run lint
-    - yarn run build
-    - yarn run prod:start:background
-    - sleep 3s
   script:
-    - yarn run test
+    # Running build will additionally lint the codebase.
+    - yarn run build
   after_script:
     - echo 'Prion brought to you by JTCO and JTX'
     - echo 'To see more check out jtco.io and jtronics.exchange'
