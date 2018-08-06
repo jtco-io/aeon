@@ -35,7 +35,8 @@
     "upgrade:all": "yarn upgrade && cd ./client && yarn upgrade && cd ../server && yarn upgrade"
   },
   "dependencies": {
-    "@types/dotenv": "^4.0.3"
+    "@types/dotenv": "^4.0.3",
+    "@types/node": "^10.5.6"
   },
   "devDependencies": {
     "concurrently": "^3.6.0",

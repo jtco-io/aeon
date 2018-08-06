@@ -1,13 +1,7 @@
 import * as express from "express";
 import { proxyMiddleware } from "http-proxy-middleware";
 import { join, resolve } from "path";
-import {
-  Config,
-  Controllers,
-  Directory,
-  DirectoryFiles,
-  DirectoryPaths,
-} from "./types";
+import { Config, Controllers, Directory } from "./types";
 
 export default class Server {
   app: express.Application;
@@ -28,32 +22,10 @@ export default class Server {
     this.controllers = controllers;
     this.middlewares = [];
     this.webpackConfig = webpackConfig;
+
+    console.log("Client Server", config, this.config.directories);
+
     this.initialize();
-  }
-
-  private setDirectories() {
-    const clientServer = resolve(__dirname),
-      src = join(clientServer, ".."),
-      client = join(src, ".."),
-      build = join(client, "build");
-
-    const paths: DirectoryPaths = {
-      clientServer,
-      src,
-      client,
-      build: {
-        client: join(build, "client"),
-        server: join(build, "server"),
-      },
-      assets: join(src, "./assets"),
-      projRoot: join(client, ".."),
-    };
-    const files: DirectoryFiles = {
-      stats: join(paths.build.client, "stats.json"),
-      serverRenderer: join(paths.build.server, "./index"),
-      favicon: join(paths.assets, "./favicon.ico"),
-    };
-    this.directory = { paths, files };
   }
 
   public start() {
@@ -68,13 +40,12 @@ export default class Server {
     // Make sure to set these bad boys first for logging and service worker proxy.
     const app = this.app,
       { production } = this.config,
+      { files } = this.config.directories,
       { WebpackDevelopment, serviceWorkerProxy } = this.controllers;
 
     app.use(require("morgan")("dev"));
     app.use(serviceWorkerProxy);
-    this.setDirectories();
-
-    app.use("/favicon.ico", express.static(this.directory.files.favicon));
+    app.use("/favicon.ico", express.static(files.favicon));
 
     if (production) {
       console.log("Client Server: Using Production");
@@ -86,13 +57,10 @@ export default class Server {
   }
 
   private getMiddlewaresProduction() {
-    const { files } = this.directory;
+    const { files, paths } = this.config.directories;
     const serverRenderer = require(files.serverRenderer).default;
 
-    this.app.use(
-      "/static/bundles",
-      express.static(this.directory.paths.build.client),
-    );
+    this.app.use("/static/bundles", express.static(paths.build.client));
     // Stats passed here!
     this.app.use(serverRenderer({ clientStats: require(files.stats) }));
   }

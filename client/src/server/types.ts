@@ -1,4 +1,4 @@
-export { Config } from "config";
+import { Config as IsoConfig } from "../config/types";
 
 export interface Controllers {
   serviceWorkerProxy: any;
@@ -22,9 +22,12 @@ export interface DirectoryFiles {
   stats: string;
   serverRenderer: any;
   favicon: any;
+  manifest: any;
 }
 
 export interface Directory {
   paths: DirectoryPaths;
   files: DirectoryFiles;
 }
+
+export type Config = IsoConfig & { directories: any };
