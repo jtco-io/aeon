@@ -3,8 +3,8 @@ import { DirectoryFiles, DirectoryPaths } from "./types";
 const { join, resolve } = require("path");
 const projRoot = resolve(__dirname, "..", "..", ".."),
   client = join(projRoot, "client"),
-  clientServer = join(client, "server"),
-  src = join(client, ".."),
+  src = join(client, "src"),
+  clientServer = join(src, "server"),
   build = join(client, "build");
 
 const paths: DirectoryPaths = {
