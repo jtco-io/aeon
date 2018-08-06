@@ -25,7 +25,7 @@ test_whitebox:
     - yarn run prod:start:background
     - sleep 3s
   script:
-    - curl http://$SERVER_HOST:$CLIENT_PORT
+    - yarn run test
   after_script:
     - echo 'Prion brought to you by JTCO and JTX'
     - echo 'To see more check out jtco.io and jtronics.exchange'
