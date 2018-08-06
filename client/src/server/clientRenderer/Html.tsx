@@ -3,7 +3,6 @@ import { Asset, Assets, Config } from "./types";
 
 interface HtmlProps {
   content: any;
-  config: Config;
   title: string;
   apolloClient: any;
   assets: Assets;

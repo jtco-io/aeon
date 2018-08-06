@@ -1,39 +1,26 @@
 import * as express from "express";
 import { proxyMiddleware } from "http-proxy-middleware";
 import { join, resolve } from "path";
-import { Config, Controllers, Directory } from "./types";
+import { Config, Controllers } from "./types";
 
 export default class Server {
   app: express.Application;
-  host: string;
-  port: number;
-  middlewares: any[];
   config: Config;
   controllers: Controllers;
-  directory: Directory;
   webpackConfig: Object;
-  bundler: Object;
 
   constructor(config: Config, controllers: Controllers, webpackConfig: Object) {
-    this.app = express();
     this.config = config;
-    this.host = config.frontend.host;
-    this.port = config.frontend.port;
     this.controllers = controllers;
-    this.middlewares = [];
     this.webpackConfig = webpackConfig;
-
-    console.log("Client Server", config, this.config.directories);
-
+    this.app = express();
     this.initialize();
   }
 
   public start() {
-    function onListen(host: string, port: number) {
-      console.log(`Client Server: Listening at: ${host}:${port}`);
-    }
+    const { frontend: { host, port } } = this.config;
 
-    this.app.listen(this.port, () => onListen(this.host, this.port));
+    this.app.listen(port, () => console.log(`Client Server: Listening at: ${host}:${port}`));
   }
 
   private initialize() {
@@ -51,8 +38,11 @@ export default class Server {
       console.log("Client Server: Using Production");
       this.getMiddlewaresProduction();
     } else {
+      const manifestPath = this.config.directories.files.manifest;
+      const manifest = require(manifestPath);
+
       console.log("Client Server: Using Development");
-      app.use(WebpackDevelopment(this.webpackConfig));
+      app.use(WebpackDevelopment(this.webpackConfig, this.config));
     }
   }
 

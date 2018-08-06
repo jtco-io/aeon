@@ -1,13 +1,13 @@
 const fetch = require("node-fetch");
-import { Config, Assets, WebpackClientStats } from "./types";
+import { Config, Assets, WebpackStats } from "./types";
 
 class WebpackStatsTransformer {
   config: Config;
-  stats: WebpackClientStats;
+  stats: WebpackStats;
   assetsByFileType: Assets;
   manifest: any;
 
-  constructor(config: Config, stats: WebpackClientStats | null) {
+  constructor(config: Config, stats: WebpackStats | null) {
     this.config = config;
     this.stats = stats;
     this.assetsByFileType = {
@@ -81,7 +81,7 @@ class WebpackStatsTransformer {
     const { assetsByChunkName } = this.stats;
 
     for (let chunkName of Object.keys(assetsByChunkName)) {
-      this.assetDetector(chunkName);
+      await this.assetDetector(chunkName);
     }
   }
 }

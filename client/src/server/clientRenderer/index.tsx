@@ -1,4 +1,3 @@
-import { config as dotenv } from "dotenv";
 import { join, resolve } from "path";
 import * as React from "react";
 import { renderToStringWithData } from "react-apollo";
@@ -7,15 +6,12 @@ import GraphQL from "shared/components/GraphQL";
 import Root from "shared/components/Root";
 import Router from "shared/components/Router";
 import createStore from "shared/util/createStore";
-import config from "../../config";
 
 import Html from "./Html";
+import { ServerRendererPassedArgs } from "./types";
 import WebpackStatsTransformer from "./WebpackStatsTransformer";
 
-const projRoot = resolve(__dirname, "..", "..", "..");
-dotenv({ path: join(projRoot, ".env") });
-
-export function clientRenderer({ clientStats }: any): any {
+export function clientRenderer({ clientStats, config }: ServerRendererPassedArgs): any {
   const context: any = {};
 
   return async (req: any, res: any, next: any): Promise<any> => {
@@ -35,7 +31,6 @@ export function clientRenderer({ clientStats }: any): any {
         const html = (
           <Html
             content={content}
-            config={config}
             assets={stats.assetsByFileType}
             title={config.env.PROJECT_TITLE}
             apolloClient={apolloClient}

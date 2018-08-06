@@ -1,4 +1,5 @@
-export { Config } from "config";
+export { Config } from "../types";
+import { Config } from "../types";
 
 export interface WebpackAssetsByChunkName {
   [s: string]: string | string[];
@@ -46,11 +47,12 @@ export interface WebpackAsset {
   size: number;
 }
 
-export interface WebpackClientStats {
+export interface WebpackStats {
   version: string;
   hash: string;
   time: number;
   filteredModules: number;
+  publicPath: string;
   outputPath: string;
   assetsByChunkName: WebpackAssetsByChunkName;
   assets: WebpackAsset[];
@@ -68,4 +70,10 @@ export interface Assets {
   ["css"]?: Asset[];
   ["img"]?: Asset[];
   manifest?: Asset;
+}
+
+export interface ServerRendererPassedArgs {
+  clientStats: WebpackStats
+  serverStats: WebpackStats
+  config: Config
 }
