@@ -18,9 +18,13 @@ export default class Server {
   }
 
   public start() {
-    const { frontend: { host, port } } = this.config;
+    const {
+      frontend: { host, port },
+    } = this.config;
 
-    this.app.listen(port, () => console.log(`Client Server: Listening at: ${host}:${port}`));
+    this.app.listen(port, () =>
+      console.log(`Client Server: Listening at: ${host}:${port}`),
+    );
   }
 
   private initialize() {

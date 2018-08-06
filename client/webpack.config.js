@@ -119,7 +119,7 @@ module.exports = [
     mode,
     name: "server",
     target: "node",
-    entry: join( dirs.src, "server", "clientRenderer" ),
+    entry: join( dirs.src, "server", "renderer" ),
     devtool: PROD ? "cheap-module-source-map" : "source-map",
     output: {
       path: join(dirs.build, "server"),

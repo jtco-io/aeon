@@ -73,7 +73,7 @@ export interface Assets {
 }
 
 export interface ServerRendererPassedArgs {
-  clientStats: WebpackStats
-  serverStats: WebpackStats
-  config: Config
+  clientStats: WebpackStats;
+  serverStats: WebpackStats;
+  config: Config;
 }

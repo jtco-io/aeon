@@ -1,11 +1,11 @@
 const fetch = require("node-fetch");
-import { Config, Assets, WebpackStats } from "./types";
+import { Asset, Assets, Config, WebpackStats } from "./types";
 
 class WebpackStatsTransformer {
   config: Config;
   stats: WebpackStats;
   assetsByFileType: Assets;
-  manifest: any;
+  manifest: Asset;
 
   constructor(config: Config, stats: WebpackStats | null) {
     this.config = config;
@@ -14,6 +14,10 @@ class WebpackStatsTransformer {
       js: [],
       map: [],
       css: [],
+      manifest: {
+        url: null,
+        chunkName: null,
+      },
     };
     this.initialize();
   }
@@ -41,7 +45,6 @@ class WebpackStatsTransformer {
     for (let asset of assets) {
       let fileType;
       const falseInput = { input: false };
-      console.log("asset", asset);
       switch (asset) {
         case (asset.match(jsRegex) || falseInput).input:
           fileType = this.assetsByFileType.js;

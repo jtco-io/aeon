@@ -11,7 +11,8 @@ import Html from "./Html";
 import { ServerRendererPassedArgs } from "./types";
 import WebpackStatsTransformer from "./WebpackStatsTransformer";
 
-export function clientRenderer({ clientStats, config }: ServerRendererPassedArgs): any {
+export function renderer(serverOptions: ServerRendererPassedArgs): any {
+  const { clientStats, config } = serverOptions;
   const context: any = {};
 
   return async (req: any, res: any, next: any): Promise<any> => {
@@ -48,4 +49,4 @@ export function clientRenderer({ clientStats, config }: ServerRendererPassedArgs
   };
 }
 
-export default clientRenderer;
+export default renderer;

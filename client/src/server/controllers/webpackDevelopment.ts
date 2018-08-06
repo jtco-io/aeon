@@ -15,15 +15,17 @@ export function webpackDevelopment(webpackConfig: any, config: Config): Router {
     require("webpack-hot-middleware")(
       compiler.compilers.find(
         (compiler: { name: string }) => compiler.name === "client",
-      )
+      ),
     ),
   );
 
-  router.use(require("webpack-hot-server-middleware")(compiler, {
-    serverRendererOptions: {
-      config,
-    },
-  }));
+  router.use(
+    require("webpack-hot-server-middleware")(compiler, {
+      serverRendererOptions: {
+        config,
+      },
+    }),
+  );
   console.log("Client Server: Webpack Controller returned as Express route");
   return router;
 }
