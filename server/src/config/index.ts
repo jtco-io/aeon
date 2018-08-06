@@ -5,22 +5,14 @@
 // export { default as mailer } from './mailer';
 // export { default as analytics } from './analytics';
 // export { default as subscription } from './subscription';
-import env from "./env";
+import { env, Env } from "./env";
 
 export interface Config {
-  NODE_ENV: string;
-  isProd: boolean;
-  serverHost: string;
-  serverPort: number;
-  serverGraphqlUrl: string;
+  env: Env;
 }
 
-const config: Config = {
-  NODE_ENV: env.NODE_ENV,
-  isProd: env.NODE_ENV === "production",
-  serverHost: env.SERVER_HOST || "localhost",
-  serverPort: env.SERVER_PORT || 4000,
-  serverGraphqlUrl: env.GRAPHQL_ENPOINT || "graphql",
+export const config: Config = {
+  env,
 };
 
 export default config;

@@ -18,15 +18,12 @@ function logTwoTone(
 
 function serverPreflight(config: Config): void {
   logTwoTone("Server:", "                     Preflight check");
-  logTwoTone("NODE_ENV:", `                   ${config.NODE_ENV}`);
+  logTwoTone("NODE_ENV:", `                   ${config.env.NODE_ENV}`);
 }
 
 function serverOnListen(config: Config, url: string) {
   logTwoTone("GraphQL Server:", `             Now Accepting Connections`);
-  logTwoTone(
-    "URL is:",
-    `                     ${url}${config.serverGraphqlUrl}`,
-  );
+  logTwoTone("URL is:", `                     ${config.env.GRAPHQL_URL}`);
 }
 
 const log = {

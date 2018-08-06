@@ -4,15 +4,15 @@ import { log } from "../lib";
 import { Config } from "../config";
 
 export default class Database {
-  environment: Config["NODE_ENV"];
+  environment: any;
   isProd: boolean;
   knexConfig: any;
   initialized: boolean;
   knex: Knex;
 
   constructor(config: Config, knexConfig) {
-    this.environment = config.NODE_ENV;
-    this.isProd = config.isProd;
+    this.environment = config.env.NODE_ENV;
+    this.isProd = config.env.PRODUCTION;
     this.knexConfig = this.getConfig(knexConfig);
     this.initialized = false;
   }
@@ -22,21 +22,22 @@ export default class Database {
   }
 
   private getConfig(knexConfig) {
+    let envKnexConfig;
     if (this.isProd) {
-      knexConfig = knexConfig.production;
+      envKnexConfig = knexConfig.production;
     } else if (this.environment === "test") {
       this.log("Using in Memory sqlite from test settings");
-      knexConfig = {
+      envKnexConfig = {
         client: "sqlite3",
         useNullAsDefault: true,
         connection: { filename: ":memory:" },
       };
     } else {
       this.log("Using Development Settings");
-      knexConfig = knexConfig.development;
+      envKnexConfig = knexConfig.development;
     }
 
-    return knexConfig;
+    return envKnexConfig;
   }
 
   public connect() {

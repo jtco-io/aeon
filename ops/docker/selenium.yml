@@ -1,0 +1,46 @@
+version: '3.4'
+services:
+  selenium:
+    image: $CI_REGISTRY_IMAGE/selenium_testing
+    build:
+      context: ../../testing
+      args:
+        IMAGE: $CI_REGISTRY_IMAGE/base/selenium
+    depends_on:
+      - selenium_hub
+      - server
+      - client-serve
+    volumes:
+       - ./screenshots:/root/screenshots
+    environment:
+      SELENIUM_URL: selenium_hub:4444
+      CLIENT_SERVER_URL: client-serve:5000
+
+
+  firefox:
+    image: selenium/node-firefox-debug:3.9.1
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium_hub
+    environment:
+      HUB_HOST: selenium_hub
+    ports:
+      - "5901:5900"
+
+  chrome:
+    image: selenium/node-chrome-debug:3.9.1
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium_hub
+    environment:
+      HUB_HOST: selenium_hub
+    ports:
+      - "5900:5900"
+
+  selenium_hub:
+    image: selenium/hub:3.9.1
+    hostname: selenium_hub
+    ports:
+      - "4444:4444"

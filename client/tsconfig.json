@@ -5,7 +5,12 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "target": "es6",
-    "lib": ["es2015", "dom", "esnext.asynciterable"],
+    "types": ["node"],
+    "lib": [
+      "es2015",
+      "dom",
+      "esnext.asynciterable"
+    ],
     "moduleResolution": "node",
     "rootDir": "src",
     "jsx": "react",
@@ -13,20 +18,29 @@
     "baseUrl": "./src",
     "paths": {
       "config": [
-        "./config"
+        "config"
       ],
       "screens": [
-        "./src/screens"
+        "src/screens"
       ],
       "components": [
-        "./screens/App/components"
+        "screens/App/components"
+      ],
+      "*": [
+        "typings/*",
+        "*"
       ]
-    }
+    },
+    "typeRoots": [
+      "typings/*",
+      "*"
+    ]
   },
   "exclude": [
     "tmp",
     "dist",
-    "node_modules"
+    "node_modules",
+    "typings/*",
   ],
   "compileOnSave": false,
   "buildOnSave": false

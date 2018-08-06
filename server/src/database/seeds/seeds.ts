@@ -45,7 +45,7 @@ export function getUsers() {
 }
 
 export async function seed(knex) {
-  if (config.isProd) {
+  if (config.env.PRODUCTION) {
     await knex("users")
       .whereIn("email", users.map(u => u.email))
       .del();

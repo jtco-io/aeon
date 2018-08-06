@@ -1,7 +1,8 @@
 {
   "defaultSeverity": "error",
   "extends": [
-    "tslint-config-airbnb"
+    "tslint-config-airbnb",
+    "tslint-config-prettier"
   ],
   "jsRules": {},
   "rules": {
@@ -11,12 +12,12 @@
     "one-variable-per-declaration": false,
     "no-parameter-reassignment": false,
     "import-name": false,
-    "ter-arrow-parens": false
+    "no-boolean-literal-compare": false
   },
   "rulesDirectory": [],
   "linterOptions": {
    "exclude": [
-     "**/node_modules/**"
+     "**/node_modules"
    ]
   }
 }

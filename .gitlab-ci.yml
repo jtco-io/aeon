@@ -19,10 +19,7 @@ test_whitebox:
     - server/node_modules/
     - client/node_modules/
   before_script:
-    - yarn install
-    - cd ./client && yarn install
-    - cd ../server && yarn install
-    - cd ../
+    - yarn run install:all
     - yarn run lint
     - yarn run build
     - yarn run prod:start:background

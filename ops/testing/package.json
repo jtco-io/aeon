@@ -1,0 +1,36 @@
+{
+  "name": "testing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "react-scripts": "^1.1.4",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  },
+  "scripts": {
+    "start": "jest -c jestConfig.json",
+    "test": "babel-node example.js",
+    "dc": "docker-compose -f docker-compose.yml"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.55",
+    "@babel/core": "^7.0.0-beta.55",
+    "@babel/node": "^7.0.0-beta.55",
+    "@babel/preset-env": "^7.0.0-beta.55"
+  },
+  "babel":{
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "modules": "commonjs",
+          "targets": {
+            "esmodules": true,
+            "node": "current"
+          }
+        }
+      ]
+    ]
+  }
+
+}

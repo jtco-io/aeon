@@ -3,7 +3,7 @@ import * as ReactRouterDom from "react-router-dom";
 import { Route, RouteProps, Switch, StaticRouter } from "react-router";
 
 interface RouterProps {
-  isServer: boolean;
+  isServer?: boolean;
   children: any;
   history?: any;
   location?: any;

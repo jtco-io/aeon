@@ -1,21 +1,23 @@
-import * as React from "react";
-import * as ReactRouterDom from "react-router-dom";
-import { Router } from "react-router";
-import * as History from "history";
 import createBrowserHistory from "history/createBrowserHistory";
-import { ApolloProvider } from "react-apollo";
+import * as React from "react";
 import { hydrate } from "react-dom";
-import config from "config";
+import GraphQL from "shared/components/GraphQL";
 import Root from "shared/components/Root";
+import Router from "shared/components/Router";
+import createStore from "shared/util/createStore";
+import ServiceWorker from "shared/util/ServiceWorker";
 
 const props = {
-  // apolloClient,
+  apolloClient: createStore(),
   history: createBrowserHistory(),
+  serviceWorker: new ServiceWorker().install(),
 };
-
-hydrate(
-  <ReactRouterDom.Router history={props.history as any}>
-    <Root />
-  </ReactRouterDom.Router>,
-  document.getElementById("content"),
+const app = () => (
+  <GraphQL client={props.apolloClient}>
+    <Router history={props.history as any}>
+      <Root />
+    </Router>
+  </GraphQL>
 );
+
+hydrate(app(), document.getElementById("root"));

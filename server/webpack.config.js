@@ -1,31 +1,24 @@
-const webpack = require('webpack')
-const {resolve} = require('path')
+const {resolve, join} = require('path')
+const TSLintPlugin = require('tslint-webpack-plugin');
 
-require('dotenv').config({path: "../.env"})
+const projRoot = resolve(__dirname, "..");
 
-const serverDir = resolve(__dirname),
-  srcDir = resolve(serverDir, 'src'),
-  buildDir = resolve(serverDir, 'build')
+const
+  serverDir = join(projRoot, "server"),
+  srcDir = join(serverDir, 'src', 'index.ts')
 
-const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development',
-  DEV = mode !== 'production',
-  PROD = mode === 'production',
-  entry = resolve(srcDir, 'index.ts'),
-  devtool = PROD ? 'cheap-module-source-map' : 'source-map',
-  alias = {
-    config: resolve(srcDir, 'config'),
-    //database: resolve(srcDir, 'database'),
-    //models: resolve(srcDir, 'database', 'models')
-
-  }
+const
+  env = process.env,
+  mode = env.NODE_ENV === 'production' ? 'production' : 'development',
+  PROD = mode === 'production'
 
 module.exports = {
   mode,
-  entry,
-  devtool,
+  entry: join(serverDir, 'src', 'index.ts'),
+  devtool: PROD ? 'cheap-module-source-map' : 'source-map',
   target: 'node',
   output: {
-    path: buildDir,
+    path: join(serverDir, 'build'),
     filename: '[name].js',
     publicPath: '/',
   },
@@ -51,14 +44,15 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.ts', '.tsx'],
-    alias
+    extensions: ['.ts'],
+    alias: {
+      config: join(srcDir, 'config'),
+    }
   },
   plugins: [
-    new webpack.DefinePlugin({
-      // prettier-ignore
-      'process.env.NODE_ENV': JSON.stringify(DEV ? 'development' : 'production')
-    }),
+    new TSLintPlugin({
+      files: ['./src/**/*.ts', './src/**/*.tsx']
+    })
   ],
   node: {
     console: false,
