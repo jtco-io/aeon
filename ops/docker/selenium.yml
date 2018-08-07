@@ -14,7 +14,7 @@ services:
        - ./screenshots:/root/screenshots
     environment:
       SELENIUM_URL: selenium_hub:4444
-      CLIENT_SERVER_URL: client-serve:5000
+        CLIENT_SERVER_URL: client-serve:5000
 
 
   firefox:

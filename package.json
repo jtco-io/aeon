@@ -24,7 +24,7 @@
     "db:rollback": "cd ./server && yarn run db migrate:rollback",
     "test": "cd ./ops/testing && yarn run start",
     "dc": "docker-compose -f ops/docker/compose.yml",
-    "dc:selenium": "yarn run dc -f ./testing/docker-compose.yml",
+    "dc:selenium": "yarn run dc -f ./ops/docker/selenium.yml",
     "dc:build": "yarn run dc build",
     "dc:start": "yarn run dc up",
     "prettier": "cd ./client && yarn run prettier && cd ../server && yarn run prettier",

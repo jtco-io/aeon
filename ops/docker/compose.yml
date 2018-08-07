@@ -5,13 +5,28 @@ services:
     image: registry.gitlab.com/jtco-io/jtx/frontend
     build:
       context: ../../client
+      # These are env variables the client will get bundled with
+      # All other Node.JS process respect server environment variables
+      # as set in the environment attribute
+#      args:
+#        FRONTEND_HOST: "${DOCKER_CLIENT_PROXY_HOST}"
+#        FRONTEND_PORT: 80
     restart: always
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     environment:
-      - SERVER_HOST=backend
+      FRONTEND_HOST: ${DOCKER_CLIENT_PROXY_HOST}
+      FRONTEND_PORT: "${FRONTEND_PORT}"
+      # Here we use the internal ip of the graphql host to
+      # avoid hitting WAN, Another option is to set the docker host attr.
+      BACKEND_HOST: backend
+      BACKEND_PORT: "${BACKEND_PORT}"
+      PUBLIC_PATH: "${PUBLIC_PATH}"
     labels:
       traefik.enable: 'true'
-      traefik.port: "${CLIENT_PORT}"
+      traefik.port: "${FRONTEND_PORT}"
       traefik.frontend.rule: "Host:${DOCKER_CLIENT_PROXY_HOST}"
+      traefik.frontend.priority: 2
 
   backend:
     container_name: backend
@@ -19,8 +34,17 @@ services:
     build:
       context: ../../server
     restart: always
+    ports:
+    - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
-          - SERVER_PORT="${SERVER_PORT}"
+        BACKEND_HOST: 0.0.0.0
+        BACKEND_PORT: "${BACKEND_PORT}"
+    labels:
+      traefik.enable: 'true'
+      traefik.port: "${BACKEND_PORT}"
+      traefik.frontend.rule: "Host:${DOCKER_CLIENT_PROXY_HOST} Path:/graphql"
+      traefik.frontend.priority: 1
+
 
   proxy:
     container_name: proxy
