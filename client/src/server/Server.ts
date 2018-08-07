@@ -35,7 +35,7 @@ export default class Server {
       { WebpackDevelopment, serviceWorkerProxy } = this.controllers;
 
     app.use(require("morgan")("dev"));
-    app.use(serviceWorkerProxy);
+    app.use(serviceWorkerProxy(this.config));
     app.use("/favicon.ico", express.static(files.favicon));
 
     if (production) {
