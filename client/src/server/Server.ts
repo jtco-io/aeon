@@ -42,7 +42,6 @@ export default class Server {
       console.log("Client Server: Using Production");
       this.getMiddlewaresProduction();
     } else {
-
       console.log("Client Server: Using Development");
       app.use(WebpackDevelopment(this.webpackConfig, this.config));
     }
@@ -55,6 +54,6 @@ export default class Server {
 
     this.app.use("/static/bundles", express.static(paths.build.client));
     // Stats passed here!
-    this.app.use(serverRenderer({config, clientStats: require(files.stats) }));
+    this.app.use(serverRenderer({ config, clientStats: require(files.stats) }));
   }
 }
