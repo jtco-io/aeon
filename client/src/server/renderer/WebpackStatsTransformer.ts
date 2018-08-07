@@ -23,8 +23,8 @@ class WebpackStatsTransformer {
   }
 
   getFullBundleUrl(filename: string): string {
-    const { frontend, publicPath } = this.config;
-    return `${frontend.url}${publicPath}bundles/${filename}`;
+    const { publicPath } = this.config;
+    return `${publicPath}bundles/${filename}`;
   }
 
   private assetDetector(chunkName: string) {
