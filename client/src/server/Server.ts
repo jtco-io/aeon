@@ -42,8 +42,6 @@ export default class Server {
       console.log("Client Server: Using Production");
       this.getMiddlewaresProduction();
     } else {
-      const manifestPath = this.config.directories.files.manifest;
-      const manifest = require(manifestPath);
 
       console.log("Client Server: Using Development");
       app.use(WebpackDevelopment(this.webpackConfig, this.config));
