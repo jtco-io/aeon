@@ -1,11 +1,5 @@
 variables:
   DOCKER_DRIVER: overlay2
-
-stages:
-  - test_whitebox
-  - build
-
-variables:
   PROJECT_TITLE: Prion
   FRONTEND_HOST: 0.0.0.0
   FRONTEND_PORT: 6080
@@ -13,6 +7,10 @@ variables:
   BACKEND_PORT: 6081
   HTTPS: false
   PUBLIC_PATH: /static/
+
+stages:
+  - test_whitebox
+  - build
 
 test_whitebox:
   stage: test_whitebox
