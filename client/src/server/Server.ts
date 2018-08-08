@@ -35,16 +35,13 @@ export default class Server {
       { WebpackDevelopment, serviceWorkerProxy } = this.controllers;
 
     app.use(require("morgan")("dev"));
-    app.use(serviceWorkerProxy);
+    app.use(serviceWorkerProxy(this.config));
     app.use("/favicon.ico", express.static(files.favicon));
 
     if (production) {
       console.log("Client Server: Using Production");
       this.getMiddlewaresProduction();
     } else {
-      const manifestPath = this.config.directories.files.manifest;
-      const manifest = require(manifestPath);
-
       console.log("Client Server: Using Development");
       app.use(WebpackDevelopment(this.webpackConfig, this.config));
     }
@@ -57,6 +54,6 @@ export default class Server {
 
     this.app.use("/static/bundles", express.static(paths.build.client));
     // Stats passed here!
-    this.app.use(serverRenderer({config, clientStats: require(files.stats) }));
+    this.app.use(serverRenderer({ config, clientStats: require(files.stats) }));
   }
 }

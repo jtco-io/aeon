@@ -1,21 +1,17 @@
 version: '3.4'
 services:
   selenium:
-    image: $CI_REGISTRY_IMAGE/selenium_testing
     build:
-      context: ../../testing
-      args:
-        IMAGE: $CI_REGISTRY_IMAGE/base/selenium
+      context: ../testing
     depends_on:
       - selenium_hub
-      - server
-      - client-serve
+      - frontend
     volumes:
        - ./screenshots:/root/screenshots
     environment:
       SELENIUM_URL: selenium_hub:4444
-      CLIENT_SERVER_URL: client-serve:5000
-
+      FRONTEND_HOST: frontend
+      FRONTEND_PORT: "${FRONTEND_PORT}"
 
   firefox:
     image: selenium/node-firefox-debug:3.9.1
