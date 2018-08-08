@@ -5,7 +5,7 @@ variables:
   FRONTEND_PORT: 6080
   BACKEND_HOST: 0.0.0.0
   BACKEND_PORT: 6081
-  HTTPS: false
+  HTTPS: "false"
   PUBLIC_PATH: /static/
 
 stages:
