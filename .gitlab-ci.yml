@@ -6,9 +6,13 @@ stages:
   - build
 
 variables:
-  CLIENT_PORT: 8080
-  SERVER_HOST: localhost
-  SERVER_PORT: 8081
+  PROJECT_TITLE: Prion
+  FRONTEND_HOST: 0.0.0.0
+  FRONTEND_PORT: 6080
+  BACKEND_HOST: 0.0.0.0
+  BACKEND_PORT: 6081
+  HTTPS: false
+  PUBLIC_PATH: /static/
 
 test_whitebox:
   stage: test_whitebox
@@ -23,9 +27,6 @@ test_whitebox:
   script:
     # Running build will additionally lint the codebase.
     - yarn run build
-  after_script:
-    - echo 'Prion brought to you by JTCO and JTX'
-    - echo 'To see more check out jtco.io and jtronics.exchange'
 
 build:
   stage: build
@@ -35,12 +36,11 @@ build:
   services:
       - docker:dind
   before_script:
-    - yarn run dc:build
-    - yarn run dc:start -d
-    - sleep 3s
+    - yarn run dc build
+    - yarn run dc:selenium up -d backend frontend proxy firefox chrome selenium_hub
   script:
-    - curl http://$SERVER_HOST:$CLIENT_PORT
+    - yarn run dc:dc:test
   after_script:
-    - yarn run dc down
+    - yarn run dc:selenium down
     - echo 'Prion brought to you by JTCO and JTX'
     - echo 'To see more check out jtco.io and jtronics.exchange'

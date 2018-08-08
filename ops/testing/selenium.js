@@ -7,23 +7,23 @@ export default class Selenium {
   initialized;
   testEndpoint;
   getRootSelector;
-  serverEndpoint;
+  seleniumURL;
   driver;
 
   constructor(testEndpoint, rootSelector = { css: "#root" }) {
     this.testEndpoint = `http:/${process.env.FRONTEND_HOST}:${process.env.FRONTEND_PORT}`;
     this.rootSelector = rootSelector;
     if (process.env.SELENIUM_URL) {
-      this.serverEndpoint = process.env.SELENIUM_URL;
+      this.seleniumURL = process.env.SELENIUM_URL;
     }
   }
 
   async initialize() {
     if (!this.initialized) {
-      if (this.serverEndpoint) {
+      if (this.seleniumURL) {
         this.driver = new Builder()
           .forBrowser( "chrome" )
-          .usingServer( `http://${seleniumUrl}/wd/hub` )
+          .usingServer( `http://${this.seleniumURL}/wd/hub` )
           .build();
 
 
