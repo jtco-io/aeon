@@ -37,7 +37,7 @@ build:
     - yarn run dc build
     - yarn run dc:selenium up -d backend frontend proxy firefox chrome selenium_hub
   script:
-    - yarn run dc:dc:test
+    - yarn run dc:test
   after_script:
     - yarn run dc:selenium down
     - echo 'Prion brought to you by JTCO and JTX'
