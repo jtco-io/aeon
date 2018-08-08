@@ -23,8 +23,8 @@ class WebpackStatsTransformer {
   }
 
   getFullBundleUrl(filename: string): string {
-    const { frontend, publicPath } = this.config;
-    return `${frontend.url}${publicPath}bundles/${filename}`;
+    const { publicPath } = this.config;
+    return `${publicPath}bundles/${filename}`;
   }
 
   private assetDetector(chunkName: string) {
@@ -61,8 +61,15 @@ class WebpackStatsTransformer {
   }
 
   private async getWebpackManifest(): Promise<any> {
-    const manifest = await fetch(this.getFullBundleUrl("manifest.json"));
-    this.manifest = await manifest.json();
+    /* In Production we can Node.JS import the manifest*/
+    if (this.config.production && !this.manifest) {
+      this.manifest = await this.config.manifest.then(
+        (manifest: any) => manifest,
+      );
+    } else {
+      const manifest = await fetch(this.getFullBundleUrl("manifest.json"));
+      this.manifest = await manifest.json();
+    }
   }
 
   private async getServiceWorkerManifest() {

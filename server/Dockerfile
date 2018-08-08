@@ -1,10 +1,10 @@
 ARG IMAGE=node:carbon
+ARG BACKEND_HOST=localhost
+ARG BACKEND_PORT=8081
 
 FROM $IMAGE as server-builder
 
 ENV INSTALL_PATH=/server
-ENV SERVER_HOST=0.0.0.0
-ENV SERVER_PORT=8081
 
 WORKDIR $INSTALL_PATH
 
@@ -13,6 +13,8 @@ COPY ./yarn.lock $INSTALL_PATH/yarn.lock
 RUN yarn install --production=true
 
 FROM server-builder as server-built
+ENV BACKEND_HOST=localhost
+ENV BACKEND_PORT=$BACKEND_PORT
 COPY . $INSTALL_PATH
 RUN yarn run build
 

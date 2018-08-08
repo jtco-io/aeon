@@ -2,7 +2,6 @@ import { Config as IsoConfig } from "../config/types";
 
 export interface Controllers {
   serviceWorkerProxy: any;
-  isFaviconProxy: any;
   WebpackDevelopment: any;
 }
 
@@ -30,4 +29,7 @@ export interface Directory {
   files: DirectoryFiles;
 }
 
-export type Config = IsoConfig & { directories: any };
+export type Config = IsoConfig & {
+  directories: Directory;
+  manifest?: any;
+};

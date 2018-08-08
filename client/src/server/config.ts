@@ -7,4 +7,14 @@ const config: Config = {
   directories,
 };
 
+if (isoConfig.production) {
+  try {
+    config.manifest = import(directories.files.manifest).then(
+      manifest => manifest,
+    );
+    // do stuff
+  } catch (ex) {
+    console.log(ex);
+  }
+}
 export default config;

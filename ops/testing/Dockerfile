@@ -1,5 +1,4 @@
 ARG IMAGE=node:carbon
-
 FROM $IMAGE as base-selenium
 
 ENV INSTALL_PATH=/app

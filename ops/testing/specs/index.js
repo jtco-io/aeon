@@ -1,8 +1,10 @@
-import { loadSeleniumInitialPage } from '../pageObjects/index'
+import { selenium } from "../selenium";
 
 describe('index', () => {
   it('should show the right title', async () => {
-    const driver = await loadSeleniumInitialPage()
-    expect(await driver.getTitle()).toBe('Prion')
+    const selenium = process.selenium;
+    await selenium.loadIndexPage()
+
+    expect(await selenium.driver.getTitle()).toBe('Prion')
   })
 })
