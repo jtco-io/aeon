@@ -10,7 +10,7 @@ interface RootProps {
 
 class Root extends React.Component<RootProps, any> {
   public render(): JSX.Element {
-    return <Routes routes={routesList}/>;
+    return <Routes routes={routesList} />;
   }
 }
 export default hot(module)(Root);
