@@ -3,7 +3,7 @@ import * as React from "react";
 import { renderToStringWithData } from "react-apollo";
 import * as ReactDOM from "react-dom/server";
 import GraphQL from "shared/components/GraphQL";
-import Root from "shared/components/Root";
+import Root from "../../Root";
 import Router from "shared/components/Router";
 import createStore from "shared/util/createStore";
 
