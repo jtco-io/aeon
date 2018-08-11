@@ -1,8 +1,9 @@
 import * as React from "react";
 
 import { hot } from "react-hot-loader";
-import { routesList } from "./routes";
+import Layout from "shared/components/Layout";
 import Routes from "shared/components/Routes";
+import { routesList } from "./routes";
 
 interface RootProps {
   history?: any;
@@ -10,7 +11,11 @@ interface RootProps {
 
 class Root extends React.Component<RootProps, any> {
   public render(): JSX.Element {
-    return <Routes routes={routesList} />;
+    return (
+      <Layout>
+        <Routes routes={routesList}/>
+      </Layout>
+    );
   }
 }
 export default hot(module)(Root);
