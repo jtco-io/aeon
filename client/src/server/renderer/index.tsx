@@ -28,14 +28,15 @@ export function renderer(serverOptions: ServerRendererPassedArgs): any {
       </GraphQL>
     );
 
-    await getDataFromTree(getDataFromTree);
+    await getDataFromTree(component);
+    const initialState = apolloClient.extract();
 
     const html = (
       <Html
         content={component}
         assets={stats.assetsByFileType}
         title={config.env.PROJECT_TITLE}
-        apolloClient={apolloClient}
+        initialState={initialState}
       />
     );
     res.status(200);

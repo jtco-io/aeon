@@ -1,46 +1,66 @@
+import { StyleSheetServer } from "aphrodite";
 import * as React from "react";
-import { Asset, Assets, Config } from "./types";
+import { Assets } from "./types";
 
 interface HtmlProps {
+  context?: any;
   content: any;
   title: string;
-  apolloClient: any;
+  initialState: any;
   assets: Assets;
+  req?: any;
 }
 
-class Html extends React.Component<HtmlProps, {}> {
-  private initializeState() {
-    const { apolloClient } = this.props;
+interface HtmlState {
+  html: any;
+  css: any;
+}
+
+class Html extends React.Component<HtmlProps, any> {
+  state: any;
+
+  constructor(props: HtmlProps) {
+    super(props);
+    this.state = {
+      root: props.content,
+      modules: [],
+      css: null,
+      stylesheet: null,
+    };
+    this.setStyles();
+  }
+
+  private setStyles() {
+    const { html, css } = StyleSheetServer.renderStatic(() => this.state.root);
+    this.state.root = html;
+    this.state.css = css;
+  }
+
+  private hydrateState() {
+    const { initialState } = this.props;
     return (
       <script
         dangerouslySetInnerHTML={{
-          __html: `window.__APOLLO_STATE__=${JSON.stringify(
-            apolloClient.extract(),
-          )};`,
+          __html: `window.__APOLLO_STATE__=${JSON.stringify(initialState)};`,
         }}
       />
     );
   }
 
   public render(): JSX.Element {
-    const {
-      content,
-      title,
-      assets: { js, manifest },
-    } = this.props;
+    const { title } = this.props;
+    const { css, root } = this.state;
+
     return (
       <html>
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>{title}</title>
-          <link rel="manifest" href={manifest.url} />
+          <style data-aphrodite>{css.content}</style>
         </head>
         <body>
-          <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
-          {this.initializeState()}
-          {js.map(({ chunkName, url }: Asset) => (
-            <script key={chunkName} src={url} />
-          ))}
+          {this.hydrateState()}
+          <div id="root">{root}</div>
         </body>
       </html>
     );
