@@ -47,6 +47,9 @@ function getClientPlugins(PROD, env, dirs) {
         },
       ],
     }),
+    new ReactLoadablePlugin({
+      filename: './build/client/react-loadable.json',
+    }),
     new TSLintPlugin( {
       files: ['./src/**/*.ts', './src/**/*.tsx']
     } )
