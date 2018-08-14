@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { Config } from "../types";
 
-export function webpackDevelopment(webpackConfig: any, config: Config): Router {
+export function webpackDevelopment(
+  webpackConfig: any,
+  config: Config,
+  rlStats: any,
+): Router {
   const router: Router = Router();
   const compiler = require("webpack")(webpackConfig);
   router.use(
@@ -23,6 +27,7 @@ export function webpackDevelopment(webpackConfig: any, config: Config): Router {
     require("webpack-hot-server-middleware")(compiler, {
       serverRendererOptions: {
         config,
+        rlStats,
       },
     }),
   );

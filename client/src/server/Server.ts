@@ -8,11 +8,18 @@ export default class Server {
   config: Config;
   controllers: Controllers;
   webpackConfig: Object;
+  rlStats: any;
 
-  constructor(config: Config, controllers: Controllers, webpackConfig: Object) {
+  constructor(
+    config: Config,
+    controllers: Controllers,
+    webpackConfig: Object,
+    rlStats: any,
+  ) {
     this.config = config;
     this.controllers = controllers;
     this.webpackConfig = webpackConfig;
+    this.rlStats = rlStats;
     this.app = express();
     this.initialize();
   }
@@ -43,7 +50,9 @@ export default class Server {
       this.getMiddlewaresProduction();
     } else {
       console.log("Client Server: Using Development");
-      app.use(WebpackDevelopment(this.webpackConfig, this.config));
+      app.use(
+        WebpackDevelopment(this.webpackConfig, this.config, this.rlStats),
+      );
     }
   }
 

@@ -12,6 +12,7 @@ const server = new Server(
   require("./config").default,
   require("./controllers").default,
   require(join(projRoot, "client", "webpack.config.js")),
+  require(join(projRoot, "client", "build", "client", "react-loadable.json")),
 );
 
 export default Loadable.preloadAll().then(() => {
