@@ -76,4 +76,5 @@ export interface ServerRendererPassedArgs {
   clientStats: WebpackStats;
   serverStats: WebpackStats;
   config: Config;
+  rlStats: any;
 }
