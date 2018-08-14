@@ -1,19 +1,15 @@
 import { join, resolve } from "path";
 import * as React from "react";
-import { renderToStringWithData } from "react-apollo";
+import { getDataFromTree } from "react-apollo";
 import * as ReactDOM from "react-dom/server";
-import * as Loadable from "react-loadable";
-import { getBundles } from "react-loadable/webpack";
 import GraphQL from "shared/components/GraphQL";
 import Router from "shared/components/Router";
-import createStore from "shared/util/createStore";
+import createStore from "shared/sutil/createStore";
 import Root from "../../Root";
 
 import Html from "./Html";
 import { ServerRendererPassedArgs } from "./types";
 import WebpackStatsTransformer from "./WebpackStatsTransformer";
-
-declare const modules: any;
 
 export function renderer(serverOptions: ServerRendererPassedArgs): any {
   const { clientStats, config, rlStats } = serverOptions;
@@ -23,22 +19,16 @@ export function renderer(serverOptions: ServerRendererPassedArgs): any {
     const apolloClient = createStore(true);
 
     const stats = await new WebpackStatsTransformer(config, clientStats);
-    // console.log('RENDER', stats)
-    let modules: any = [];
 
-    let component = await renderToStringWithData(
-      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-        <GraphQL client={apolloClient}>
-          <Router location={req.url} context={context} isServer>
-            <Root />
-          </Router>
-        </GraphQL>
-      </Loadable.Capture>,
+    let component = await (
+      <GraphQL client={apolloClient}>
+        <Router location={req.url} context={context} isServer>
+          <Root />
+        </Router>
+      </GraphQL>
     );
 
-    // @ts-ignore
-    let bundles = await getBundles(rlStats, modules);
-    console.log("getBundles", bundles);
+    await getDataFromTree(getDataFromTree);
 
     const html = (
       <Html
