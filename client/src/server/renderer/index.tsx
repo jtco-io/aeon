@@ -16,48 +16,41 @@ import WebpackStatsTransformer from "./WebpackStatsTransformer";
 declare const modules: any;
 
 export function renderer(serverOptions: ServerRendererPassedArgs): any {
-  const { clientStats, config } = serverOptions;
-
+  const { clientStats, config, rlStats } = serverOptions;
   const context: any = {};
 
   return async (req: any, res: any, next: any): Promise<any> => {
     const apolloClient = createStore(true);
 
     const stats = await new WebpackStatsTransformer(config, clientStats);
-
+    // console.log('RENDER', stats)
     let modules: any = [];
 
-    const component = (
+    let component = await renderToStringWithData(
       <Loadable.Capture report={moduleName => modules.push(moduleName)}>
         <GraphQL client={apolloClient}>
           <Router location={req.url} context={context} isServer>
             <Root />
           </Router>
         </GraphQL>
-      </Loadable.Capture>
+      </Loadable.Capture>,
     );
 
     // @ts-ignore
-    console.log("getBundles", getBundles(clientStats, modules));
-    renderToStringWithData(component)
-      .then(content => {
-        const html = (
-          <Html
-            content={content}
-            assets={stats.assetsByFileType}
-            title={config.env.PROJECT_TITLE}
-            apolloClient={apolloClient}
-          />
-        );
-        res.status(200);
-        res.send(`<!doctype html>\n${ReactDOM.renderToStaticMarkup(html)}`);
-        res.end();
-      })
-      .catch(e => {
-        console.error("RENDERING ERROR:", e); // eslint-disable-line no-console
-        res.status(500);
-        res.end(`An error occurred.:\n\n${e.stack}`);
-      });
+    let bundles = await getBundles(rlStats, modules);
+    console.log("getBundles", bundles);
+
+    const html = (
+      <Html
+        content={component}
+        assets={stats.assetsByFileType}
+        title={config.env.PROJECT_TITLE}
+        apolloClient={apolloClient}
+      />
+    );
+    res.status(200);
+    res.send(`<!doctype html>\n${ReactDOM.renderToStaticMarkup(html)}`);
+    res.end();
   };
 }
 
