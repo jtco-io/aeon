@@ -13,7 +13,7 @@ class Root extends React.Component<RootProps, any> {
   public render(): JSX.Element {
     return (
       <Layout>
-        <Routes routes={routesList}/>
+        <Routes routes={routesList} />
       </Layout>
     );
   }

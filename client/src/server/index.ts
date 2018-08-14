@@ -1,5 +1,6 @@
 import { config as dotenv } from "dotenv";
 import { join, resolve } from "path";
+import * as Loadable from "react-loadable";
 import Server from "./Server";
 
 const projRoot = resolve(__dirname, "..", "..", "..");
@@ -13,4 +14,6 @@ const server = new Server(
   require(join(projRoot, "client", "webpack.config.js")),
 );
 
-export default server.start();
+export default Loadable.preloadAll().then(() => {
+  server.start();
+});
