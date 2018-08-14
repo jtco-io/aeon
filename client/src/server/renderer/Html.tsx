@@ -23,6 +23,9 @@ class Html extends React.Component<HtmlProps, any> {
     super(props);
     this.state = {
       root: props.content,
+      apolloState: `window.__APOLLO_STATE__=${JSON.stringify(
+        props.initialState,
+      )};`,
       modules: [],
       css: null,
       stylesheet: null,
@@ -33,23 +36,12 @@ class Html extends React.Component<HtmlProps, any> {
   private setStyles() {
     const { html, css } = StyleSheetServer.renderStatic(() => this.state.root);
     this.state.root = html;
-    this.state.css = css;
-  }
-
-  private hydrateState() {
-    const { initialState } = this.props;
-    return (
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `window.__APOLLO_STATE__=${JSON.stringify(initialState)};`,
-        }}
-      />
-    );
+    this.state.css = `window.__CSS__=${JSON.stringify(css)};`;
   }
 
   public render(): JSX.Element {
     const { title } = this.props;
-    const { css, root } = this.state;
+    const { css, root, apolloState } = this.state;
 
     return (
       <html>
@@ -57,9 +49,10 @@ class Html extends React.Component<HtmlProps, any> {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>{title}</title>
           <style data-aphrodite>{css.content}</style>
+          <script dangerouslySetInnerHTML={{ __html: apolloState }} />
+          <script dangerouslySetInnerHTML={{ __html: css }} />
         </head>
         <body>
-          {this.hydrateState()}
           <div id="root">{root}</div>
         </body>
       </html>
