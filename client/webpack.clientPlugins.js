@@ -6,6 +6,7 @@ function getClientPlugins(PROD, env, dirs) {
   const OfflinePlugin = require('offline-plugin')
   const TSLintPlugin = require( 'tslint-webpack-plugin' );
   const ManifestPlugin = require('webpack-manifest-plugin');
+  const { ReactLoadablePlugin } = require('react-loadable/webpack');
 
 
   const plugins = [
@@ -19,8 +20,8 @@ function getClientPlugins(PROD, env, dirs) {
     }),
     new ManifestPlugin(),
     new WebpackPwaManifest({
-      name: env.__PROJECT_TITLE__,
-      short_name: env.__PROJECT_TITLE__,
+      name: env.PROJECT_TITLE,
+      short_name: env.PROJECT_TITLE,
       description: "A cutting edge Node.JS and React single page application boilerplate!",
       background_color: "#ffffff",
       icons: [
