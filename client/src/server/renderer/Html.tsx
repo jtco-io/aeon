@@ -31,7 +31,6 @@ class Html extends React.Component<HtmlProps, any> {
     };
   }
 
-
   public render(): JSX.Element {
     const { title, assets } = this.props;
     const { css, root, apolloState } = this.state;
@@ -43,11 +42,11 @@ class Html extends React.Component<HtmlProps, any> {
           <script dangerouslySetInnerHTML={{ __html: apolloState }} />
         </head>
         <body>
-        <div id="root">{root}</div>
-        <script dangerouslySetInnerHTML={{ __html: css }} />
-        {assets.js.map(({ chunkName, url }: Asset) => (
-        <script key={chunkName} src={url} />
-        ))}
+          <div id="root">{root}</div>
+          <script dangerouslySetInnerHTML={{ __html: css }} />
+          {assets.js.map(({ chunkName, url }: Asset) => (
+            <script key={chunkName} src={url} />
+          ))}
         </body>
       </html>
     );
