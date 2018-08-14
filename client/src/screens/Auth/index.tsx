@@ -1,28 +1,20 @@
 import * as ReactRouter from "react-router";
-import * as Loadable from "react-loadable";
+import Register from "screens/App/screens/Home/screens/Landing";
+import Login from "screens/App/screens/Home/screens/Landing";
+import PasswordReset from "screens/App/screens/Home/screens/Landing";
 
 const auth: ReactRouter.RouteProps[] = [
   {
     path: "/auth/register",
-    component: Loadable({
-      loader: () => import(/* webpackChunkName: "auth" */ "./screens/Register"),
-      loading: (): any => null,
-    }),
+    component: Register,
   },
   {
     path: "/auth/login",
-    component: Loadable({
-      loader: () => import(/* webpackChunkName: "auth" */ "./screens/Login"),
-      loading: (): any => null,
-    }),
+    component: Login,
   },
   {
     path: "/auth/password_reset",
-    component: Loadable({
-      loader: () =>
-        import(/* webpackChunkName: "auth" */ "./screens/PasswordReset"),
-      loading: (): any => null,
-    }),
+    component: PasswordReset,
   },
 ];
 

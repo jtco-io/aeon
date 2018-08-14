@@ -1,6 +1,5 @@
 import { config as dotenv } from "dotenv";
 import { join, resolve } from "path";
-import * as Loadable from "react-loadable";
 import Server from "./Server";
 
 const projRoot = resolve(__dirname, "..", "..", "..");
@@ -15,6 +14,4 @@ const server = new Server(
   require(join(projRoot, "client", "build", "client", "react-loadable.json")),
 );
 
-export default Loadable.preloadAll().then(() => {
-  server.start();
-});
+server.start();

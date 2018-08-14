@@ -19,6 +19,7 @@ export function renderer(serverOptions: ServerRendererPassedArgs): any {
     const apolloClient = createStore(true);
 
     const stats = await new WebpackStatsTransformer(config, clientStats);
+    await stats.initialize();
 
     let component = await (
       <GraphQL client={apolloClient}>

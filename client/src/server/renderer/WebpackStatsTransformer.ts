@@ -19,7 +19,6 @@ class WebpackStatsTransformer {
         chunkName: null,
       },
     };
-    this.initialize();
   }
 
   getFullBundleUrl(filename: string): string {
@@ -86,8 +85,9 @@ class WebpackStatsTransformer {
     };
   }
 
-  private async initialize() {
-    await this.getServiceWorkerManifest();
+  public async initialize() {
+    // await this.getServiceWorkerManifest();
+
     const { assetsByChunkName } = this.stats;
 
     for (let chunkName of Object.keys(assetsByChunkName)) {
