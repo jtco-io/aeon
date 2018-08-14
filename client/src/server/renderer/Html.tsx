@@ -1,6 +1,5 @@
-import { StyleSheetServer } from "aphrodite";
 import * as React from "react";
-import { Asset, Assets } from "./types";
+import { Assets, Asset } from "./types";
 
 interface HtmlProps {
   context?: any;
@@ -30,16 +29,8 @@ class Html extends React.Component<HtmlProps, any> {
       css: null,
       stylesheet: null,
     };
-    this.setStyles();
   }
 
-  private setStyles() {
-    const { html, css } = StyleSheetServer.renderStatic(() => this.state.root);
-    this.state.root = html;
-    this.state.css = `window.__CSS__=${JSON.stringify(
-      css.renderedClassNames,
-    )};`;
-  }
 
   public render(): JSX.Element {
     const { title, assets } = this.props;
@@ -49,15 +40,14 @@ class Html extends React.Component<HtmlProps, any> {
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>{title}</title>
-          <style data-aphrodite>{css.content}</style>
           <script dangerouslySetInnerHTML={{ __html: apolloState }} />
         </head>
         <body>
-          <div id="root">{root}</div>
-          <script dangerouslySetInnerHTML={{ __html: css }} />
-          {assets.js.map(({ chunkName, url }: Asset) => (
-            <script key={chunkName} src={url} />
-          ))}
+        <div id="root">{root}</div>
+        <script dangerouslySetInnerHTML={{ __html: css }} />
+        {assets.js.map(({ chunkName, url }: Asset) => (
+        <script key={chunkName} src={url} />
+        ))}
         </body>
       </html>
     );

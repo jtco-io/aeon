@@ -31,7 +31,10 @@ const { stringify } = JSON,
     HTTPS: stringify( env.HTTPS )
 };
 
-let clientEntry = [join(dirs.src, "index.tsx")];
+let clientEntry = [
+  join(dirs.src, "index.tsx"),
+  join(dirs.assets, "global.css")
+];
 
 if (!PROD) {
   clientEntry = [
@@ -71,7 +74,7 @@ const wpResolve = {
     publicDir: join( dirs.src, "public" ),
     assets: join( dirs.src, "assets" )
   },
-  extensions: [".js", ".ts", ".tsx", ".ico", ".png"]
+  extensions: [".js", ".ts", ".tsx", ".css", ".ico", ".png"]
 };
 
 module.exports = [

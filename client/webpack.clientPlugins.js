@@ -6,7 +6,6 @@ function getClientPlugins(PROD, env, dirs) {
   const OfflinePlugin = require('offline-plugin')
   const TSLintPlugin = require( 'tslint-webpack-plugin' );
   const ManifestPlugin = require('webpack-manifest-plugin');
-  const { ReactLoadablePlugin } = require('react-loadable/webpack');
 
 
   const plugins = [
@@ -46,9 +45,6 @@ function getClientPlugins(PROD, env, dirs) {
           ],
         },
       ],
-    }),
-    new ReactLoadablePlugin({
-      filename: './build/client/react-loadable.json',
     }),
     new TSLintPlugin( {
       files: ['./src/**/*.ts', './src/**/*.tsx']

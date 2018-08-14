@@ -29,6 +29,14 @@ class Navbar extends React.Component<PageProps, {}> {
         name: "Admin",
         href: "/admin",
       },
+      {
+        name: "Login",
+        href: "/auth/login",
+      },
+      {
+        name: "Sign Up",
+        href: "/auth/register",
+      },
     ],
   };
 

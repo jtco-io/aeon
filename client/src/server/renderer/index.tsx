@@ -4,7 +4,7 @@ import { getDataFromTree } from "react-apollo";
 import * as ReactDOM from "react-dom/server";
 import GraphQL from "shared/components/GraphQL";
 import Router from "shared/components/Router";
-import createStore from "shared/sutil/createStore";
+import createStore from "shared/util/createStore";
 import Root from "../../Root";
 
 import Html from "./Html";
@@ -21,7 +21,7 @@ export function renderer(serverOptions: ServerRendererPassedArgs): any {
     const stats = await new WebpackStatsTransformer(config, clientStats);
     await stats.initialize();
 
-    let component = await (
+    let component = (
       <GraphQL client={apolloClient}>
         <Router location={req.url} context={context} isServer>
           <Root />
@@ -32,7 +32,7 @@ export function renderer(serverOptions: ServerRendererPassedArgs): any {
     await getDataFromTree(component);
     const initialState = apolloClient.extract();
 
-    const html = (
+    const htmlComp = (
       <Html
         content={component}
         assets={stats.assetsByFileType}
@@ -41,7 +41,7 @@ export function renderer(serverOptions: ServerRendererPassedArgs): any {
       />
     );
     res.status(200);
-    res.send(`<!doctype html>\n${ReactDOM.renderToStaticMarkup(html)}`);
+    res.send(`<!doctype html>\n${ReactDOM.renderToStaticMarkup(htmlComp)}`);
     res.end();
   };
 }
