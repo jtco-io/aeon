@@ -1,7 +1,7 @@
 import * as ReactRouter from "react-router";
-import Register from "screens/App/screens/Home/screens/Landing";
-import Login from "screens/App/screens/Home/screens/Landing";
-import PasswordReset from "screens/App/screens/Home/screens/Landing";
+import Register from "screens/Auth/screens/Register";
+import Login from "screens/Auth/screens/Login";
+import PasswordReset from "screens/Auth/screens/PasswordReset";
 
 const auth: ReactRouter.RouteProps[] = [
   {

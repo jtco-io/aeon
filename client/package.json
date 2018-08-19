@@ -33,6 +33,7 @@
     "apollo-link-error": "^1.1.0",
     "apollo-link-http": "^1.5.4",
     "cross-fetch": "^2.2.2",
+    "css-loader": "^1.0.0",
     "dotenv": "^6.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -41,7 +42,8 @@
     "graphql": "^0.11.0",
     "graphql-tag": "^2.9.2",
     "http-proxy-middleware": "^0.18.0",
-    "jwt-decode": "2.2.0",
+    "md5-hash-webpack-plugin": "^0.1.1",
+    "mini-css-extract-plugin": "^0.4.1",
     "morgan": "^1.9.0",
     "node-fetch": "^2.2.0",
     "nodemon": "^1.18.3",
@@ -67,7 +69,7 @@
     "webpack-hot-middleware": "^2.22.2",
     "webpack-hot-server-middleware": "^0.5.0",
     "webpack-manifest-plugin": "^2.0.3",
-    "webpack-pwa-manifest": "^3.6.3",
+    "webpack-pwa-manifest": "^3.7.1",
     "webpack-stats-plugin": "^0.2.1"
   }
 }
