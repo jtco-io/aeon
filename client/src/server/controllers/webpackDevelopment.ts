@@ -1,18 +1,14 @@
 import { Router } from "express";
 import { Config } from "../types";
 
-export function webpackDevelopment(
-  webpackConfig: any,
-  config: Config,
-  rlStats: any,
-): Router {
+export function webpackDevelopment(webpackConfig: any, config: Config): Router {
   const router: Router = Router();
   const compiler = require("webpack")(webpackConfig);
   router.use(
     require("webpack-dev-middleware")(compiler, {
       serverSideRender: true,
-      publicPath: "/static",
-      //stats: "minimal",
+      publicPath: config.publicPath,
+      // stats: "minimal",
     }),
   );
   router.use(
@@ -27,7 +23,6 @@ export function webpackDevelopment(
     require("webpack-hot-server-middleware")(compiler, {
       serverRendererOptions: {
         config,
-        rlStats,
       },
     }),
   );

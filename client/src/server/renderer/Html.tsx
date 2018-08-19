@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Assets, Asset } from "./types";
+import { Asset, Assets } from "./types";
 
 interface HtmlProps {
   context?: any;
@@ -12,7 +12,6 @@ interface HtmlProps {
 
 interface HtmlState {
   html: any;
-  css: any;
 }
 
 class Html extends React.Component<HtmlProps, any> {
@@ -22,31 +21,27 @@ class Html extends React.Component<HtmlProps, any> {
     super(props);
     this.state = {
       root: props.content,
-      apolloState: `window.__APOLLO_STATE__=${JSON.stringify(
-        props.initialState,
-      )};`,
       modules: [],
-      css: null,
-      stylesheet: null,
     };
   }
 
   public render(): JSX.Element {
     const { title, assets } = this.props;
-    const { css, root, apolloState } = this.state;
+    const { root } = this.state;
     return (
       <html>
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>{title}</title>
-          <script dangerouslySetInnerHTML={{ __html: apolloState }} />
+          {assets.css.map(({ chunkName, url }, key) => (
+            <link key={key} href={url} rel="stylesheet" />
+          ))}
+          {assets.js.map(({ chunkName, url }: Asset, key) => (
+            <script async key={key} src={url} />
+          ))}
         </head>
         <body>
-          <div id="root">{root}</div>
-          <script dangerouslySetInnerHTML={{ __html: css }} />
-          {assets.js.map(({ chunkName, url }: Asset) => (
-            <script key={chunkName} src={url} />
-          ))}
+          <div id="root" dangerouslySetInnerHTML={{ __html: root }} />
         </body>
       </html>
     );
