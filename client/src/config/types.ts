@@ -1,8 +1,15 @@
 export type NODE_ENV = "production" | "development" | "testing";
 
 export interface ApolloConfig {
-  client: any;
-  server: any;
+  client: {
+    ssrForceFetchDelay: number;
+    connectToDevTools: boolean;
+    link: any;
+  };
+  server: {
+    ssrMode: boolean;
+    link: any;
+  };
 }
 
 export interface Env {
@@ -36,5 +43,5 @@ export interface Config {
   publicPath: string;
   frontend: ConfigFrontendServer;
   backend: ConfigBackendServer;
-  apollo: any;
+  apollo: ApolloConfig;
 }
