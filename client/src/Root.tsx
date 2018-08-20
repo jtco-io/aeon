@@ -1,22 +1,18 @@
 import * as React from "react";
-import * as ReactRouter from "react-router";
 
 import { hot } from "react-hot-loader";
-import Routes from "./Routes";
-import App from "screens/App";
-import Layout from "./Layout";
-import { routesList } from "../../routes";
+import Layout from "shared/components/Layout";
+import Routes from "shared/components/Routes";
+import { routesList } from "./routes";
 
-interface RootProps {
-  history?: any;
-}
+interface RootProps {}
 
 class Root extends React.Component<RootProps, any> {
   public render(): JSX.Element {
     return (
-      <App>
+      <Layout>
         <Routes routes={routesList} />
-      </App>
+      </Layout>
     );
   }
 }
