@@ -6,9 +6,10 @@ import Root from "./Root";
 import Router from "shared/components/Router";
 import createStore from "shared/util/createStore";
 import ServiceWorker from "shared/util/ServiceWorker";
+import config from "./config";
 
 const props = {
-  apolloClient: createStore(),
+  apolloClient: createStore(config, false),
   history: createBrowserHistory(),
   serviceWorker: new ServiceWorker().install(),
 };

@@ -3,7 +3,7 @@ import { createHttpLink } from "apollo-link-http";
 import fetch from "cross-fetch";
 import { ApolloConfig, Config } from "./types";
 
-export default function getApolloConfig(config: Partial<Config>): ApolloConfig {
+export default function getApolloConfig(config: Partial<Config>): any {
   const {
     backend: {
       graphql: { host, port, directory },

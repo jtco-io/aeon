@@ -21,13 +21,16 @@ class Html extends React.Component<HtmlProps, any> {
     super(props);
     this.state = {
       root: props.content,
+      apolloState: `window.__APOLLO_STATE__=${JSON.stringify(
+        props.initialState,
+      )};`,
       modules: [],
     };
   }
 
   public render(): JSX.Element {
-    const { title, assets } = this.props;
-    const { root } = this.state;
+    const { title, assets, content } = this.props;
+    const { apolloState } = this.state;
     return (
       <html>
         <head>
@@ -39,9 +42,10 @@ class Html extends React.Component<HtmlProps, any> {
           {assets.js.map(({ chunkName, url }: Asset, key) => (
             <script async key={key} src={url} />
           ))}
+          <script dangerouslySetInnerHTML={{ __html: apolloState }} />
         </head>
         <body>
-          <div id="root" dangerouslySetInnerHTML={{ __html: root }} />
+          <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
         </body>
       </html>
     );
