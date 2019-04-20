@@ -8,8 +8,8 @@ ENV INSTALL_PATH=/server
 
 WORKDIR $INSTALL_PATH
 
-COPY ./package.json $INSTALL_PATH/package.json
-COPY ./yarn.lock $INSTALL_PATH/yarn.lock
+COPY package.json $INSTALL_PATH/package.json
+COPY yarn.lock $INSTALL_PATH/yarn.lock
 RUN yarn install --production=true
 
 FROM server-builder as server-built

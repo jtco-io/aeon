@@ -31,4 +31,4 @@ export const config: Config = {
 
 export default config;
 
-declare module "config";
+declare module "config/index";

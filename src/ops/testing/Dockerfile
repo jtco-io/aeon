@@ -3,8 +3,8 @@ FROM $IMAGE as base-selenium
 
 ENV INSTALL_PATH=/app
 WORKDIR $INSTALL_PATH
-COPY ./package.json ./package.json
-COPY ./yarn.lock ./yarn.lock
+COPY package.json ./package.json
+COPY yarn.lock ./yarn.lock
 RUN yarn
 
 FROM base-selenium

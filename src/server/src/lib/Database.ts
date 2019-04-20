@@ -1,6 +1,6 @@
 import * as Knex from "knex";
 import { Model } from "objection";
-import { log } from "../lib";
+import { log } from "./index";
 import { Config } from "../config";
 
 export default class Database {
