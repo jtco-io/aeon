@@ -10,7 +10,23 @@ Constructs in this context are:
 * helpers
 * utils
 
-Aeon is the code base and engine in which you your projects workflow and services is build. Eg anytime your building a Webpack you'll prob use Webpack and need it's Development server.
+Aeon is engine your projects workflow and services are built around.
+
+#### Frontend
+Entirely devoted to frontend rendering the client, bunlding assets and delivering the assets as need.
+
+* Development Server
+* SSR Client Renderer (Various Tools are used see `./client/server/clientRenderer`
+* [Express Proxy Middleware](https://github.com/chimurai/http-proxy-middleware)
+  * [Service Worker](https://github.com/NekR/offline-plugin)
+* [React](https://reactjs.org/): library for building user interfaces
+
+#### Backend
+* [Knex.JS](https://knexjs.org/): SQL query builder for Postgres, MSSQL, MySQL, MariaDB, SQLite3, Oracle
+* [Objection.js]( ): ORM for Node.js built on Knex
+* [SQLite](https://sqlite.org/index.html) or [PostgresQL](https://www.postgresql.org), see Knex ^ etc
+
+
 
 ### Reason for Initial Complexity
 

@@ -14,22 +14,6 @@ Aeon boilerplate allowing quick iteration on on your next project with. Inspired
 * [Apollo](https://www.apollographql.com) - GraphQL API
 
 
-#### Frontend
-Entirely devoted to frontend rendering the client, bunlding assets and delivering the assets as need.
-
-* Development Server
-* SSR Client Renderer (Various Tools are used see `./client/server/clientRenderer`
-* [Express Proxy Middleware](https://github.com/chimurai/http-proxy-middleware)
-  * [Service Worker](https://github.com/NekR/offline-plugin)
-* [React](https://reactjs.org/): library for building user interfaces
-
-#### Backend
-* [Knex.JS](https://knexjs.org/): SQL query builder for Postgres, MSSQL, MySQL, MariaDB, SQLite3, Oracle
-* [Objection.js]( ): ORM for Node.js built on Knex
-* [SQLite](https://sqlite.org/index.html) or [PostgresQL](https://www.postgresql.org), see Knex ^ etc
-
-
-
 This will spin up the following
 * server with our tasks and serving final graphql endpoint
 * client code development server server up SSR
