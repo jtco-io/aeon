@@ -12,6 +12,18 @@ These features should then be automatically.
 
 Immutable versions of code are released and can be manually inspected in a staging environment or released manually or automatically to production.
 
+
+### Workflow
+
+1. Identify Feature or Issue
+1. Create Issue on however you manage projects.
+    * Create Branch 
+        * Preferably the merge request is automatically
+        * Said early merge request and branch push gives us a CI confirmation point
+1. Identify how to do a thorough test suite for the feature a simply and minimally as possible.
+1. Exicute and release
+        
+        
 ## Pre Commit
 * prettier
 * Typescript & ts-lint
