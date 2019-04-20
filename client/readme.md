@@ -1,4 +1,4 @@
-# Prion: Client
+# Aeon: Client
 
 ## Making your app a Progressive Web App (PWA) - Experimental
 

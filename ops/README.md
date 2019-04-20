@@ -1,6 +1,6 @@
 # Ops
 
-Prion in addition to be a cutting edge software, utilizes an automated test,
+Aeon in addition to be a cutting edge software, utilizes an automated test,
 build and deploy chain that is to say [CI](https://en.wikipedia.org/wiki/Continuous_integration)
 & [CD](https://en.wikipedia.org/wiki/Continuous_delivery).
 

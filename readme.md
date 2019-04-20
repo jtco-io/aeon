@@ -1,10 +1,10 @@
-Prion next gen frontend and backend boilerplate codebase allowing quick
+Aeon next gen frontend and backend boilerplate codebase allowing quick
 iteration on on your next project with. We aim to achieve parity with
 frameworks like [Django](https://www.djangoproject.com/), [Ruby on Rails](https://rubyonrails.org/), but being closer to [CRA](https://github.com/facebook/create-react-app) and [Flask](http://flask.pocoo.org/).
 
 
-[![build status](https://gitlab.com/ncrmro/prion/badges/master/build.svg)](https://gitlab.com/ncrmro/prion/commits/master)
-[![build status](https://gitlab.com/ncrmro/prion/badges/development/build.svg)](https://gitlab.com/ncrmro/prion/commits/development)
+[![build status](https://gitlab.com/ncrmro/aeon/badges/master/build.svg)](https://gitlab.com/ncrmro/aeon/commits/master)
+[![build status](https://gitlab.com/ncrmro/aeon/badges/development/build.svg)](https://gitlab.com/ncrmro/aeon/commits/development)
 
 ## Stack & Project Philosophy
 
@@ -19,7 +19,7 @@ Constructs in this context are:
 * helpers
 * utils
 
-Prion is the code base and engine in which you your projects workflow and services
+Aeon is the code base and engine in which you your projects workflow and services
 is build. Eg anytime your building a Webpack you'll prob use Webpack and
 need it's Development server.
 
@@ -74,12 +74,12 @@ Entirely devoted to frontend rendering the client, bunlding assets and deliverin
 
 The workflow once once catalyzed should allow for momentous and agile workflow.
 
-Any time you might change something that could make prion and any other apps using it more composiable,
-go ahead and work it out on a Prion Fork with out cluttering your project commits with experiments.
+Any time you might change something that could make aeon and any other apps using it more composiable,
+go ahead and work it out on a Aeon Fork with out cluttering your project commits with experiments.
 
 Next up plan out your sprints, what features can you get to in that sprint and what can what.. nice to have?
 
-Is Prion right or do I need to add any external packages to my codebase that I started from Prion before actually iterating on features (chores).
+Is Aeon right or do I need to add any external packages to my codebase that I started from Aeon before actually iterating on features (chores).
 
 That is we would like to keep our CI success rate high in our orginal projects.
 

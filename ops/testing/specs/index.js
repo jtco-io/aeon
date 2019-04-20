@@ -5,6 +5,6 @@ describe('index', () => {
     const selenium = process.selenium;
     await selenium.loadIndexPage()
 
-    expect(await selenium.driver.getTitle()).toBe('Prion')
+    expect(await selenium.driver.getTitle()).toBe('Aeon')
   })
 })

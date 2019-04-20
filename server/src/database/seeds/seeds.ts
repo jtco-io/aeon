@@ -19,13 +19,13 @@ export const users: Users = [
     firstName: "John",
     lastName: "Doe",
     username: "jdoe",
-    email: "admin@prion.io",
+    email: "admin@aeon.io",
   },
   {
     firstName: "Jach",
     lastName: "White",
     username: "jwhite",
-    email: "jwhite@prion.io",
+    email: "jwhite@aeon.io",
   },
 ];
 

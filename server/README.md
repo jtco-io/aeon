@@ -1,8 +1,8 @@
-# Prion Server
+# Aeon Server
 
 ## Setup
 `brew install postgres`
 
-`createdb dev_prion`
+`createdb dev_aeon`
 
 `yarn knex migrate:make user`
