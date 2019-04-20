@@ -23,3 +23,6 @@ Finally we can spin up the develompment servers using the following command.
 ```
 yarn run start
 ```
+This will spin up the following
+* server with our tasks and serving final graphql endpoint
+* client code development server server up SSR

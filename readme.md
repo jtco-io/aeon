@@ -13,11 +13,6 @@ Aeon boilerplate allowing quick iteration on on your next project with. Inspired
 * [GraphQL](https://graphql.org/): DSL Query language for API
 * [Apollo](https://www.apollographql.com) - GraphQL API
 
-
-This will spin up the following
-* server with our tasks and serving final graphql endpoint
-* client code development server server up SSR
-
 ## Environment: Production
 We can look at how docker is deployed to easily check how one might run the production build locally or without docker.
 Running `yarn run build` will build both the frontend and backend servers
@@ -33,8 +28,6 @@ Docker compose is aliased in the rootpackage.json
 * `docker-compose push` becomes `yarn run dc push`
 
 .. so on so forth.
-
-
 
 
 # Further Reading
