@@ -1,3 +1,11 @@
+## Environment: Development
+Currently documentation only covers MacOS using [Homebrew](https://brew.sh), most brew commands work on Windows with [Chocolatey](https://chocolatey.org)
+
+## [Homebrew](https://brew.sh)
+To install Homebrew run the following.
+
+```/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"```
+
 ## NVM & Yarn
 
 Pretty much the backbone for our Node.JS application.

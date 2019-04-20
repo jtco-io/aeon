@@ -46,13 +46,7 @@ We acheive this Software Quality Assurance (QA) through pre-commit, pre-push, co
 Such as typechecking, linting, unit and browser testing.
 
 
-### Environment: Development
-Currently documentation only covers MacOS using [Homebrew](https://brew.sh), most brew commands work on Windows with [Chocolatey](https://chocolatey.org)
 
-#### [Homebrew](https://brew.sh)
-To install Homebrew run the following.
-
-```/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"```
 
 This will spin up the following
 * server with our tasks and serving final graphql endpoint
