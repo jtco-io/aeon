@@ -28,24 +28,6 @@ Entirely devoted to frontend rendering the client, bunlding assets and deliverin
 * [Objection.js]( ): ORM for Node.js built on Knex
 * [SQLite](https://sqlite.org/index.html) or [PostgresQL](https://www.postgresql.org), see Knex ^ etc
 
-### Workflow
-
-The workflow once once catalyzed should allow for momentous and agile workflow.
-
-Any time you might change something that could make aeon and any other apps using it more composiable,
-go ahead and work it out on a Aeon Fork with out cluttering your project commits with experiments.
-
-Next up plan out your sprints, what features can you get to in that sprint and what can what.. nice to have?
-
-Is Aeon right or do I need to add any external packages to my codebase that I started from Aeon before actually iterating on features (chores).
-
-That is we would like to keep our CI success rate high in our orginal projects.
-
-We acheive this Software Quality Assurance (QA) through pre-commit, pre-push, continuous integration etc
-
-Such as typechecking, linting, unit and browser testing.
-
-
 
 
 This will spin up the following
