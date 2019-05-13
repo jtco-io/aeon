@@ -19,12 +19,10 @@ class WebpackStatsTransformer {
         chunkName: null,
       },
     };
-    this.initialize();
   }
 
   getFullBundleUrl(filename: string): string {
-    const { publicPath } = this.config;
-    return `${publicPath}bundles/${filename}`;
+    return `${this.config.publicPath}${filename}`;
   }
 
   private assetDetector(chunkName: string) {
@@ -86,8 +84,9 @@ class WebpackStatsTransformer {
     };
   }
 
-  private async initialize() {
-    await this.getServiceWorkerManifest();
+  public async initialize() {
+    // await this.getServiceWorkerManifest();
+
     const { assetsByChunkName } = this.stats;
 
     for (let chunkName of Object.keys(assetsByChunkName)) {

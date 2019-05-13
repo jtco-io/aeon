@@ -20,6 +20,9 @@
       "config": [
         "config"
       ],
+      "sutil": [
+        "shared/sutil"
+      ],
       "screens": [
         "src/screens"
       ],
@@ -38,7 +41,7 @@
   },
   "exclude": [
     "tmp",
-    "dist",
+    "build",
     "node_modules",
     "typings/*",
   ],

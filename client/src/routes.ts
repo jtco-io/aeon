@@ -1,14 +1,5 @@
-import * as React from "react";
 import * as ReactRouter from "react-router";
-import Landing from "screens/App/screens/Home/screens/Landing";
+import App from "screens/App";
+import Auth from "screens/Auth";
 
-export const routesList: ReactRouter.RouteProps[] = [
-  {
-    path: "/",
-    component: Landing,
-  },
-  {
-    path: "/admin",
-    component: Landing,
-  },
-];
+export const routesList: ReactRouter.RouteProps[] = [...App, ...Auth];

@@ -26,7 +26,7 @@ export const config: Config = {
   backend,
   apollo: getApolloConfig({ backend }),
   production: env.NODE_ENV === "production",
-  publicPath: env.PUBLIC_PATH,
+  publicPath: env.PUBLIC_PATH || "/static/",
 };
 
 export default config;

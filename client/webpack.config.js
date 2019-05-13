@@ -1,6 +1,7 @@
 const webpackConfig = require( "webpack" );
 const { getClientPlugins } = require( "./webpack.clientPlugins" );
 const { resolve, join } = require( "path" );
+const MiniCssExtractPlugin = require( "mini-css-extract-plugin" );
 
 const projRoot = resolve(__dirname, "..");
 
@@ -17,7 +18,8 @@ require('dotenv').config({path: resolve(clientDir, "..", ".env")});
 
 const { stringify } = JSON,
   env = process.env,
-  { NODE_ENV, PUBLIC_PATH } = env,
+  { NODE_ENV } = env,
+  PUBLIC_PATH = env.PUBLIC_PATH || "/static/",
   mode = NODE_ENV === "production" ? "production" : "development",
   PROD = mode === "production",
   environmentVariables = {
@@ -31,7 +33,9 @@ const { stringify } = JSON,
     HTTPS: stringify( env.HTTPS )
 };
 
-let clientEntry = [join(dirs.src, "index.tsx")];
+let clientEntry = [
+  join(dirs.src, "index.tsx")
+];
 
 if (!PROD) {
   clientEntry = [
@@ -41,8 +45,7 @@ if (!PROD) {
   ];
 }
 
-const moduleRules = {
-  rules: [
+const moduleRules = [
     {
       test: /\.tsx?$/,
       use: "ts-loader",
@@ -59,8 +62,7 @@ const moduleRules = {
         }
       ]
     }
-  ],
-};
+];
 
 
 const wpResolve = {
@@ -71,7 +73,7 @@ const wpResolve = {
     publicDir: join( dirs.src, "public" ),
     assets: join( dirs.src, "assets" )
   },
-  extensions: [".js", ".ts", ".tsx", ".ico", ".png"]
+  extensions: [".js", ".ts", ".tsx", ".css", ".scss", ".ico", ".png"]
 };
 
 module.exports = [
@@ -82,15 +84,15 @@ module.exports = [
     stats: true,
     entry: {
       vendor: ["react", "react-dom", "history", "react-router"],
-      app: clientEntry,
+      app: clientEntry
     },
     devtool: !PROD ? "inline-source-map" : "source-map",
     devServer: {
-      hot: true,
+      hot: true
     },
     output: {
-      path: join(dirs.build, "client"),
-      publicPath: PUBLIC_PATH + "bundles/",
+      path: join( dirs.build, "client" ),
+      publicPath: PUBLIC_PATH,
       filename: PROD
         ? "[name].[chunkhash].bundle.js"
         : "[name].[hash].bundle.js",
@@ -112,7 +114,21 @@ module.exports = [
       runtimeChunk: true,
     },
     plugins: getClientPlugins(PROD, environmentVariables, dirs),
-    module: moduleRules,
+    module: {
+      rules: [
+        ...moduleRules,
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {}
+            },
+            "css-loader"
+          ]
+        }
+      ]
+    },
     resolve: wpResolve
   },
   {
@@ -133,7 +149,16 @@ module.exports = [
       }
       callback();
     },
-    module: moduleRules,
+    module: {
+      rules: [
+        ...moduleRules,
+        {
+          test: /\.css$/,
+          use: "css-loader/locals"
+        }
+
+      ]
+    },
     plugins: [
       new webpackConfig.DefinePlugin({
         //"process.env": env,

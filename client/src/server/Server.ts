@@ -1,6 +1,5 @@
 import * as express from "express";
 import { proxyMiddleware } from "http-proxy-middleware";
-import { join, resolve } from "path";
 import { Config, Controllers } from "./types";
 
 export default class Server {
@@ -8,6 +7,7 @@ export default class Server {
   config: Config;
   controllers: Controllers;
   webpackConfig: Object;
+  rlStats: any;
 
   constructor(config: Config, controllers: Controllers, webpackConfig: Object) {
     this.config = config;
@@ -52,7 +52,7 @@ export default class Server {
     const { files, paths } = config.directories;
     const serverRenderer = require(files.serverRenderer).default;
 
-    this.app.use("/static/bundles", express.static(paths.build.client));
+    this.app.use(config.publicPath, express.static(paths.build.client));
     // Stats passed here!
     this.app.use(serverRenderer({ config, clientStats: require(files.stats) }));
   }
