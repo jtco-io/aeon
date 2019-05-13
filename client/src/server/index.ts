@@ -7,10 +7,10 @@ const projRoot = resolve(__dirname, "..", "..", "..");
 dotenv({ path: join(projRoot, ".env") });
 
 const server = new Server(
-  // Require Types after dotenv above.
+  // Require config after dotenv above.
   require("./config").default,
   require("./controllers").default,
   require(join(projRoot, "client", "webpack.config.js")),
 );
 
-export default server.start();
+server.start();

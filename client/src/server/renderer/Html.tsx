@@ -1,46 +1,51 @@
 import * as React from "react";
-import { Asset, Assets, Config } from "./types";
+import { Asset, Assets } from "./types";
 
 interface HtmlProps {
+  context?: any;
   content: any;
   title: string;
-  apolloClient: any;
+  initialState: any;
   assets: Assets;
+  req?: any;
 }
 
-class Html extends React.Component<HtmlProps, {}> {
-  private initializeState() {
-    const { apolloClient } = this.props;
-    return (
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `window.__APOLLO_STATE__=${JSON.stringify(
-            apolloClient.extract(),
-          )};`,
-        }}
-      />
-    );
+interface HtmlState {
+  html: any;
+}
+
+class Html extends React.Component<HtmlProps, any> {
+  state: any;
+
+  constructor(props: HtmlProps) {
+    super(props);
+    this.state = {
+      root: props.content,
+      apolloState: `window.__APOLLO_STATE__=${JSON.stringify(
+        props.initialState,
+      )};`,
+      modules: [],
+    };
   }
 
   public render(): JSX.Element {
-    const {
-      content,
-      title,
-      assets: { js, manifest },
-    } = this.props;
+    const { title, assets, content } = this.props;
+    const { apolloState } = this.state;
     return (
       <html>
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>{title}</title>
-          <link rel="manifest" href={manifest.url} />
+          {assets.css.map(({ chunkName, url }, key) => (
+            <link key={key} href={url} rel="stylesheet" />
+          ))}
+          {assets.js.map(({ chunkName, url }: Asset, key) => (
+            <script async key={key} src={url} />
+          ))}
+          <script dangerouslySetInnerHTML={{ __html: apolloState }} />
         </head>
         <body>
           <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
-          {this.initializeState()}
-          {js.map(({ chunkName, url }: Asset) => (
-            <script key={chunkName} src={url} />
-          ))}
         </body>
       </html>
     );

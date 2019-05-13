@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Route, RouteProps, Router, Switch, StaticRouter } from "react-router";
-import App from "screens/App";
-import Landing from "screens/App/screens/Home/screens/Landing";
+import { Route, RouteProps, Switch } from "react-router";
+
 class RouteStatus extends React.Component<any, any> {
   public render(): JSX.Element {
     return <p>Static context: {JSON.stringify(this.props.staticContext)}</p>;
