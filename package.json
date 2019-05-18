@@ -1,45 +1,35 @@
 {
-  "name": "prion",
-  "author": "Nicholas Romero <ncrmro@gmail.com>",
-  "license": "MIT",
-  "version": "0.0.1",
-  "engines": {
-    "node": ">=8.3.1",
-    "npm": ">=5.6.0"
+  "name": "react-lambda",
+  "version": "0.4.0",
+  "private": true,
+  "dependencies": {
+    "node-fetch": "^2.3.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.0.0"
   },
   "scripts": {
-    "start": "concurrently --kill-others \"yarn run client:dev:start\" \"yarn run server:dev:start\"",
-    "build": "yarn run client:prod:build && yarn run server:prod:build",
-    "dev:build": "yarn run dev:client:build && yarn run dev:server:build",
-    "prod:start": "concurrently --kill-others \"yarn run client:prod:start\" \"yarn run server:prod:start\"",
-    "prod:start:background": "nohup bash -c 'yarn run prod:start 2>&1 &'",
-    "client:dev:start": "cd ./client && yarn run start",
-    "client:prod:build": "cd ./client && yarn run build",
-    "client:prod:start": "cd ./client && yarn run prod:start",
-    "server:dev:start": "cd ./server && yarn run start",
-    "server:prod:start": "cd ./server && yarn run prod:start",
-    "server:prod:build": "cd ./server && yarn run build",
-    "db:seed": "cd ./server && yarn run db:migrate && yarn run db seed:run",
-    "db:migrate": "cd ./server && yarn run db migrate:latest",
-    "db:rollback": "cd ./server && yarn run db migrate:rollback",
-    "test": "cd ./ops/testing && yarn run start",
-    "dc": "docker-compose -f ops/docker/compose.yml",
-    "dc:selenium": "yarn run dc -f ./ops/docker/selenium.yml",
-    "dc:test": "yarn run dc:selenium up -d backend frontend proxy firefox chrome selenium_hub && yarn run dc:selenium up selenium",
-    "prettier": "cd ./client && yarn run prettier && cd ../server && yarn run prettier",
-    "lint": "cd ./client && yarn run lint && cd ../server && yarn run lint",
-    "precommit": "yarn run prettier",
-    "prepush": "yarn run build",
-    "install:all": "yarn && cd ./client && yarn && cd ../server && yarn",
-    "upgrade:all": "yarn upgrade && cd ./client && yarn upgrade && cd ../server && yarn upgrade"
+    "start": "react-scripts start",
+    "start:lambda": "netlify-lambda serve src/lambda",
+    "build": "run-p build:**",
+    "build:app": "react-scripts build",
+    "build:lambda": "netlify-lambda build src/lambda",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "dependencies": {
-    "@types/dotenv": "^4.0.3",
-    "@types/node": "^10.5.6"
+  "eslintConfig": {
+    "extends": "react-app"
   },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "devDependencies": {
-    "concurrently": "^3.6.0",
-    "husky": "^0.14.3",
-    "nodemon": "^1.17.5"
+    "@babel/plugin-transform-object-assign": "^7.0.0",
+    "http-proxy-middleware": "^0.19.0",
+    "netlify-lambda": "^1.4.5",
+    "npm-run-all": "^4.1.5"
   }
 }
