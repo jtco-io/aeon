@@ -1,15 +1,4 @@
-.idea
 node_modules
-server
-.editorconfig
-.eslintignore
-.eslintrc.json
-.flowconfig
-.gitignore
-.gitlab-ci.yml
-docker-compose.yml
-Dockerfile
-graphql.config.json
-readme.md
+build
 *.log
 .env
